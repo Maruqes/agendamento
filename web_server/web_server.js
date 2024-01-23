@@ -15,7 +15,7 @@ const rateLimitMiddleware = setRateLimit({
   message: "Too many requests",
   headers: true,
 });
-//app
+
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
