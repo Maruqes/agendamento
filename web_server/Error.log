@@ -1,0 +1,10 @@
+18:51:33 27-12-2023 -> ValidationError: The Express 'trust proxy' setting is true, which allows anyone to trivially bypass IP-based rate limiting. See https://express-rate-limit.github.io/ERR_ERL_PERMISSIVE_TRUST_PROXY/ for more information.
+    at Object.trustProxy (/home/marques/agendamento/node_modules/express-rate-limit/dist/index.cjs:148:13)
+    at wrappedValidations.<computed> [as trustProxy] (/home/marques/agendamento/node_modules/express-rate-limit/dist/index.cjs:324:22)
+    at Object.keyGenerator (/home/marques/agendamento/node_modules/express-rate-limit/dist/index.cjs:578:20)
+    at /home/marques/agendamento/node_modules/express-rate-limit/dist/index.cjs:629:32
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/marques/agendamento/node_modules/express-rate-limit/dist/index.cjs:611:5 {
+  code: 'ERR_ERL_PERMISSIVE_TRUST_PROXY',
+  help: 'https://express-rate-limit.github.io/ERR_ERL_PERMISSIVE_TRUST_PROXY/'
+}

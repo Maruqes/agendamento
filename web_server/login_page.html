@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+
+      .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .form-group button {
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      /* Additional CSS */
+      #name,
+      #email,
+      #user_number,
+      #service_year,
+      #service_month,
+      #service_day,
+      #service_hour,
+      #service_minute {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
+      #create_marcacao-button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password">
+        </div>
+        <div class="form-group">
+            <button onclick="login_func()">Login</button>
+        </div>
+    </div>
+    <input type="name" id="name" name="name" placeholder="Enter the name">
+    <input type="email" id="email" name="email" placeholder="Enter your email">
+    <input type="number" id="user_number" name="user_number" placeholder="Enter your user number">
+    <input type="number" id="service_year" name="service_year" placeholder="Enter the service year">
+    <input type="number" id="service_month" name="service_month" placeholder="Enter the service month">
+    <input type="number" id="service_day" name="service_day" placeholder="Enter the service day">
+    <input type="number" id="service_hour" name="service_hour" placeholder="Enter the service hour">
+    <input type="number" id="service_minute" name="service_minute" placeholder="Enter the service minute">
+    <button id="create_marcacao-button" onclick="create_marcacao()">Marcar</button>
+</body>
+<script>
+
+    function test()
+    {
+        console.log();
+    }
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+
+    function login_cookie()
+    {
+      console.log("login_cookie");
+      var cookie = getCookie('session_token');
+
+      let data = {
+        cookie: cookie,
+      };
+      fetch("/login_cookie", {
+        method: "POST",
+        mode: 'cors',
+        headers: {'Content-Type': 'application/json',
+                  'Access-Control-Allow-Origin': '*'
+      }, 
+        body: JSON.stringify(data)
+      }).then(res => {
+        if(res.status != 200)
+          return;
+        res.text().then(text => {
+          document.documentElement.innerHTML = text;
+          src = document.createElement('script');
+          src.src = '/backoffice.js';
+          document.body.appendChild(src);
+        })
+
+      });
+    }
+
+    login_cookie();
+
+    function login_func()
+    {
+      let data = {
+        user: document.getElementById("username").value,
+        password: document.getElementById("password").value
+      };
+      console.log(data);
+
+      fetch("/login", {
+        method: "POST",
+        mode: 'cors',
+        headers: {'Content-Type': 'application/json',
+                  'Access-Control-Allow-Origin': '*'
+      }, 
+        body: JSON.stringify(data)
+      }).then(res => {
+        console.log("Request complete! response:", res);
+        if(res.status != 200)
+          return;
+        res.json().then(session => {
+          var session_token = JSON.parse(session).session_token;
+          console.log(session_token);
+          document.cookie = "session_token="+session_token; 
+          login_cookie();
+        })
+        
+      });
+    }
+
+    function create_marcacao()
+    {
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var userNumber = document.getElementById("user_number").value;
+      var serviceYear = document.getElementById("service_year").value;
+      var serviceMonth = document.getElementById("service_month").value;
+      var serviceDay = document.getElementById("service_day").value;
+      var serviceHour = document.getElementById("service_hour").value;
+      var serviceMinute = document.getElementById("service_minute").value;
+      let data = {
+        name: name,
+        email: email,
+        user_number: userNumber,
+        date: [
+          {
+            dia: serviceDay,
+            mes: serviceMonth,
+            ano: serviceYear,
+
+            hora: serviceHour,
+            minuto: serviceMinute
+          }
+        ]
+      };
+      fetch("/new", {
+        method: "POST",
+        mode: 'cors',
+        headers: {'Content-Type': 'application/json',
+                  'Access-Control-Allow-Origin': '*'
+      }, 
+        body: JSON.stringify(data)
+      }).then(res => {
+        console.log("Request complete! response:", res);
+      });
+    }
+  </script>
+</html>

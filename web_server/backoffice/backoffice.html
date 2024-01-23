@@ -1,0 +1,84 @@
+
+<html>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+
+    p {
+      color: #333;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 3px solid #ccc;
+      transition: border-color 0.3s ease;
+      outline: none;
+      border-radius: 4px;
+    }
+
+    input[type="text"]:focus {
+      border-color: #555;
+    }
+
+    /* New HTML tags */
+    h1 {
+      color: #555;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+  </style>
+  <head>
+    <title>This is the title of the webpage!</title>
+  </head>
+  <body>
+    <p>This is an example paragraph. Anything in the <strong>body</strong> tag will appear on the page, just like this <strong>p</strong> tag and its contents.</p>
+    <p>BACKOFFICE</p>
+    <button onclick="getMarcacoes()">Get Marcacoes</button>
+    <input type="text" id="name" name="name" placeholder="Enter the product name">
+    <input type="text" id="price" name="price" placeholder="Enter the product price">
+    <input type="text" id="duration" name="duration" placeholder="Enter the product duration">
+    <input type="file" name="image_input" id="image_input"/>
+    <button onclick="createProduct()">Create Product</button>
+    <button onclick="getProducts()">Get Product</button>
+    <input type="text" id="delete_Product" name="delete_Product" placeholder="Enter the product to delete">
+    <button onclick="delete_Product()">Delete Product</button>
+    <input type="text" id="new_name" name="new_name" placeholder="Enter the name">
+    <input type="text" id="password" name="password" placeholder="Enter the password">
+    <button onclick="create_user()">Create User</button>
+    <input type="text" id="delete_name" name="delete_name" placeholder="Enter the delete_name">
+    <button onclick="delete_user()">Delete User</button>
+
+  </body>
+
+</html>

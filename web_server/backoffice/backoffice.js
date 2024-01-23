@@ -1,0 +1,104 @@
+function getMarcacoes() {
+  fetch("/get_marcacoes?cookie=" + getCookie("session_token"))
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+function createProduct() {
+  //upload image to server
+  var file = document.getElementById("image_input").files[0];
+  var formData = new FormData();
+  formData.append("image", file);
+  formData.append("cookie", getCookie("session_token"));
+  fetch("/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  var name = document.getElementById("name").value;
+  var price = document.getElementById("price").value;
+  var image = document.getElementById("image_input").value.split("\\").pop();
+  console.log(image);
+  var duration = document.getElementById("duration").value;
+  let data = {
+    name: name,
+    price: price,
+    image: image,
+    duration: duration,
+    cookie: getCookie("session_token"),
+  };
+  fetch("/create_product", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify(data),
+  });
+}
+
+function getProducts() {
+  fetch("/get_products?cookie=" + getCookie("session_token"))
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((error) => console.error("Error:", error));
+}
+
+function delete_Product() {
+  var name = document.getElementById("delete_Product").value;
+  let data = {
+    name: name,
+    cookie: getCookie("session_token"),
+  };
+  fetch("/delete_product", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify(data),
+  });
+}
+
+function create_user() {
+  var user = document.getElementById("new_name").value;
+  var password = document.getElementById("password").value;
+  let data = {
+    user: user,
+    password: password,
+    cookie: getCookie("session_token"),
+  };
+  fetch("/create_user", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify(data),
+  });
+}
+
+function delete_user() {
+  var user = document.getElementById("delete_name").value;
+  let data = {
+    user: user,
+    cookie: getCookie("session_token"),
+  };
+  fetch("/delete_user", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify(data),
+  });
+}
