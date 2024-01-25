@@ -62,6 +62,7 @@ async function login_user(user, password, resexpress) {
 
 async function create_user(user, password) {
     const saltRounds = 10;
+
     const hash = await bcrypt.hash(password, saltRounds);
     db.add_user(user, hash)
         .then(() => {

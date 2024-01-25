@@ -89,7 +89,8 @@
             <button onclick="login_func()">Login</button>
         </div>
     </div>
-    <input type="name" id="name" name="name" placeholder="Enter the name">
+    <input type="complete_name" id="complete_name" name="complete_name" placeholder="Enter the complete_name">
+    <input type="name" id="name" name="name" placeholder="Enter the product">
     <input type="email" id="email" name="email" placeholder="Enter your email">
     <input type="number" id="user_number" name="user_number" placeholder="Enter your user number">
     <input type="number" id="service_year" name="service_year" placeholder="Enter the service year">
@@ -173,6 +174,7 @@
 
     function create_marcacao()
     {
+      var complete_name = document.getElementById("complete_name").value;
       var name = document.getElementById("name").value;
       var email = document.getElementById("email").value;
       var userNumber = document.getElementById("user_number").value;
@@ -185,6 +187,7 @@
         name: name,
         email: email,
         user_number: userNumber,
+        complete_name: complete_name,
         date: [
           {
             dia: serviceDay,
