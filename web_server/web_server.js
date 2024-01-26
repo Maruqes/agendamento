@@ -30,7 +30,10 @@ app.get("/", function (req, res) {
 });
 app.use(express.static("images"));
 app.post("/upload", (req, res) => {
-  var autorizado = auth.login_user_with_cookie(req.body.cookie);
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
   if (autorizado == -1)
     return res.status(401).send("You are not authorized to upload files");
 
@@ -51,7 +54,10 @@ app.post("/new", async function (req, res) {
 });
 
 app.get("/get_marcacoes", function (req, res) {
-  var autorizado = auth.login_user_with_cookie(req.query.cookie);
+  var autorizado = auth.login_user_with_cookie(
+    req.query.username,
+    req.query.cookie
+  );
   if (autorizado >= 0) {
     shop.update_agendamentos_json(res); //res.send is inside the function couse it need to be async for some reason it do not work ouside
   } else {
@@ -60,7 +66,10 @@ app.get("/get_marcacoes", function (req, res) {
 });
 
 app.post("/create_product", function (req, res) {
-  var autorizado = auth.login_user_with_cookie(req.body.cookie);
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
   if (autorizado == 1) {
     shop.create_new_product(req.body, req.ip);
     res.sendStatus(200);
@@ -74,7 +83,10 @@ app.get("/get_products", function (req, res) {
 });
 
 app.post("/delete_Product", function (req, res) {
-  var autorizado = auth.login_user_with_cookie(req.body.cookie);
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
   if (autorizado == 1) {
     shop.delete_product(req.body.name);
     res.sendStatus(200);
@@ -89,7 +101,10 @@ app.post("/login", function (req, res) {
 });
 
 app.post("/create_user", function (req, res) {
-  var autorizado = auth.login_user_with_cookie(req.body.cookie);
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
   if (autorizado == 1) {
     auth.create_user(
       req.body.user,
@@ -102,7 +117,10 @@ app.post("/create_user", function (req, res) {
 });
 
 app.post("/delete_user", function (req, res) {
-  var autorizado = auth.login_user_with_cookie(req.body.cookie);
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
   if (autorizado == 1) {
     auth.delete_user(req.body.user);
   } else {
@@ -111,7 +129,10 @@ app.post("/delete_user", function (req, res) {
 });
 
 app.post("/login_cookie", function (req, res) {
-  var autorizado = auth.login_user_with_cookie(req.body.cookie);
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
   if (autorizado >= 0) {
     res.sendFile(path.join(__dirname + "/backoffice/backoffice.html"));
   } else {
@@ -122,6 +143,32 @@ app.post("/login_cookie", function (req, res) {
 //js files
 app.get("/backoffice.js", function (req, res) {
   res.sendFile(path.join(__dirname + "/backoffice/backoffice.js"));
+});
+
+app.get("/get_users", function (req, res) {
+  var autorizado = auth.login_user_with_cookie(
+    req.query.username,
+    req.query.cookie
+  );
+  if (autorizado == 1) {
+    auth.update_users_json(res);
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+app.post("/logout", function (req, res) {
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+  if (autorizado >= 0) {
+    auth.logout_user(req.body.cookie);
+    console.log("Logout: " + req.body.username);
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 app.listen(8080);

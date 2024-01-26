@@ -1,5 +1,11 @@
 function getMarcacoes() {
-  fetch("/get_marcacoes?cookie=" + getCookie("session_token"))
+  fetch(
+    "/get_marcacoes?cookie=" +
+      getCookie("session_token") +
+      "&" +
+      "username=" +
+      getCookie("username")
+  )
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -15,6 +21,7 @@ function createProduct() {
   var formData = new FormData();
   formData.append("image", file);
   formData.append("cookie", getCookie("session_token"));
+  formData.append("username", getCookie("username"));
   fetch("/upload", {
     method: "POST",
     body: formData,
@@ -31,6 +38,7 @@ function createProduct() {
     image: image,
     duration: duration,
     cookie: getCookie("session_token"),
+    username: getCookie("username"),
   };
   fetch("/create_product", {
     method: "POST",
@@ -44,7 +52,13 @@ function createProduct() {
 }
 
 function getProducts() {
-  fetch("/get_products?cookie=" + getCookie("session_token"))
+  fetch(
+    "/get_products?cookie=" +
+      getCookie("session_token") +
+      "&" +
+      "username=" +
+      getCookie("username")
+  )
     .then((response) => response.json())
     .then((data) => console.log(data))
     .catch((error) => console.error("Error:", error));
@@ -55,6 +69,7 @@ function delete_Product() {
   let data = {
     name: name,
     cookie: getCookie("session_token"),
+    username: getCookie("username"),
   };
   fetch("/delete_product", {
     method: "POST",
@@ -77,6 +92,7 @@ function create_user() {
     password: password,
     user_permission: user_prms,
     cookie: getCookie("session_token"),
+    username: getCookie("username"),
   };
   fetch("/create_user", {
     method: "POST",
@@ -94,6 +110,7 @@ function delete_user() {
   let data = {
     user: user,
     cookie: getCookie("session_token"),
+    username: getCookie("username"),
   };
   fetch("/delete_user", {
     method: "POST",
@@ -104,4 +121,34 @@ function delete_user() {
     },
     body: JSON.stringify(data),
   });
+}
+
+function get_users() {
+  fetch(
+    "/get_users?cookie=" +
+      getCookie("session_token") +
+      "&" +
+      "username=" +
+      getCookie("username")
+  )
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((error) => console.error("Error:", error));
+}
+
+async function logout() {
+  let data = {
+    cookie: getCookie("session_token"),
+    username: getCookie("username"),
+  };
+  await fetch("/logout", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify(data),
+  });
+  location.reload();
 }

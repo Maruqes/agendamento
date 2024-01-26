@@ -120,6 +120,7 @@
 
       let data = {
         cookie: cookie,
+        username: getCookie('username')
       };
       fetch("/login_cookie", {
         method: "POST",
@@ -165,6 +166,7 @@
         res.json().then(session => {
           var session_token = JSON.parse(session).session_token;
           console.log(session_token);
+          document.cookie = "username="+document.getElementById("username").value;
           document.cookie = "session_token="+session_token; 
           login_cookie();
         })

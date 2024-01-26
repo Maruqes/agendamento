@@ -123,6 +123,17 @@ function search_for_user(user) {
     });
 }
 
+function read_db_users() {
+    return new Promise((resolve, reject) => {
+        db.all("SELECT user, admin FROM users", function (err, data) {
+            if (err) {
+                reject(err);
+            }
+            resolve(data);
+        });
+    });
+}
+
 module.exports = {
     add_db,
     read_db,
@@ -134,4 +145,5 @@ module.exports = {
     delete_product_on_db,
     add_user,
     delete_user,
+    read_db_users,
 };

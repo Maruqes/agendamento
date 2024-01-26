@@ -1,188 +1,64 @@
-2:59:52 26-1-2024 -> Express server started
-3:2:40 26-1-2024 -> User not found
-3:2:41 26-1-2024 -> User not found
-3:2:45 26-1-2024 -> Trying to login 123
-3:2:45 26-1-2024 -> Logged in 123 if admin 0
-3:2:45 26-1-2024 -> vTTjDlaOFzsVkEF1IDZVL2e8Dg8G1sDKKcOkvSvl9TGha8WK69fE6KNLgtfr
-3:2:45 26-1-2024 -> Logged in 123 if admin 0
-3:2:47 26-1-2024 -> Logged in 123 if admin 0
-3:2:48 26-1-2024 -> Logged in 123 if admin 0
-3:2:48 26-1-2024 -> Logged in 123 if admin 0
-3:2:49 26-1-2024 -> Logged in 123 if admin 0
-3:2:49 26-1-2024 -> {
-  name: '',
-  price: '',
-  image: '',
-  duration: '',
-  cookie: 'vTTjDlaOFzsVkEF1IDZVL2e8Dg8G1sDKKcOkvSvl9TGha8WK69fE6KNLgtfr'
-}
-3:2:49 26-1-2024 -> Logged in 123 if admin 0
-3:2:49 26-1-2024 -> Logged in 123 if admin 0
-3:2:49 26-1-2024 -> {
-  name: '',
-  price: '',
-  image: '',
-  duration: '',
-  cookie: 'vTTjDlaOFzsVkEF1IDZVL2e8Dg8G1sDKKcOkvSvl9TGha8WK69fE6KNLgtfr'
-}
-3:2:49 26-1-2024 -> Logged in 123 if admin 0
-3:2:51 26-1-2024 -> Logged in 123 if admin 0
-3:2:59 26-1-2024 -> Logged in 123 if admin 0
-3:3:1 26-1-2024 -> Logged in 123 if admin 0
-3:3:3 26-1-2024 -> Logged in 123 if admin 0
-3:3:33 26-1-2024 -> User not found
-3:3:41 26-1-2024 -> Trying to login admin
-3:3:41 26-1-2024 -> Logged in admin if admin 1
-3:3:41 26-1-2024 -> deXaN8u9dLbYfivH0G34mlLQp8Hy5FcrSYyQS8S5Jf7MGqtzvzXKheN2spuN
-3:3:41 26-1-2024 -> Logged in admin if admin 1
-3:3:44 26-1-2024 -> Logged in admin if admin 1
-3:4:14 26-1-2024 -> {
-  name: 'test1',
-  price: '69',
-  image: 'manoQAbriuOMarAoMeio.png',
-  duration: '15',
-  cookie: 'deXaN8u9dLbYfivH0G34mlLQp8Hy5FcrSYyQS8S5Jf7MGqtzvzXKheN2spuN'
-}
-3:4:14 26-1-2024 -> Logged in admin if admin 1
-3:4:14 26-1-2024 -> Produto test1 adicionado
-3:4:14 26-1-2024 -> Logged in admin if admin 1
-3:4:14 26-1-2024 -> The file has been saved!
-3:4:40 26-1-2024 -> Logged in admin if admin 1
-3:4:40 26-1-2024 -> Product test1 removed
-3:4:51 26-1-2024 -> Logged in admin if admin 1
-3:4:52 26-1-2024 -> User created
-3:5:2 26-1-2024 -> User not found
-3:5:5 26-1-2024 -> Trying to login 1234
-3:5:5 26-1-2024 -> Logged in 1234 if admin 1
-3:5:5 26-1-2024 -> lhOzyuUL91hB8doTQsXG35ONDsmEYszhVEVzuCArbFsY6yVCjys2oD6h9lzB
-3:5:5 26-1-2024 -> Logged in 1234 if admin 1
-3:5:16 26-1-2024 -> Logged in 1234 if admin 1
-3:5:16 26-1-2024 -> Product umbomproduto removed
-3:5:25 26-1-2024 -> Logged in 1234 if admin 1
-3:5:25 26-1-2024 -> User created
-3:5:32 26-1-2024 -> Logged in 1234 if admin 1
-3:5:32 26-1-2024 -> User created
-3:6:24 26-1-2024 -> Logged in 1234 if admin 1
-3:6:25 26-1-2024 -> Error: SQLITE_BUSY: database is locked
---> in Statement#run([ '' ], [Function: replacement])
-    at Database.<anonymous> (/home/marques/agendamento/node_modules/sqlite3/lib/sqlite3.js:76:19)
-    at Database.<anonymous> (/home/marques/agendamento/node_modules/sqlite3/lib/sqlite3.js:20:19)
-    at /home/marques/agendamento/backend/db.js:106:12
-    at new Promise (<anonymous>)
-    at Object.delete_user (/home/marques/agendamento/backend/db.js:105:12)
-    at Object.delete_user (/home/marques/agendamento/backend/auth.js:83:8) {
-  errno: 5,
-  code: 'SQLITE_BUSY',
-  __augmented: true
-}
-3:6:28 26-1-2024 -> Logged in 1234 if admin 1
-3:6:29 26-1-2024 -> Error: SQLITE_BUSY: database is locked
---> in Statement#run([ '' ], [Function: replacement])
-    at Database.<anonymous> (/home/marques/agendamento/node_modules/sqlite3/lib/sqlite3.js:76:19)
-    at Database.<anonymous> (/home/marques/agendamento/node_modules/sqlite3/lib/sqlite3.js:20:19)
-    at /home/marques/agendamento/backend/db.js:106:12
-    at new Promise (<anonymous>)
-    at Object.delete_user (/home/marques/agendamento/backend/db.js:105:12)
-    at Object.delete_user (/home/marques/agendamento/backend/auth.js:83:8) {
-  errno: 5,
-  code: 'SQLITE_BUSY',
-  __augmented: true
-}
-3:6:29 26-1-2024 -> Logged in 1234 if admin 1
-3:6:30 26-1-2024 -> Error: SQLITE_BUSY: database is locked
---> in Statement#run([ '' ], [Function: replacement])
-    at Database.<anonymous> (/home/marques/agendamento/node_modules/sqlite3/lib/sqlite3.js:76:19)
-    at Database.<anonymous> (/home/marques/agendamento/node_modules/sqlite3/lib/sqlite3.js:20:19)
-    at /home/marques/agendamento/backend/db.js:106:12
-    at new Promise (<anonymous>)
-    at Object.delete_user (/home/marques/agendamento/backend/db.js:105:12)
-    at Object.delete_user (/home/marques/agendamento/backend/auth.js:83:8) {
-  errno: 5,
-  code: 'SQLITE_BUSY',
-  __augmented: true
-}
-3:6:35 26-1-2024 -> Logged in 1234 if admin 1
-3:6:35 26-1-2024 -> User  does not exist
-3:6:36 26-1-2024 -> Logged in 1234 if admin 1
-3:6:36 26-1-2024 -> User  does not exist
-3:6:37 26-1-2024 -> Logged in 1234 if admin 1
-3:6:37 26-1-2024 -> User  does not exist
-3:6:37 26-1-2024 -> Logged in 1234 if admin 1
-3:6:37 26-1-2024 -> User  does not exist
-3:6:44 26-1-2024 -> Logged in 1234 if admin 1
-3:6:44 26-1-2024 -> User  does not exist
-3:6:44 26-1-2024 -> Logged in 1234 if admin 1
-3:6:46 26-1-2024 -> Logged in 1234 if admin 1
-3:6:46 26-1-2024 -> User  does not exist
-3:6:46 26-1-2024 -> Logged in 1234 if admin 1
-3:6:46 26-1-2024 -> User  does not exist
-3:6:47 26-1-2024 -> Logged in 1234 if admin 1
-3:6:47 26-1-2024 -> User  does not exist
-3:6:47 26-1-2024 -> Logged in 1234 if admin 1
-3:6:47 26-1-2024 -> User  does not exist
-3:6:47 26-1-2024 -> Logged in 1234 if admin 1
-3:6:47 26-1-2024 -> User  does not exist
-3:6:47 26-1-2024 -> Logged in 1234 if admin 1
-3:6:47 26-1-2024 -> User  does not exist
-3:6:47 26-1-2024 -> Logged in 1234 if admin 1
-3:6:47 26-1-2024 -> User  does not exist
-3:6:47 26-1-2024 -> Logged in 1234 if admin 1
-3:6:47 26-1-2024 -> User  does not exist
-3:6:47 26-1-2024 -> Logged in 1234 if admin 1
-3:6:47 26-1-2024 -> User  does not exist
-3:7:1 26-1-2024 -> Logged in 1234 if admin 1
-3:7:1 26-1-2024 -> User  does not exist
-3:7:1 26-1-2024 -> Logged in 1234 if admin 1
-3:7:1 26-1-2024 -> Logged in 1234 if admin 1
-3:7:1 26-1-2024 -> Product  does not exist
-3:7:1 26-1-2024 -> User  does not exist
-3:7:2 26-1-2024 -> Logged in 1234 if admin 1
-3:7:3 26-1-2024 -> Logged in 1234 if admin 1
-3:7:6 26-1-2024 -> Logged in 1234 if admin 1
-3:7:6 26-1-2024 -> {
-  name: '',
-  price: '',
-  image: '',
-  duration: '',
-  cookie: 'lhOzyuUL91hB8doTQsXG35ONDsmEYszhVEVzuCArbFsY6yVCjys2oD6h9lzB'
-}
-3:7:6 26-1-2024 -> Logged in 1234 if admin 1
-3:7:6 26-1-2024 -> produto invalido
-3:8:9 26-1-2024 -> Logged in 1234 if admin 1
-3:8:9 26-1-2024 -> User  does not exist
-3:8:11 26-1-2024 -> Logged in 1234 if admin 1
-3:8:11 26-1-2024 -> User created
-3:8:12 26-1-2024 -> Logged in 1234 if admin 1
-3:8:12 26-1-2024 -> User created
-3:8:20 26-1-2024 -> Logged in 1234 if admin 1
-3:8:20 26-1-2024 -> Product  does not exist
-3:8:20 26-1-2024 -> Logged in 1234 if admin 1
-3:8:20 26-1-2024 -> Product  does not exist
-3:8:22 26-1-2024 -> Logged in 1234 if admin 1
-3:8:22 26-1-2024 -> {
-  name: '',
-  price: '',
-  image: '',
-  duration: '',
-  cookie: 'lhOzyuUL91hB8doTQsXG35ONDsmEYszhVEVzuCArbFsY6yVCjys2oD6h9lzB'
-}
-3:8:22 26-1-2024 -> Logged in 1234 if admin 1
-3:8:22 26-1-2024 -> produto invalido
-3:8:24 26-1-2024 -> Logged in 1234 if admin 1
-3:8:24 26-1-2024 -> {
-  name: '',
-  price: '',
-  image: '',
-  duration: '',
-  cookie: 'lhOzyuUL91hB8doTQsXG35ONDsmEYszhVEVzuCArbFsY6yVCjys2oD6h9lzB'
-}
-3:8:24 26-1-2024 -> Logged in 1234 if admin 1
-3:8:24 26-1-2024 -> produto invalido
-3:8:27 26-1-2024 -> Logged in 1234 if admin 1
-3:8:37 26-1-2024 -> User not found
-3:8:42 26-1-2024 -> Trying to login admin
-3:8:42 26-1-2024 -> Logged in admin if admin 1
-3:8:42 26-1-2024 -> 2Vuqq90g73D2XIj78EP0wgQTa3JueT5X6ohI8kOyM5eNScli6iGzZn29ygsH
-3:8:42 26-1-2024 -> Logged in admin if admin 1
-3:8:48 26-1-2024 -> Logged in admin if admin 1
-3:8:48 26-1-2024 -> User deleted
+5:15:36 26-1-2024 -> Express server started
+5:15:39 26-1-2024 -> admin
+5:15:39 26-1-2024 -> User not found
+5:15:42 26-1-2024 -> Trying to login admin
+5:15:43 26-1-2024 -> Logged in admin if admin 1
+5:15:43 26-1-2024 -> jzw3shgx64U4F4stplbZF2jbPj9VZDInlfDqdlvEE6crxC2cAtesupmHtDuP
+5:15:43 26-1-2024 -> admin
+5:15:43 26-1-2024 -> Logged in admin if admin 1
+5:16:35 26-1-2024 -> adminn
+5:16:35 26-1-2024 -> User is wrong
+5:16:35 26-1-2024 -> adminn
+5:16:35 26-1-2024 -> User is wrong
+5:16:37 26-1-2024 -> adminn
+5:16:37 26-1-2024 -> User is wrong
+5:16:37 26-1-2024 -> adminn
+5:16:37 26-1-2024 -> User is wrong
+5:16:55 26-1-2024 -> adminn
+5:16:55 26-1-2024 -> User is wrong
+5:16:55 26-1-2024 -> adminn
+5:16:55 26-1-2024 -> User is wrong
+5:17:3 26-1-2024 -> admin
+5:17:3 26-1-2024 -> Logged in admin if admin 1
+5:17:3 26-1-2024 -> admin
+5:17:3 26-1-2024 -> Logged in admin if admin 1
+5:17:3 26-1-2024 -> The file has been saved!
+5:17:3 26-1-2024 -> Produto test adicionado
+5:17:26 26-1-2024 -> adminn
+5:17:26 26-1-2024 -> User is wrong
+5:17:35 26-1-2024 -> admin
+5:17:35 26-1-2024 -> Logged in admin if admin 1
+5:17:35 26-1-2024 -> Product test removed
+5:17:53 26-1-2024 -> adminn
+5:17:53 26-1-2024 -> User is wrong
+5:17:57 26-1-2024 -> admin
+5:17:57 26-1-2024 -> Logged in admin if admin 1
+5:17:57 26-1-2024 -> User created
+5:18:5 26-1-2024 -> admin
+5:18:5 26-1-2024 -> Logged in admin if admin 1
+5:18:5 26-1-2024 -> User deleted
+5:18:12 26-1-2024 -> admin
+5:18:12 26-1-2024 -> Logged in admin if admin 1
+5:18:14 26-1-2024 -> admin
+5:18:14 26-1-2024 -> Logged in admin if admin 1
+5:18:20 26-1-2024 -> adminn
+5:18:20 26-1-2024 -> User is wrong
+5:18:21 26-1-2024 -> adminn
+5:18:21 26-1-2024 -> User is wrong
+5:18:24 26-1-2024 -> adminn
+5:18:24 26-1-2024 -> User is wrong
+5:18:24 26-1-2024 -> adminn
+5:18:24 26-1-2024 -> User is wrong
+5:18:27 26-1-2024 -> adminn
+5:18:27 26-1-2024 -> User is wrong
+5:18:36 26-1-2024 -> admin
+5:18:36 26-1-2024 -> Logged in admin if admin 1
+5:18:38 26-1-2024 -> admin
+5:18:38 26-1-2024 -> Logged in admin if admin 1
+5:18:38 26-1-2024 -> adminLogout
+5:18:38 26-1-2024 -> admin
+5:18:38 26-1-2024 -> User not found
+5:18:39 26-1-2024 -> admin
+5:18:39 26-1-2024 -> User not found
+5:18:40 26-1-2024 -> admin
+5:18:40 26-1-2024 -> User not found

@@ -95,14 +95,33 @@ async function delete_user(user) {
         });
 }
 
-function login_user_with_cookie(cookie) {
+function login_user_with_cookie(user_recieved, cookie) {
+    console.log(user_recieved);
     var user = search_for_token(cookie);
     if (user == null) {
         console.log("User not found");
+        return -1;
+    }
+    if (user_recieved != user.user) {
+        console.log("User is wrong");
         return -1;
     }
     console.log("Logged in " + user.user + " if admin " + user.admin);
     return user.admin;
 }
 
-module.exports = { login_user, login_user_with_cookie, create_user, delete_user };
+function update_users_json(res) {
+    db.read_db_users()
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+}
+
+function logout_user(cookie) {
+    sessions = sessions.filter((session) => session.token !== cookie);
+}
+
+module.exports = { login_user, login_user_with_cookie, create_user, delete_user, update_users_json, logout_user };
