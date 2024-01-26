@@ -90,9 +90,9 @@ function delete_product_on_db(product) {
     });
 }
 
-function add_user(user, password) {
+function add_user(user, password, admin) {
     return new Promise((resolve, reject) => {
-        db.run("INSERT INTO users (user,password) VALUES(?,?)", [user, password], (err) => {
+        db.run("INSERT INTO users (user,password, admin) VALUES(?,?,?)", [user, password, admin], (err) => {
             if (err) {
                 reject(err);
             }

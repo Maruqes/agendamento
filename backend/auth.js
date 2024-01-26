@@ -10,16 +10,16 @@ function create_session_token() {
     return token;
 }
 
-function create_session(user) {
+function create_session(user, is_admin) {
     var token = create_session_token();
-    sessions.push({ user: user, token: token });
+    sessions.push({ user: user, token: token, admin: is_admin });
     return token;
 }
 
 function search_for_token(token) {
     for (var i = 0; i < sessions.length; i++) {
         if (sessions[i].token == token) {
-            return sessions[i].user;
+            return sessions[i];
         }
     }
     return null;
@@ -44,8 +44,8 @@ async function login_user(user, password, resexpress) {
             }
             const res = await bcrypt.compare(password, data[0].password);
             if (res) {
-                console.log("Logged in " + user);
-                session_token = create_session(user);
+                console.log("Logged in " + user + " if admin " + data[0].admin);
+                session_token = create_session(user, data[0].admin);
                 console.log(session_token);
                 resexpress.status(200).send(JSON.stringify('{ "session_token": "' + session_token + '" }'));
 
@@ -60,11 +60,16 @@ async function login_user(user, password, resexpress) {
         });
 }
 
-async function create_user(user, password) {
+async function create_user(user, password, admin) {
+    if (user == "" || password == "") {
+        console.log("User or password empty");
+        return;
+    }
+
     const saltRounds = 10;
 
     const hash = await bcrypt.hash(password, saltRounds);
-    db.add_user(user, hash)
+    db.add_user(user, hash, admin)
         .then(() => {
             console.log("User created");
         })
@@ -94,10 +99,10 @@ function login_user_with_cookie(cookie) {
     var user = search_for_token(cookie);
     if (user == null) {
         console.log("User not found");
-        return false;
+        return -1;
     }
-    console.log("Logged in " + user);
-    return true;
+    console.log("Logged in " + user.user + " if admin " + user.admin);
+    return user.admin;
 }
 
 module.exports = { login_user, login_user_with_cookie, create_user, delete_user };

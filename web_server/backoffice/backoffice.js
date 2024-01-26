@@ -70,9 +70,12 @@ function delete_Product() {
 function create_user() {
   var user = document.getElementById("new_name").value;
   var password = document.getElementById("password").value;
+  var user_prms = document.getElementById("user_prms").value;
+
   let data = {
     user: user,
     password: password,
+    user_permission: user_prms,
     cookie: getCookie("session_token"),
   };
   fetch("/create_user", {

@@ -1,4 +1,4 @@
-2:14:0 25-1-2024 -> ValidationError: The Express 'trust proxy' setting is true, which allows anyone to trivially bypass IP-based rate limiting. See https://express-rate-limit.github.io/ERR_ERL_PERMISSIVE_TRUST_PROXY/ for more information.
+2:59:54 26-1-2024 -> ValidationError: The Express 'trust proxy' setting is true, which allows anyone to trivially bypass IP-based rate limiting. See https://express-rate-limit.github.io/ERR_ERL_PERMISSIVE_TRUST_PROXY/ for more information.
     at Object.trustProxy (/home/marques/agendamento/node_modules/express-rate-limit/dist/index.cjs:148:13)
     at wrappedValidations.<computed> [as trustProxy] (/home/marques/agendamento/node_modules/express-rate-limit/dist/index.cjs:324:22)
     at Object.keyGenerator (/home/marques/agendamento/node_modules/express-rate-limit/dist/index.cjs:578:20)
@@ -8,3 +8,69 @@
   code: 'ERR_ERL_PERMISSIVE_TRUST_PROXY',
   help: 'https://express-rate-limit.github.io/ERR_ERL_PERMISSIVE_TRUST_PROXY/'
 }
+3:2:49 26-1-2024 -> TypeError: Cannot read properties of null (reading 'image')
+    at /home/marques/agendamento/web_server/web_server.js:38:27
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/marques/agendamento/node_modules/express/lib/router/route.js:144:13)
+    at Route.dispatch (/home/marques/agendamento/node_modules/express/lib/router/route.js:114:3)
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+    at /home/marques/agendamento/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/marques/agendamento/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/marques/agendamento/node_modules/express/lib/router/index.js:280:10)
+    at serveStatic (/home/marques/agendamento/node_modules/serve-static/index.js:75:16)
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+3:2:49 26-1-2024 -> TypeError: Cannot read properties of null (reading 'image')
+    at /home/marques/agendamento/web_server/web_server.js:38:27
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/marques/agendamento/node_modules/express/lib/router/route.js:144:13)
+    at Route.dispatch (/home/marques/agendamento/node_modules/express/lib/router/route.js:114:3)
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+    at /home/marques/agendamento/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/marques/agendamento/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/marques/agendamento/node_modules/express/lib/router/index.js:280:10)
+    at serveStatic (/home/marques/agendamento/node_modules/serve-static/index.js:75:16)
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+3:2:51 26-1-2024 -> TypeError: Cannot read properties of null (reading 'image')
+    at /home/marques/agendamento/web_server/web_server.js:38:27
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/marques/agendamento/node_modules/express/lib/router/route.js:144:13)
+    at Route.dispatch (/home/marques/agendamento/node_modules/express/lib/router/route.js:114:3)
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+    at /home/marques/agendamento/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/marques/agendamento/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/marques/agendamento/node_modules/express/lib/router/index.js:280:10)
+    at serveStatic (/home/marques/agendamento/node_modules/serve-static/index.js:75:16)
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+3:7:6 26-1-2024 -> TypeError: Cannot read properties of null (reading 'image')
+    at /home/marques/agendamento/web_server/web_server.js:38:27
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/marques/agendamento/node_modules/express/lib/router/route.js:144:13)
+    at Route.dispatch (/home/marques/agendamento/node_modules/express/lib/router/route.js:114:3)
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+    at /home/marques/agendamento/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/marques/agendamento/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/marques/agendamento/node_modules/express/lib/router/index.js:280:10)
+    at serveStatic (/home/marques/agendamento/node_modules/serve-static/index.js:75:16)
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+3:8:22 26-1-2024 -> TypeError: Cannot read properties of null (reading 'image')
+    at /home/marques/agendamento/web_server/web_server.js:38:27
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/marques/agendamento/node_modules/express/lib/router/route.js:144:13)
+    at Route.dispatch (/home/marques/agendamento/node_modules/express/lib/router/route.js:114:3)
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+    at /home/marques/agendamento/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/marques/agendamento/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/marques/agendamento/node_modules/express/lib/router/index.js:280:10)
+    at serveStatic (/home/marques/agendamento/node_modules/serve-static/index.js:75:16)
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+3:8:24 26-1-2024 -> TypeError: Cannot read properties of null (reading 'image')
+    at /home/marques/agendamento/web_server/web_server.js:38:27
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/marques/agendamento/node_modules/express/lib/router/route.js:144:13)
+    at Route.dispatch (/home/marques/agendamento/node_modules/express/lib/router/route.js:114:3)
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)
+    at /home/marques/agendamento/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/marques/agendamento/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/marques/agendamento/node_modules/express/lib/router/index.js:280:10)
+    at serveStatic (/home/marques/agendamento/node_modules/serve-static/index.js:75:16)
+    at Layer.handle [as handle_request] (/home/marques/agendamento/node_modules/express/lib/router/layer.js:95:5)

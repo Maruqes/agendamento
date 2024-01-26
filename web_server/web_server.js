@@ -31,7 +31,7 @@ app.get("/", function (req, res) {
 app.use(express.static("images"));
 app.post("/upload", (req, res) => {
   var autorizado = auth.login_user_with_cookie(req.body.cookie);
-  if (!autorizado)
+  if (autorizado == -1)
     return res.status(401).send("You are not authorized to upload files");
 
   fs.writeFile(
@@ -52,7 +52,7 @@ app.post("/new", async function (req, res) {
 
 app.get("/get_marcacoes", function (req, res) {
   var autorizado = auth.login_user_with_cookie(req.query.cookie);
-  if (autorizado) {
+  if (autorizado >= 0) {
     shop.update_agendamentos_json(res); //res.send is inside the function couse it need to be async for some reason it do not work ouside
   } else {
     res.sendStatus(401);
@@ -61,7 +61,7 @@ app.get("/get_marcacoes", function (req, res) {
 
 app.post("/create_product", function (req, res) {
   var autorizado = auth.login_user_with_cookie(req.body.cookie);
-  if (autorizado) {
+  if (autorizado == 1) {
     shop.create_new_product(req.body, req.ip);
     res.sendStatus(200);
   } else {
@@ -75,7 +75,7 @@ app.get("/get_products", function (req, res) {
 
 app.post("/delete_Product", function (req, res) {
   var autorizado = auth.login_user_with_cookie(req.body.cookie);
-  if (autorizado) {
+  if (autorizado == 1) {
     shop.delete_product(req.body.name);
     res.sendStatus(200);
   } else {
@@ -90,8 +90,12 @@ app.post("/login", function (req, res) {
 
 app.post("/create_user", function (req, res) {
   var autorizado = auth.login_user_with_cookie(req.body.cookie);
-  if (autorizado) {
-    auth.create_user(req.body.user, req.body.password);
+  if (autorizado == 1) {
+    auth.create_user(
+      req.body.user,
+      req.body.password,
+      req.body.user_permission
+    );
   } else {
     res.sendStatus(401);
   }
@@ -99,7 +103,7 @@ app.post("/create_user", function (req, res) {
 
 app.post("/delete_user", function (req, res) {
   var autorizado = auth.login_user_with_cookie(req.body.cookie);
-  if (autorizado) {
+  if (autorizado == 1) {
     auth.delete_user(req.body.user);
   } else {
     res.sendStatus(401);
@@ -108,7 +112,7 @@ app.post("/delete_user", function (req, res) {
 
 app.post("/login_cookie", function (req, res) {
   var autorizado = auth.login_user_with_cookie(req.body.cookie);
-  if (autorizado) {
+  if (autorizado >= 0) {
     res.sendFile(path.join(__dirname + "/backoffice/backoffice.html"));
   } else {
     res.sendStatus(401);
