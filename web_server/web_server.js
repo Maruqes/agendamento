@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.set("trust proxy", true);
-app.use(rateLimitMiddleware);
+//app.use(rateLimitMiddleware);
 app.use(fileUpload());
 
 app.get("/", function (req, res) {
@@ -109,7 +109,8 @@ app.post("/create_user", function (req, res) {
     auth.create_user(
       req.body.user,
       req.body.password,
-      req.body.user_permission
+      req.body.user_permission,
+      res
     );
   } else {
     res.sendStatus(401);
@@ -122,7 +123,7 @@ app.post("/delete_user", function (req, res) {
     req.body.cookie
   );
   if (autorizado == 1) {
-    auth.delete_user(req.body.user);
+    auth.delete_user(req.body.user, req.body.username, res);
   } else {
     res.sendStatus(401);
   }

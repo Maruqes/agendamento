@@ -52,6 +52,7 @@ async function login_user(user, password, resexpress) {
         .then(async (data) => {
             if (there_is_user(user, data) == false) {
                 console.log("User not found");
+                resexpress.status(401).send("Wrong password");
                 return;
             }
             const res = await bcrypt.compare(password, data[0].password);
@@ -68,13 +69,15 @@ async function login_user(user, password, resexpress) {
             }
         })
         .catch((err) => {
+            resexpress.status(401).send("Wrong password");
             console.log(err);
         });
 }
 
-async function create_user(user, password, admin) {
+async function create_user(user, password, admin, resexpress) {
     if (user == "" || password == "") {
         console.log("User or password empty");
+        resexpress.status(401).send("User or password empty");
         return;
     }
 
@@ -84,23 +87,36 @@ async function create_user(user, password, admin) {
     db.add_user(user, hash, admin)
         .then(() => {
             console.log("User created");
+            resexpress.status(200).send("User created");
         })
         .catch((err) => {
             console.log(err);
         });
 }
 
-async function delete_user(user) {
+async function delete_user(user, who_is_deleting, resexpress) {
     const existingUser = await db.search_for_user(user);
 
+    if (who_is_deleting == user) {
+        console.log(`User ${user} cannot delete himself`);
+        resexpress.status(401).send("User cannot delete himself");
+        return;
+    }
     if (!existingUser[0]) {
         console.log(`User ${user} does not exist`);
+        resexpress.status(401).send("User does not exist");
+        return;
+    }
+    if (existingUser[0].user != user) {
+        console.log(`User ${user} does not exist`);
+        resexpress.status(401).send("User does not exist");
         return;
     }
     db.delete_user(user)
         .then(() => {
             sessions = sessions.filter((session) => session.user !== user);
             console.log("User deleted");
+            resexpress.status(200).send("User deleted");
         })
         .catch((err) => {
             console.log(err);
@@ -136,6 +152,7 @@ function logout_user(cookie) {
     sessions = sessions.filter((session) => session.token !== cookie);
 }
 sessions.push({ user: "admin", token: "admin", admin: 1 }); //PARA REMOVER
+sessions.push({ user: "admin0", token: "admin0", admin: 0 }); //PARA REMOVER
 console.log("REMOVER");
 console.log(sessions);
 console.log("REMOVER");
