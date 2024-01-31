@@ -3,10 +3,22 @@ const bcrypt = require("bcrypt");
 
 var sessions = [];
 
+function dont_repeat_session(token) {
+    for (var i = 0; i < sessions.length; i++) {
+        if (sessions[i].token == token) {
+            return false;
+        }
+    }
+    return true;
+}
+
 function create_session_token() {
     var token = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     for (var i = 0; i < 60; i++) token += possible.charAt(Math.floor(Math.random() * possible.length));
+    if (dont_repeat_session(token) == false) {
+        token = create_session_token();
+    }
     return token;
 }
 
@@ -123,5 +135,8 @@ function update_users_json(res) {
 function logout_user(cookie) {
     sessions = sessions.filter((session) => session.token !== cookie);
 }
-
+sessions.push({ user: "admin", token: "admin", admin: 1 }); //PARA REMOVER
+console.log("REMOVER");
+console.log(sessions);
+console.log("REMOVER");
 module.exports = { login_user, login_user_with_cookie, create_user, delete_user, update_users_json, logout_user };

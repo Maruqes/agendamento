@@ -11,8 +11,18 @@ function containsSQLCode(str) {
         return false;
     }
 }
+
 function isValidPhoneNumber(user_number) {
-    return user_number[0] === "+" && user_number[1] === "3" && user_number[2] === "5" && user_number[3] === "1" && user_number.length === 13;
+    try {
+        if (user_number[0] === "+" && user_number[1] === "3" && user_number[2] === "5" && user_number[3] === "1" && user_number.length === 13) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (err) {
+        console.error(`Error in isValidPhoneNumber: ${err}`);
+        return false;
+    }
 }
 
 function order_errors(err, order, ip) {
@@ -46,7 +56,6 @@ async function create_order(order, date, ip) {
 
 async function new_order_test(body, ip) {
     const { user_number, email, name, date, complete_name } = body;
-
     try {
         if (containsSQLCode(user_number) || containsSQLCode(email) || containsSQLCode(name)) {
             console.error(`Bad input: ${user_number} ${email} ${name} ${date}`);
@@ -57,8 +66,13 @@ async function new_order_test(body, ip) {
         return 701;
     }
 
-    if (!isValidPhoneNumber(user_number)) {
-        console.error(`Numero de telefone invalido: ${user_number}`);
+    try {
+        if (!isValidPhoneNumber(user_number)) {
+            console.error(`Numero de telefone invalido: ${user_number}`);
+            return 702;
+        }
+    } catch (err) {
+        console.error(`Bad input: ${user_number} ${email} ${name} ${date}`);
         return 702;
     }
 

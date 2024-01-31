@@ -1,64 +1,11 @@
-5:15:36 26-1-2024 -> Express server started
-5:15:39 26-1-2024 -> admin
-5:15:39 26-1-2024 -> User not found
-5:15:42 26-1-2024 -> Trying to login admin
-5:15:43 26-1-2024 -> Logged in admin if admin 1
-5:15:43 26-1-2024 -> jzw3shgx64U4F4stplbZF2jbPj9VZDInlfDqdlvEE6crxC2cAtesupmHtDuP
-5:15:43 26-1-2024 -> admin
-5:15:43 26-1-2024 -> Logged in admin if admin 1
-5:16:35 26-1-2024 -> adminn
-5:16:35 26-1-2024 -> User is wrong
-5:16:35 26-1-2024 -> adminn
-5:16:35 26-1-2024 -> User is wrong
-5:16:37 26-1-2024 -> adminn
-5:16:37 26-1-2024 -> User is wrong
-5:16:37 26-1-2024 -> adminn
-5:16:37 26-1-2024 -> User is wrong
-5:16:55 26-1-2024 -> adminn
-5:16:55 26-1-2024 -> User is wrong
-5:16:55 26-1-2024 -> adminn
-5:16:55 26-1-2024 -> User is wrong
-5:17:3 26-1-2024 -> admin
-5:17:3 26-1-2024 -> Logged in admin if admin 1
-5:17:3 26-1-2024 -> admin
-5:17:3 26-1-2024 -> Logged in admin if admin 1
-5:17:3 26-1-2024 -> The file has been saved!
-5:17:3 26-1-2024 -> Produto test adicionado
-5:17:26 26-1-2024 -> adminn
-5:17:26 26-1-2024 -> User is wrong
-5:17:35 26-1-2024 -> admin
-5:17:35 26-1-2024 -> Logged in admin if admin 1
-5:17:35 26-1-2024 -> Product test removed
-5:17:53 26-1-2024 -> adminn
-5:17:53 26-1-2024 -> User is wrong
-5:17:57 26-1-2024 -> admin
-5:17:57 26-1-2024 -> Logged in admin if admin 1
-5:17:57 26-1-2024 -> User created
-5:18:5 26-1-2024 -> admin
-5:18:5 26-1-2024 -> Logged in admin if admin 1
-5:18:5 26-1-2024 -> User deleted
-5:18:12 26-1-2024 -> admin
-5:18:12 26-1-2024 -> Logged in admin if admin 1
-5:18:14 26-1-2024 -> admin
-5:18:14 26-1-2024 -> Logged in admin if admin 1
-5:18:20 26-1-2024 -> adminn
-5:18:20 26-1-2024 -> User is wrong
-5:18:21 26-1-2024 -> adminn
-5:18:21 26-1-2024 -> User is wrong
-5:18:24 26-1-2024 -> adminn
-5:18:24 26-1-2024 -> User is wrong
-5:18:24 26-1-2024 -> adminn
-5:18:24 26-1-2024 -> User is wrong
-5:18:27 26-1-2024 -> adminn
-5:18:27 26-1-2024 -> User is wrong
-5:18:36 26-1-2024 -> admin
-5:18:36 26-1-2024 -> Logged in admin if admin 1
-5:18:38 26-1-2024 -> admin
-5:18:38 26-1-2024 -> Logged in admin if admin 1
-5:18:38 26-1-2024 -> adminLogout
-5:18:38 26-1-2024 -> admin
-5:18:38 26-1-2024 -> User not found
-5:18:39 26-1-2024 -> admin
-5:18:39 26-1-2024 -> User not found
-5:18:40 26-1-2024 -> admin
-5:18:40 26-1-2024 -> User not found
+4:1:35 31-1-2024 -> Express server started
+4:1:36 31-1-2024 -> admin
+4:1:36 31-1-2024 -> Logged in admin if admin 1
+4:1:39 31-1-2024 -> admin2
+4:1:39 31-1-2024 -> User is wrong
+4:1:42 31-1-2024 -> admin
+4:1:42 31-1-2024 -> Logged in admin if admin 1
+4:1:44 31-1-2024 -> admin
+4:1:44 31-1-2024 -> User not found
+4:1:46 31-1-2024 -> admin
+4:1:46 31-1-2024 -> Logged in admin if admin 1
