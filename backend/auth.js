@@ -74,7 +74,7 @@ async function login_user(user, password, resexpress) {
         });
 }
 
-async function create_user(user, password, admin, resexpress) {
+async function create_user(user, password, admin, email, phone_number, resexpress) {
     if (user == "" || password == "") {
         console.log("User or password empty");
         resexpress.status(401).send("User or password empty");
@@ -84,10 +84,37 @@ async function create_user(user, password, admin, resexpress) {
     const saltRounds = 10;
 
     const hash = await bcrypt.hash(password, saltRounds);
-    db.add_user(user, hash, admin)
+    db.add_user(user, hash, admin, email, phone_number)
         .then(() => {
             console.log("User created");
             resexpress.status(200).send("User created");
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+async function edit_user(user, password, admin, email, phone_number, resexpress) {
+    const existingUser = await db.search_for_user(user);
+
+    if (!existingUser[0]) {
+        console.log(`User ${user} does not exist`);
+        resexpress.status(401).send("User does not exist");
+        return;
+    }
+    if (existingUser[0].user != user) {
+        console.log(`User ${user} does not exist`);
+        resexpress.status(401).send("User does not exist");
+        return;
+    }
+
+    const saltRounds = 10;
+
+    const hash = await bcrypt.hash(password, saltRounds);
+    db.edit_user(user, hash, admin, email, phone_number)
+        .then(() => {
+            console.log("User edited");
+            resexpress.status(200).send("User edited");
         })
         .catch((err) => {
             console.log(err);
@@ -156,4 +183,4 @@ sessions.push({ user: "admin0", token: "admin0", admin: 0 }); //PARA REMOVER
 console.log("REMOVER");
 console.log(sessions);
 console.log("REMOVER");
-module.exports = { login_user, login_user_with_cookie, create_user, delete_user, update_users_json, logout_user };
+module.exports = { login_user, login_user_with_cookie, create_user, delete_user, update_users_json, logout_user, edit_user };

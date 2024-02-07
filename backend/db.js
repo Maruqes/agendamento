@@ -32,7 +32,7 @@ function read_db() {
 
 function read_db_products() {
     return new Promise((resolve, reject) => {
-        db.all("SELECT name,price,image,duration FROM products", function (err, data) {
+        db.all("SELECT name,price,image,duration, description FROM products", function (err, data) {
             if (err) {
                 reject(err);
             }
@@ -63,9 +63,20 @@ function get_product_on_db(name) {
     });
 }
 
-function create_new_product_on_db(name, price, image, duration) {
+function create_new_product_on_db(name, price, image, duration, description) {
     return new Promise((resolve, reject) => {
-        db.run("INSERT INTO products (name,price,image,duration) VALUES(?,?,?,?)", [name, price, image, duration], (err) => {
+        db.run("INSERT INTO products (name,price,image,duration, description) VALUES(?,?,?,?,?)", [name, price, image, duration, description], (err) => {
+            if (err) {
+                reject(err);
+            }
+            resolve();
+        });
+    });
+}
+
+function edit_product_on_db(name, price, image, duration, description) {
+    return new Promise((resolve, reject) => {
+        db.run("UPDATE products SET price = ?, image = ?, duration = ?, description = ? WHERE name = ?", [price, image, duration, description, name], (err) => {
             if (err) {
                 reject(err);
             }
@@ -85,9 +96,20 @@ function delete_product_on_db(product) {
     });
 }
 
-function add_user(user, password, admin) {
+function add_user(user, password, admin, email, phone_number) {
     return new Promise((resolve, reject) => {
-        db.run("INSERT INTO users (user,password, admin) VALUES(?,?,?)", [user, password, admin], (err) => {
+        db.run("INSERT INTO users (user,password, admin, email, phone_number) VALUES(?,?,?,?,?)", [user, password, admin, email, phone_number], (err) => {
+            if (err) {
+                reject(err);
+            }
+            resolve();
+        });
+    });
+}
+
+function edit_user(user, password, admin, email, phone_number) {
+    return new Promise((resolve, reject) => {
+        db.run("UPDATE users SET password = ?, admin = ?, email = ?, phone_number = ? WHERE user = ?", [password, admin, email, phone_number, user], (err) => {
             if (err) {
                 reject(err);
             }
@@ -120,7 +142,7 @@ function search_for_user(user) {
 
 function read_db_users() {
     return new Promise((resolve, reject) => {
-        db.all("SELECT user, admin FROM users", function (err, data) {
+        db.all("SELECT user, admin, email, phone_number FROM users", function (err, data) {
             if (err) {
                 reject(err);
             }
@@ -141,4 +163,6 @@ module.exports = {
     add_user,
     delete_user,
     read_db_users,
+    edit_product_on_db,
+    edit_user,
 };

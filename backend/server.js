@@ -126,22 +126,49 @@ async function update_products_json(res) {
 }
 
 async function create_new_product(body) {
-    const { name, price, image, duration } = body;
+    const { name, price, image, duration, description } = body;
     if (name == "" || price == "") {
         console.log("produto invalido");
         return;
     }
-    if (containsSQLCode(name) || containsSQLCode(image)) {
+    if (containsSQLCode(name) || containsSQLCode(image) || containsSQLCode(description)) {
         console.error(`SQL injection detected: ${name} ${price} ${image} ${duration}`);
         return;
     }
 
     try {
-        await db.create_new_product_on_db(name, price, image, duration);
+        await db.create_new_product_on_db(name, price, image, duration, description);
         console.log(`Produto ${name} adicionado`);
     } catch (err) {
         console.log(`Erro ao adicionar produto ${name} err ${err}`);
         console.error(`Erro ao adicionar produto ${name} err ${err}`);
+    }
+}
+
+async function edit_product(body) {
+    const { name, price, image, duration, description } = body;
+    if (name == "" || price == "") {
+        console.log("produto invalido");
+        return;
+    }
+    if (containsSQLCode(name) || containsSQLCode(image) || containsSQLCode(description)) {
+        console.error(`SQL injection detected: ${name} ${price} ${image} ${duration}`);
+        return;
+    }
+
+    const existingProduct = await db.get_product_on_db(name);
+
+    if (!existingProduct[0]) {
+        console.log(`Product ${name} does not exist`);
+        return;
+    }
+
+    try {
+        await db.edit_product_on_db(name, price, image, duration, description);
+        console.log(`Produto ${name} editado`);
+    } catch (err) {
+        console.log(`Erro ao editar produto ${name} err ${err}`);
+        console.error(`Erro ao editar produto ${name} err ${err}`);
     }
 }
 
@@ -183,4 +210,4 @@ function start_sheculer() {
 }
 start_sheculer();
 
-module.exports = { new_order_test, update_agendamentos_json, create_new_product, update_products_json, delete_product };
+module.exports = { new_order_test, update_agendamentos_json, create_new_product, update_products_json, delete_product, edit_product };

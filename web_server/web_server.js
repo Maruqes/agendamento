@@ -95,6 +95,19 @@ app.post("/delete_Product", function (req, res) {
   }
 });
 
+app.post("/edit_product", function (req, res) {
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+  if (autorizado == 1) {
+    shop.edit_product(req.body, req.ip);
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
+  }
+});
+
 app.post("/login", function (req, res) {
   console.log("Trying to login " + req.body.user);
   auth.login_user(req.body.user, req.body.password, res);
@@ -105,11 +118,16 @@ app.post("/create_user", function (req, res) {
     req.body.username,
     req.body.cookie
   );
+  if (req.body.user_permission != 0 && req.body.user_permission != 1)
+    return res.send("USER perms are wrong needs to be 0 or 1");
+
   if (autorizado == 1) {
     auth.create_user(
       req.body.user,
       req.body.password,
       req.body.user_permission,
+      req.body.email,
+      req.body.phone_number,
       res
     );
   } else {
@@ -124,6 +142,29 @@ app.post("/delete_user", function (req, res) {
   );
   if (autorizado == 1) {
     auth.delete_user(req.body.user, req.body.username, res);
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+app.post("/edit_user", function (req, res) {
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+
+  if (req.body.user_permission != 0 && req.body.user_permission != 1)
+    return res.send("USER perms are wrong needs to be 0 or 1");
+
+  if (autorizado == 1) {
+    auth.edit_user(
+      req.body.user,
+      req.body.password,
+      req.body.user_permission,
+      req.body.email,
+      req.body.phone_number,
+      res
+    );
   } else {
     res.sendStatus(401);
   }
