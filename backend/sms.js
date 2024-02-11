@@ -1,17 +1,25 @@
-const accountSid = "AC84c432dc9a2f75f287fe5630f3745303";
+const accountSid = "AC84c432dc9a2f75f287fe5630f3745303"; //this was chancged for security reasons
 const authToken = "95eb49525dde3d75389428d509f62cc9";
 const client = require("twilio")(accountSid, authToken);
 var db = require("./db.js");
 
 function send_sms(body, to) {
     console.log("SMS enviado para " + to + " com o texto: " + body);
-    //   client.messages
-    //     .create({
-    //       body: body,
-    //       from: "+19255237185",
-    //       to: to,
-    //     })
-    //     .then((message) => console.log(message.sid));
+    try {
+        client.messages
+            .create({
+                body: body,
+                from: "+19255237185",
+                to: to,
+            })
+            .then((message) => console.log(message.sid))
+            .catch((err) => console.error(err), console.log("ERRO NO ENVIO DE SMS"), console.log("ERRO NO ENVIO DE SMS"), console.log("ERRO NO ENVIO DE SMS"));
+    } catch (err) {
+        console.error(err);
+        console.log("ERRO NO ENVIO DE SMS");
+        console.log("ERRO NO ENVIO DE SMS");
+        console.log("ERRO NO ENVIO DE SMS");
+    }
 }
 
 async function daily_sms() {
