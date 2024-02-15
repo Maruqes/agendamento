@@ -1,16 +1,2 @@
-2:14:19 11-2-2024 -> RestException [Error]: Authenticate
-    at success (/home/marques/agendamento/node_modules/twilio/lib/base/Version.js:79:23)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  status: 401,
-  code: 20003,
-  moreInfo: 'https://www.twilio.com/docs/errors/20003',
-  details: undefined
-}
-2:14:24 11-2-2024 -> RestException [Error]: Authenticate
-    at success (/home/marques/agendamento/node_modules/twilio/lib/base/Version.js:79:23)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  status: 401,
-  code: 20003,
-  moreInfo: 'https://www.twilio.com/docs/errors/20003',
-  details: undefined
-}
+3:56:12 15-2-2024 -> User not admin
+3:56:41 15-2-2024 -> User not admin

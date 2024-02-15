@@ -38,10 +38,15 @@ function search_for_token(token) {
 }
 
 function there_is_user(user, data) {
-    if (data.length == 0) {
-        return false;
-    }
-    if (user != data[0].user) {
+    try {
+        if (data.length == 0) {
+            return false;
+        }
+        if (user != data[0].user) {
+            return false;
+        }
+    } catch (err) {
+        console.log(err);
         return false;
     }
     return true;
@@ -183,4 +188,4 @@ sessions.push({ user: "admin0", token: "admin0", admin: 0 }); //PARA REMOVER
 console.log("REMOVER");
 console.log(sessions);
 console.log("REMOVER");
-module.exports = { login_user, login_user_with_cookie, create_user, delete_user, update_users_json, logout_user, edit_user };
+module.exports = { login_user, login_user_with_cookie, create_user, delete_user, update_users_json, logout_user, edit_user, there_is_user, search_for_token };

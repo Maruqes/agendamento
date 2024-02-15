@@ -4,11 +4,11 @@ const db = new sqlite3.Database("../backend/base.db", sqlite3.OPEN_READWRITE, (e
     if (err) return console.log(err.message);
 });
 
-function add_db(service, email, user_number, ano, mes, dia, hora, minuto, duration, price, complete_name) {
+function add_db(service, email, user_number, ano, mes, dia, hora, minuto, duration, price, complete_name, user) {
     return new Promise((resolve, reject) => {
         db.run(
-            "INSERT INTO marcacoes (email, user_number, service, duration, ano, mes, dia, hora, minuto, price_at_moment,complete_name) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
-            [email, user_number, service, duration, ano, mes, dia, hora, minuto, price, complete_name],
+            "INSERT INTO marcacoes (email, user_number, service, duration, ano, mes, dia, hora, minuto, price_at_moment,complete_name, user) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+            [email, user_number, service, duration, ano, mes, dia, hora, minuto, price, complete_name, user],
             (err) => {
                 if (err) {
                     reject(err);
@@ -19,9 +19,19 @@ function add_db(service, email, user_number, ano, mes, dia, hora, minuto, durati
     });
 }
 
-function read_db() {
+function read_db(user) {
+    if (user == "*") {
+        return new Promise((resolve, reject) => {
+            db.all("SELECT * FROM marcacoes", function (err, data) {
+                if (err) {
+                    reject(err);
+                }
+                resolve(data);
+            });
+        });
+    }
     return new Promise((resolve, reject) => {
-        db.all("SELECT email, complete_name, price_at_moment, user_number, service, ano,mes,dia,hora,minuto,duration FROM marcacoes", function (err, data) {
+        db.all("SELECT * FROM marcacoes WHERE user = ?", [user], function (err, data) {
             if (err) {
                 reject(err);
             }

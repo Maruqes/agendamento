@@ -6,14 +6,14 @@ var db = require("./db.js");
 function send_sms(body, to) {
     console.log("SMS enviado para " + to + " com o texto: " + body);
     try {
-        client.messages
-            .create({
-                body: body,
-                from: "+19255237185",
-                to: to,
-            })
-            .then((message) => console.log(message.sid))
-            .catch((err) => console.error(err), console.log("ERRO NO ENVIO DE SMS"), console.log("ERRO NO ENVIO DE SMS"), console.log("ERRO NO ENVIO DE SMS"));
+        // client.messages
+        //     .create({
+        //         body: body,
+        //         from: "+19255237185",
+        //         to: to,
+        //     })
+        //     .then((message) => console.log(message.sid))
+        //     .catch((err) => console.error(err), console.log("ERRO NO ENVIO DE SMS"), console.log("ERRO NO ENVIO DE SMS"), console.log("ERRO NO ENVIO DE SMS"));
     } catch (err) {
         console.error(err);
         console.log("ERRO NO ENVIO DE SMS");

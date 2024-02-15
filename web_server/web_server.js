@@ -59,7 +59,7 @@ app.get("/get_marcacoes", function (req, res) {
     req.query.cookie
   );
   if (autorizado >= 0) {
-    shop.update_agendamentos_json(res); //res.send is inside the function couse it need to be async for some reason it do not work ouside
+    shop.update_agendamentos_json(res, req.query.username, req.query.user); //res.send is inside the function couse it need to be async for some reason it do not work ouside
   } else {
     res.sendStatus(401);
   }

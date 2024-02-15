@@ -1,6 +1,7 @@
 const { query } = require("express");
 var db = require("./db.js");
 var sms = require("./sms.js");
+var auth = require("./auth.js");
 
 function containsSQLCode(str) {
     try {
@@ -45,7 +46,8 @@ async function create_order(order, date, ip) {
             date.minuto,
             order.product.duration,
             order.product.price,
-            order.complete_name
+            order.complete_name,
+            order.user
         );
         console.log("Venda para " + order.email + " de '" + order.product.name + "' finalizada");
         sms.send_sms("Your order has been created", order.user_number);
@@ -55,7 +57,16 @@ async function create_order(order, date, ip) {
 }
 
 async function new_order_test(body, ip) {
-    const { user_number, email, name, date, complete_name } = body;
+    const { user_number, email, name, date, complete_name, user } = body;
+
+    var data = await db.search_for_user(user);
+
+    try {
+        if (user != data[0].user) return 705;
+    } catch (err) {
+        return 705;
+    }
+
     try {
         if (containsSQLCode(user_number) || containsSQLCode(email) || containsSQLCode(name)) {
             console.error(`Bad input: ${user_number} ${email} ${name} ${date}`);
@@ -85,6 +96,7 @@ async function new_order_test(body, ip) {
             complete_name,
             user_number,
             product: product[0],
+            user,
         };
         if (new_order.product.name != name) {
             throw new Error();
@@ -99,14 +111,31 @@ async function new_order_test(body, ip) {
             complete_name,
             user_number,
             product: { name: name, price: 0, image: "", duration: 0 },
+            user,
         };
         order_errors(err, new_order, ip);
         return 703;
     }
 }
 
-async function update_agendamentos_json(res) {
-    db.read_db()
+async function update_agendamentos_json(res, username, user) {
+    if (username == "" || user == "") {
+        console.error("username or user is NULL");
+        res.sendStatus(401);
+        return;
+    }
+    console.log(`username = ${username} user = ${user}`);
+    if (username != user) {
+        var data = auth.search_for_token(username); // search for login users
+        if (data.admin == 0) {
+            console.error("User not admin");
+            console.log("User not admin");
+            res.sendStatus(401);
+            return;
+        }
+    }
+
+    db.read_db(user)
         .then((result) => {
             res.send(result);
         })
