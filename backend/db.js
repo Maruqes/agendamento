@@ -106,25 +106,33 @@ function delete_product_on_db(product) {
     });
 }
 
-function add_user(user, password, admin, email, phone_number) {
+function add_user(user, password, admin, email, phone_number, full_name) {
     return new Promise((resolve, reject) => {
-        db.run("INSERT INTO users (user,password, admin, email, phone_number) VALUES(?,?,?,?,?)", [user, password, admin, email, phone_number], (err) => {
-            if (err) {
-                reject(err);
+        db.run(
+            "INSERT INTO users (user,password, admin, email, phone_number, full_name) VALUES(?,?,?,?,?,?)",
+            [user, password, admin, email, phone_number, full_name],
+            (err) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve();
             }
-            resolve();
-        });
+        );
     });
 }
 
-function edit_user(user, password, admin, email, phone_number) {
+function edit_user(user, password, admin, email, phone_number, full_name) {
     return new Promise((resolve, reject) => {
-        db.run("UPDATE users SET password = ?, admin = ?, email = ?, phone_number = ? WHERE user = ?", [password, admin, email, phone_number, user], (err) => {
-            if (err) {
-                reject(err);
+        db.run(
+            "UPDATE users SET password = ?, admin = ?, email = ?, phone_number = ?, full_name = ? WHERE user = ?",
+            [password, admin, email, phone_number, full_name, user],
+            (err) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve();
             }
-            resolve();
-        });
+        );
     });
 }
 

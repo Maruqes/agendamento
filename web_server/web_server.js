@@ -128,6 +128,7 @@ app.post("/create_user", function (req, res) {
       req.body.user_permission,
       req.body.email,
       req.body.phone_number,
+      req.body.full_name,
       res
     );
   } else {
@@ -163,6 +164,7 @@ app.post("/edit_user", function (req, res) {
       req.body.user_permission,
       req.body.email,
       req.body.phone_number,
+      req.body.full_name,
       res
     );
   } else {

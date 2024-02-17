@@ -79,7 +79,7 @@ async function login_user(user, password, resexpress) {
         });
 }
 
-async function create_user(user, password, admin, email, phone_number, resexpress) {
+async function create_user(user, password, admin, email, phone_number, full_name, resexpress) {
     if (user == "" || password == "") {
         console.log("User or password empty");
         resexpress.status(401).send("User or password empty");
@@ -89,7 +89,7 @@ async function create_user(user, password, admin, email, phone_number, resexpres
     const saltRounds = 10;
 
     const hash = await bcrypt.hash(password, saltRounds);
-    db.add_user(user, hash, admin, email, phone_number)
+    db.add_user(user, hash, admin, email, phone_number, full_name)
         .then(() => {
             console.log("User created");
             resexpress.status(200).send("User created");
@@ -99,7 +99,7 @@ async function create_user(user, password, admin, email, phone_number, resexpres
         });
 }
 
-async function edit_user(user, password, admin, email, phone_number, resexpress) {
+async function edit_user(user, password, admin, email, phone_number, full_name, resexpress) {
     const existingUser = await db.search_for_user(user);
 
     if (!existingUser[0]) {
@@ -116,7 +116,7 @@ async function edit_user(user, password, admin, email, phone_number, resexpress)
     const saltRounds = 10;
 
     const hash = await bcrypt.hash(password, saltRounds);
-    db.edit_user(user, hash, admin, email, phone_number)
+    db.edit_user(user, hash, admin, email, phone_number, full_name)
         .then(() => {
             console.log("User edited");
             resexpress.status(200).send("User edited");
