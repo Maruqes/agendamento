@@ -4,11 +4,11 @@ const db = new sqlite3.Database("../backend/base.db", sqlite3.OPEN_READWRITE, (e
     if (err) return console.log(err.message);
 });
 
-function add_db(service, email, user_number, ano, mes, dia, hora, minuto, duration, price, complete_name, user) {
+function add_db(service, email, user_number, ano, mes, dia, hora, minuto, duration, price, complete_name, user, uuid) {
     return new Promise((resolve, reject) => {
         db.run(
-            "INSERT INTO marcacoes (email, user_number, service, duration, ano, mes, dia, hora, minuto, price_at_moment,complete_name, user) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
-            [email, user_number, service, duration, ano, mes, dia, hora, minuto, price, complete_name, user],
+            "INSERT INTO marcacoes (id, email, user_number, service, duration, ano, mes, dia, hora, minuto, price_at_moment,complete_name, user) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            [uuid, email, user_number, service, duration, ano, mes, dia, hora, minuto, price, complete_name, user],
             (err) => {
                 if (err) {
                     reject(err);
@@ -16,6 +16,28 @@ function add_db(service, email, user_number, ano, mes, dia, hora, minuto, durati
                 resolve();
             }
         );
+    });
+}
+
+function delete_marcacao(uuid) {
+    return new Promise((resolve, reject) => {
+        db.run("DELETE FROM marcacoes WHERE id = ?", [uuid], (err, data) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(data);
+        });
+    });
+}
+
+function edit_marcacao(uuid, ano, mes, dia, hora, minuto) {
+    return new Promise((resolve, reject) => {
+        db.run("UPDATE marcacoes SET ano = ?, mes = ?, dia = ?, hora = ?, minuto = ? WHERE id = ?", [ano, mes, dia, hora, minuto, uuid], (err) => {
+            if (err) {
+                reject(err);
+            }
+            resolve();
+        });
     });
 }
 
@@ -183,4 +205,6 @@ module.exports = {
     read_db_users,
     edit_product_on_db,
     edit_user,
+    delete_marcacao,
+    edit_marcacao,
 };

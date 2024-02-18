@@ -4,6 +4,7 @@ var path = require("path");
 const bodyParser = require("body-parser");
 var shop = require("../backend/server.js");
 var auth = require("../backend/auth.js");
+var marcacoes = require("../backend/marcacoes.js");
 const cors = require("cors");
 const console = require("./logs").console;
 const setRateLimit = require("express-rate-limit");
@@ -49,8 +50,18 @@ app.post("/upload", (req, res) => {
 });
 
 app.post("/new", async function (req, res) {
-  var result = await shop.new_order_test(req.body, req.ip);
+  var result = await marcacoes.new_order_test(req.body, req.ip);
   res.sendStatus(result);
+});
+
+app.post("/delete_marcacao", async function (req, res) {
+  await marcacoes.delete_marcacao(req.body.uuid);
+  res.sendStatus(200);
+});
+
+app.post("/edit_marcacao", async function (req, res) {
+  await marcacoes.edit_marcacao(req.body);
+  res.sendStatus(200);
 });
 
 app.get("/get_marcacoes", function (req, res) {
