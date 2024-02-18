@@ -48,29 +48,43 @@ function createProduct() {
       "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify(data),
-  });
+  })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+nome = null;
+
+function fazerqualquercoisacomdata(data) {
+  nome = data[0].name;
+  console.log(nome);
 }
 
 function getProducts() {
-  fetch(
-    "/get_products?cookie=" +
-      getCookie("session_token") +
-      "&" +
-      "username=" +
-      getCookie("username")
-  )
+  fetch("/get_products")
     .then((response) => response.json())
-    .then((data) => console.log(data))
+    .then((data) => fazerqualquercoisacomdata(data))
     .catch((error) => console.error("Error:", error));
+}
+
+function testzaodavida() {
+  console.log(nome);
 }
 
 function delete_Product() {
   var name = document.getElementById("delete_Product").value;
+
   let data = {
-    name: name,
     cookie: getCookie("session_token"),
     username: getCookie("username"),
+
+    name: name,
   };
+
   fetch("/delete_product", {
     method: "POST",
     mode: "cors",
@@ -79,7 +93,13 @@ function delete_Product() {
       "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify(data),
-  });
+  })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 function create_user() {

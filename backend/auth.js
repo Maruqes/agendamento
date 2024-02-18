@@ -80,9 +80,10 @@ async function login_user(user, password, resexpress) {
 }
 
 async function create_user(user, password, admin, email, phone_number, full_name, resexpress) {
+    //verificar se user ja existe
     if (user == "" || password == "") {
         console.log("User or password empty");
-        resexpress.status(401).send("User or password empty");
+        resexpress.status(500).send("User or password empty");
         return;
     }
 

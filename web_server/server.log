@@ -1,1 +1,122 @@
-4:53:35 18-2-2024 -> Express server started
+17:3:37 18-2-2024 -> Express server started
+17:3:38 18-2-2024 -> undefined
+17:3:38 18-2-2024 -> User not found
+17:3:57 18-2-2024 -> undefined
+17:3:57 18-2-2024 -> User not found
+17:4:3 18-2-2024 -> undefined
+17:4:3 18-2-2024 -> User not found
+17:4:55 18-2-2024 -> undefined
+17:4:55 18-2-2024 -> User not found
+17:5:36 18-2-2024 -> undefined
+17:5:36 18-2-2024 -> User not found
+17:5:44 18-2-2024 -> undefined
+17:5:44 18-2-2024 -> User not found
+17:6:2 18-2-2024 -> Trying to login kacie_senger@ourtimesupport.com
+17:6:2 18-2-2024 -> User not found
+17:6:5 18-2-2024 -> undefined
+17:6:5 18-2-2024 -> User not found
+17:6:23 18-2-2024 -> Trying to login rylee.hagenes80
+17:6:23 18-2-2024 -> User not found
+17:6:42 18-2-2024 -> Trying to login rylee.hagenes80
+17:6:42 18-2-2024 -> User not found
+17:7:3 18-2-2024 -> Trying to login kacie_senger@ourtimesupport.com
+17:7:3 18-2-2024 -> User not found
+17:7:50 18-2-2024 -> undefined
+17:7:50 18-2-2024 -> User not found
+17:8:10 18-2-2024 -> ola
+17:8:10 18-2-2024 -> User not found
+17:8:12 18-2-2024 -> Trying to login benjamin56@ourtimesupport.com
+17:8:12 18-2-2024 -> User not found
+17:8:32 18-2-2024 -> Trying to login alicia35
+17:8:32 18-2-2024 -> User not found
+17:8:52 18-2-2024 -> Trying to login alicia35
+17:8:52 18-2-2024 -> User not found
+17:9:11 18-2-2024 -> Trying to login benjamin56@ourtimesupport.com
+17:9:11 18-2-2024 -> User not found
+17:9:16 18-2-2024 -> undefined
+17:9:16 18-2-2024 -> User not found
+17:9:16 18-2-2024 -> undefined
+17:9:16 18-2-2024 -> User not found
+17:10:18 18-2-2024 -> undefined
+17:10:18 18-2-2024 -> User not found
+17:10:43 18-2-2024 -> Trying to login lieke45@ourtimesupport.com
+17:10:43 18-2-2024 -> User not found
+17:11:6 18-2-2024 -> Trying to login isa.bakker30
+17:11:6 18-2-2024 -> User not found
+17:11:27 18-2-2024 -> Trying to login isa.bakker30
+17:11:27 18-2-2024 -> User not found
+17:11:29 18-2-2024 -> undefined
+17:11:29 18-2-2024 -> User not found
+17:11:29 18-2-2024 -> undefined
+17:11:29 18-2-2024 -> User not found
+17:11:48 18-2-2024 -> Trying to login lieke45@ourtimesupport.com
+17:11:48 18-2-2024 -> User not found
+17:13:4 18-2-2024 -> undefined
+17:13:4 18-2-2024 -> User not found
+17:15:1 18-2-2024 -> admin
+17:15:1 18-2-2024 -> Logged in admin if admin 1
+17:15:1 18-2-2024 -> username = admin user = *
+17:17:36 18-2-2024 -> undefined
+17:17:36 18-2-2024 -> User not found
+17:22:6 18-2-2024 -> undefined
+17:22:6 18-2-2024 -> User not found
+17:22:37 18-2-2024 -> undefined
+17:22:37 18-2-2024 -> User not found
+17:29:24 18-2-2024 -> admin
+17:29:24 18-2-2024 -> Logged in admin if admin 1
+17:29:24 18-2-2024 -> username = admin user = *
+17:29:25 18-2-2024 -> undefined
+17:29:25 18-2-2024 -> User not found
+17:29:29 18-2-2024 -> Trying to login ola
+17:29:29 18-2-2024 -> Logged in ola if admin 1
+17:29:30 18-2-2024 -> EomNNFmv9E6FZYdepHIWLNiVZkjC2cTJcuKqpMeSWrurwjOe9lpPoWb5kfLz
+17:29:30 18-2-2024 -> ola
+17:29:30 18-2-2024 -> Logged in ola if admin 1
+17:30:30 18-2-2024 -> ola
+17:30:30 18-2-2024 -> Logged in ola if admin 1
+17:30:47 18-2-2024 -> ola
+17:30:47 18-2-2024 -> Logged in ola if admin 1
+17:32:11 18-2-2024 -> admin
+17:32:11 18-2-2024 -> Logged in admin if admin 1
+17:32:17 18-2-2024 -> admin0
+17:32:17 18-2-2024 -> Logged in admin0 if admin 0
+17:39:43 18-2-2024 -> admin
+17:39:43 18-2-2024 -> Logged in admin if admin 1
+17:39:43 18-2-2024 -> Produto TesteDoJota adicionado
+17:42:17 18-2-2024 -> admin
+17:42:17 18-2-2024 -> User not found
+17:42:36 18-2-2024 -> admin
+17:42:36 18-2-2024 -> Logged in admin if admin 1
+17:42:36 18-2-2024 -> Produto TesteDoJota adicionado
+17:47:34 18-2-2024 -> undefined
+17:47:34 18-2-2024 -> User not found
+17:50:0 18-2-2024 -> ola
+17:50:0 18-2-2024 -> Logged in ola if admin 1
+17:50:12 18-2-2024 -> admin0
+17:50:12 18-2-2024 -> Logged in admin0 if admin 0
+17:50:16 18-2-2024 -> admin
+17:50:16 18-2-2024 -> Logged in admin if admin 1
+17:50:29 18-2-2024 -> admin0
+17:50:29 18-2-2024 -> Logged in admin0 if admin 0
+17:50:41 18-2-2024 -> admin0
+17:50:41 18-2-2024 -> Logged in admin0 if admin 0
+17:51:33 18-2-2024 -> admin
+17:51:33 18-2-2024 -> Logged in admin if admin 1
+17:55:34 18-2-2024 -> admin
+17:55:34 18-2-2024 -> Logged in admin if admin 1
+17:55:34 18-2-2024 -> User or password empty
+17:56:2 18-2-2024 -> admin
+17:56:2 18-2-2024 -> Logged in admin if admin 1
+17:56:3 18-2-2024 -> User created
+17:56:28 18-2-2024 -> admin
+17:56:28 18-2-2024 -> Logged in admin if admin 1
+17:56:28 18-2-2024 -> User or password empty
+17:57:3 18-2-2024 -> admin
+17:57:3 18-2-2024 -> Logged in admin if admin 1
+17:57:3 18-2-2024 -> User or password empty
+17:57:43 18-2-2024 -> admin
+17:57:43 18-2-2024 -> Logged in admin if admin 1
+17:57:43 18-2-2024 -> User created
+17:59:7 18-2-2024 -> admin
+17:59:7 18-2-2024 -> Logged in admin if admin 1
+17:59:7 18-2-2024 -> User edited
