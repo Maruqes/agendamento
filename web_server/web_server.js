@@ -76,14 +76,18 @@ app.get("/get_marcacoes", function (req, res) {
   }
 });
 
-app.post("/create_product", function (req, res) {
+app.post("/create_product", async function (req, res) {
   var autorizado = auth.login_user_with_cookie(
     req.body.username,
     req.body.cookie
   );
   if (autorizado == 1) {
-    shop.create_new_product(req.body, req.ip);
-    res.sendStatus(200);
+    var resu = await shop.create_new_product(req.body, req.ip);
+    if (resu == 703) {
+      res.status(703).send("Product already exists");
+    } else {
+      res.sendStatus(resu);
+    }
   } else {
     res.sendStatus(401);
   }
@@ -93,14 +97,18 @@ app.get("/get_products", function (req, res) {
   shop.update_products_json(res); //res.send is inside the function couse it need to be async for some reason it do not work ouside
 });
 
-app.post("/delete_Product", function (req, res) {
+app.post("/delete_Product", async function (req, res) {
   var autorizado = auth.login_user_with_cookie(
     req.body.username,
     req.body.cookie
   );
   if (autorizado == 1) {
-    shop.delete_product(req.body.name);
-    res.sendStatus(200);
+    var resu = await shop.delete_product(req.body.name);
+    if (resu == 703) {
+      res.status(703).send("Product does not exist");
+    } else {
+      res.sendStatus(200);
+    }
   } else {
     res.sendStatus(401);
   }
@@ -207,6 +215,8 @@ app.get("/get_users", function (req, res) {
   );
   if (autorizado == 1) {
     auth.update_users_json(res);
+  } else if (autorizado == 0) {
+    auth.get_specific_user(req.query.username, res);
   } else {
     res.sendStatus(401);
   }
@@ -226,5 +236,5 @@ app.post("/logout", function (req, res) {
   }
 });
 
-app.listen(2005);
+app.listen(8080);
 console.log("Express server started");
