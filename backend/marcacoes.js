@@ -39,11 +39,11 @@ async function create_order(order, date, ip) {
     }
 }
 
-async function can_marcacao_fit(date, product) {
+async function can_marcacao_fit(date, duration) {
     const cur_marcacao = await db.read_marcacao_on_specific_day(date[0].dia, date[0].mes, date[0].ano);
 
     var start_mins = parseInt(date[0].hora) * 60 + parseInt(date[0].minuto);
-    var end_mins = start_mins + parseInt(product.duration);
+    var end_mins = start_mins + parseInt(duration);
 
     for (var i = 0; i < cur_marcacao.length; i++) {
         var cur_start_mins = cur_marcacao[i].hora * 60 + cur_marcacao[i].minuto;
@@ -52,7 +52,7 @@ async function can_marcacao_fit(date, product) {
         if (start_mins >= cur_start_mins && start_mins < cur_end_mins) {
             return false;
         }
-        if (end_mins >= cur_start_mins && end_mins <= cur_end_mins) {
+        if (end_mins > cur_start_mins && end_mins <= cur_end_mins) {
             return false;
         }
     }
@@ -64,7 +64,7 @@ async function new_order_test(body, ip) {
 
     const product = await db.get_product_on_db(name);
 
-    if ((await can_marcacao_fit(date, product[0])) == false) {
+    if ((await can_marcacao_fit(date, product[0].duration)) == false) {
         return 704;
     }
 
@@ -136,11 +136,18 @@ async function delete_marcacao(uuid) {
 
 async function edit_marcacao(body) {
     const { uuid, date } = body;
+
+    const marcacao = await db.get_product_on_db_by_uuid(uuid);
+
+    if ((await can_marcacao_fit(date, marcacao[0].duration)) == false) {
+        return 704;
+    }
     try {
         await db.edit_marcacao(uuid, date[0].ano, date[0].mes, date[0].dia, date[0].hora, date[0].minuto);
     } catch (err) {
         console.error(`Erro ao editar marcacao ${uuid} err ${err}`);
     }
+    return 200;
 }
 
 module.exports = {

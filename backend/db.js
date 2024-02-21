@@ -41,6 +41,17 @@ function edit_marcacao(uuid, ano, mes, dia, hora, minuto) {
     });
 }
 
+function get_product_on_db_by_uuid(uuid) {
+    return new Promise((resolve, reject) => {
+        db.all("SELECT * FROM marcacoes WHERE id=?", [uuid], function (err, data) {
+            if (err) {
+                reject(err);
+            }
+            resolve(data);
+        });
+    });
+}
+
 function read_db(user) {
     if (user == "*") {
         return new Promise((resolve, reject) => {
@@ -219,4 +230,5 @@ module.exports = {
     delete_marcacao,
     edit_marcacao,
     read_marcacao_on_specific_day,
+    get_product_on_db_by_uuid,
 };

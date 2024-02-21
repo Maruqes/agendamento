@@ -61,8 +61,8 @@ app.post("/delete_marcacao", async function (req, res) {
 });
 
 app.post("/edit_marcacao", async function (req, res) {
-  await marcacoes.edit_marcacao(req.body);
-  res.sendStatus(200);
+  const resu = await marcacoes.edit_marcacao(req.body);
+  res.sendStatus(resu);
 });
 
 app.get("/get_marcacoes", function (req, res) {
