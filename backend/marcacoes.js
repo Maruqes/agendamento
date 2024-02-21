@@ -4,6 +4,8 @@ var sms = require("./sms.js");
 var auth = require("./auth.js");
 var server = require("./server.js");
 const crypto = require("crypto");
+const { MissingJwtTokenError } = require("@shopify/shopify-api");
+const { start } = require("repl");
 
 function order_errors(err, order, ip) {
     console.error(`ip = ${ip}`);
@@ -37,8 +39,34 @@ async function create_order(order, date, ip) {
     }
 }
 
+async function can_marcacao_fit(date, product) {
+    const cur_marcacao = await db.read_marcacao_on_specific_day(date[0].dia, date[0].mes, date[0].ano);
+
+    var start_mins = parseInt(date[0].hora) * 60 + parseInt(date[0].minuto);
+    var end_mins = start_mins + parseInt(product.duration);
+
+    for (var i = 0; i < cur_marcacao.length; i++) {
+        var cur_start_mins = cur_marcacao[i].hora * 60 + cur_marcacao[i].minuto;
+        var cur_end_mins = cur_start_mins + cur_marcacao[i].duration;
+
+        if (start_mins >= cur_start_mins && start_mins < cur_end_mins) {
+            return false;
+        }
+        if (end_mins >= cur_start_mins && end_mins <= cur_end_mins) {
+            return false;
+        }
+    }
+    return true;
+}
+
 async function new_order_test(body, ip) {
     const { user_number, email, name, date, complete_name, user } = body;
+
+    const product = await db.get_product_on_db(name);
+
+    if ((await can_marcacao_fit(date, product[0])) == false) {
+        return 704;
+    }
 
     var data = await db.search_for_user(user);
 
@@ -71,7 +99,6 @@ async function new_order_test(body, ip) {
     console.log(`Venda para ${email} de '${name}' inicializada`);
 
     try {
-        const product = await db.get_product_on_db(name);
         const new_order = {
             email,
             complete_name,

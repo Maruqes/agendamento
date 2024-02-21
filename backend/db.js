@@ -62,6 +62,17 @@ function read_db(user) {
     });
 }
 
+function read_marcacao_on_specific_day(dia, mes, ano) {
+    return new Promise((resolve, reject) => {
+        db.all("SELECT * FROM marcacoes WHERE dia = ? AND mes = ? AND ano = ?", [dia, mes, ano], function (err, data) {
+            if (err) {
+                reject(err);
+            }
+            resolve(data);
+        });
+    });
+}
+
 function read_db_products() {
     return new Promise((resolve, reject) => {
         db.all("SELECT name,price,image,duration, description FROM products", function (err, data) {
@@ -207,4 +218,5 @@ module.exports = {
     edit_user,
     delete_marcacao,
     edit_marcacao,
+    read_marcacao_on_specific_day,
 };
