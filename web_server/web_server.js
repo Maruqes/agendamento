@@ -237,5 +237,23 @@ app.post("/logout", function (req, res) {
   }
 });
 
+app.get("/images/:name", function (req, res) {
+  if (
+    req.params.name.includes("..") ||
+    req.params.name.includes("cd") ||
+    req.params.name.includes("cd")
+  )
+    return res.sendStatus(403);
+  if (
+    req.params.name.includes(".png") ||
+    req.params.name.includes(".jpeg") ||
+    req.params.name.includes(".jpg")
+  ) {
+    res.sendFile(path.join(__dirname + "/images/" + req.params.name));
+  } else {
+    res.sendStatus(403);
+  }
+});
+
 app.listen(8080);
 console.log("Express server started");
