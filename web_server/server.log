@@ -1,1 +1,13 @@
-22:14:44 21-2-2024 -> Express server started
+17:27:32 22-2-2024 -> Express server started
+17:27:52 22-2-2024 -> Venda para tes2t@test2.com de 'test' inicializada
+17:27:52 22-2-2024 -> Venda para tes2t@test2.com de 'test' em andamento
+17:27:52 22-2-2024 -> Venda para tes2t@test2.com de 'test' finalizada
+17:27:52 22-2-2024 -> SMS enviado para +351938534372 com o texto: Your order has been created
+17:29:22 22-2-2024 -> Venda para tes2t@test2.com de 'massagem1' inicializada
+17:29:22 22-2-2024 -> Venda para tes2t@test2.com de 'massagem1' em andamento
+17:29:22 22-2-2024 -> Venda para tes2t@test2.com de 'massagem1' finalizada
+17:29:22 22-2-2024 -> SMS enviado para +351938534372 com o texto: Your order has been created
+17:29:31 22-2-2024 -> Venda para tes2t@test2.com de 'massagem1' inicializada
+17:29:31 22-2-2024 -> Venda para tes2t@test2.com de 'massagem1' em andamento
+17:29:31 22-2-2024 -> Venda para tes2t@test2.com de 'massagem1' finalizada
+17:29:31 22-2-2024 -> SMS enviado para +351938534372 com o texto: Your order has been created

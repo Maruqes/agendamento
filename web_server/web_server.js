@@ -238,6 +238,7 @@ app.post("/logout", function (req, res) {
 });
 
 app.get("/images/:name", function (req, res) {
+  //add photos to users
   if (
     req.params.name.includes("..") ||
     req.params.name.includes("cd") ||
@@ -253,6 +254,27 @@ app.get("/images/:name", function (req, res) {
   } else {
     res.sendStatus(403);
   }
+});
+
+app.post("/set_horario", async function (req, res) {
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+  if (autorizado == 1) {
+    var result = await shop.set_horario(
+      req.body.dia,
+      req.body.comeco,
+      req.body.fim
+    );
+    res.sendStatus(result);
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+app.get("/get_horario", function (req, res) {
+  shop.get_horario(res);
 });
 
 app.listen(8080);
