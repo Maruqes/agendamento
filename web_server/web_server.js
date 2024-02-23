@@ -71,7 +71,8 @@ app.get("/get_marcacoes", function (req, res) {
     req.query.cookie
   );
   if (autorizado >= 0) {
-    shop.update_agendamentos_json(res, req.query.username, req.query.user); //res.send is inside the function couse it need to be async for some reason it do not work ouside
+    shop.update_agendamentos_json(res, req.query.username, req.query.user);
+    //res.send is inside the function couse it need to be async for some reason it do not work ouside
   } else {
     res.sendStatus(401);
   }
@@ -149,6 +150,7 @@ app.post("/create_user", function (req, res) {
       req.body.email,
       req.body.phone_number,
       req.body.full_name,
+      req.body.image,
       res
     );
   } else {
@@ -174,17 +176,13 @@ app.post("/edit_user", function (req, res) {
     req.body.cookie
   );
 
-  if (req.body.user_permission != 0 && req.body.user_permission != 1)
-    return res.send("USER perms are wrong needs to be 0 or 1");
-
   if (autorizado == 1) {
     auth.edit_user(
       req.body.user,
-      req.body.password,
-      req.body.user_permission,
       req.body.email,
       req.body.phone_number,
       req.body.full_name,
+      req.body.image,
       res
     );
   } else {
@@ -238,7 +236,6 @@ app.post("/logout", function (req, res) {
 });
 
 app.get("/images/:name", function (req, res) {
-  //add photos to users
   if (
     req.params.name.includes("..") ||
     req.params.name.includes("cd") ||

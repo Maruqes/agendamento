@@ -1,46 +1,14 @@
 const sqlite3 = require("sqlite3").verbose();
 
-const db = new sqlite3.Database(
-  "../backend/base.db",
-  sqlite3.OPEN_READWRITE,
-  (err) => {
-    if (err) return console.log(err.message);
-  }
-);
+const db = new sqlite3.Database("../backend/base.db", sqlite3.OPEN_READWRITE, (err) => {
+  if (err) return console.log(err.message);
+});
 
-function add_db(
-  service,
-  email,
-  user_number,
-  ano,
-  mes,
-  dia,
-  hora,
-  minuto,
-  duration,
-  price,
-  complete_name,
-  user,
-  uuid
-) {
+function add_db(service, email, user_number, ano, mes, dia, hora, minuto, duration, price, complete_name, user, uuid) {
   return new Promise((resolve, reject) => {
     db.run(
       "INSERT INTO marcacoes (id, email, user_number, service, duration, ano, mes, dia, hora, minuto, price_at_moment,complete_name, user) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
-      [
-        uuid,
-        email,
-        user_number,
-        service,
-        duration,
-        ano,
-        mes,
-        dia,
-        hora,
-        minuto,
-        price,
-        complete_name,
-        user,
-      ],
+      [uuid, email, user_number, service, duration, ano, mes, dia, hora, minuto, price, complete_name, user],
       (err) => {
         if (err) {
           reject(err);
@@ -64,16 +32,12 @@ function delete_marcacao(uuid) {
 
 function edit_marcacao(uuid, ano, mes, dia, hora, minuto) {
   return new Promise((resolve, reject) => {
-    db.run(
-      "UPDATE marcacoes SET ano = ?, mes = ?, dia = ?, hora = ?, minuto = ? WHERE id = ?",
-      [ano, mes, dia, hora, minuto, uuid],
-      (err) => {
-        if (err) {
-          reject(err);
-        }
-        resolve();
+    db.run("UPDATE marcacoes SET ano = ?, mes = ?, dia = ?, hora = ?, minuto = ? WHERE id = ?", [ano, mes, dia, hora, minuto, uuid], (err) => {
+      if (err) {
+        reject(err);
       }
-    );
+      resolve();
+    });
   });
 }
 
@@ -100,59 +64,45 @@ function read_db(user) {
     });
   }
   return new Promise((resolve, reject) => {
-    db.all(
-      "SELECT * FROM marcacoes WHERE user = ?",
-      [user],
-      function (err, data) {
-        if (err) {
-          reject(err);
-        }
-        resolve(data);
+    db.all("SELECT * FROM marcacoes WHERE user = ?", [user], function (err, data) {
+      if (err) {
+        reject(err);
       }
-    );
+      resolve(data);
+    });
   });
 }
 
 function read_marcacao_on_specific_day(dia, mes, ano) {
   return new Promise((resolve, reject) => {
-    db.all(
-      "SELECT * FROM marcacoes WHERE dia = ? AND mes = ? AND ano = ?",
-      [dia, mes, ano],
-      function (err, data) {
-        if (err) {
-          reject(err);
-        }
-        resolve(data);
+    db.all("SELECT * FROM marcacoes WHERE dia = ? AND mes = ? AND ano = ?", [dia, mes, ano], function (err, data) {
+      if (err) {
+        reject(err);
       }
-    );
+      resolve(data);
+    });
   });
 }
 
 function read_db_products() {
   return new Promise((resolve, reject) => {
-    db.all(
-      "SELECT name,price,image,duration, description FROM products",
-      function (err, data) {
-        if (err) {
-          reject(err);
-        }
-        resolve(data);
+    db.all("SELECT name,price,image,duration, description FROM products", function (err, data) {
+      if (err) {
+        reject(err);
       }
-    );
+      resolve(data);
+    });
   });
 }
 
 function read_db_sms() {
   return new Promise((resolve, reject) => {
-    db.all(
-      "SELECT user_number, ano,mes,dia,hora,minuto,duration FROM marcacoes",
-      function (err, data) {
-        if (err) {
-          reject(err);
-        }
-        resolve(data);
+    db.all("SELECT user_number, ano,mes,dia,hora,minuto,duration FROM marcacoes", function (err, data) {
+      if (err) {
+        reject(err);
       }
-    );
+      resolve(data);
+    });
   });
 }
 
@@ -169,16 +119,12 @@ function get_product_on_db(name) {
 
 function create_new_product_on_db(name, price, image, duration, description) {
   return new Promise((resolve, reject) => {
-    db.run(
-      "INSERT INTO products (name,price,image,duration, description) VALUES(?,?,?,?,?)",
-      [name, price, image, duration, description],
-      (err) => {
-        if (err) {
-          reject(err);
-        }
-        resolve();
+    db.run("INSERT INTO products (name,price,image,duration, description) VALUES(?,?,?,?,?)", [name, price, image, duration, description], (err) => {
+      if (err) {
+        reject(err);
       }
-    );
+      resolve();
+    });
   });
 }
 
@@ -208,11 +154,11 @@ function delete_product_on_db(product) {
   });
 }
 
-function add_user(user, password, admin, email, phone_number, full_name) {
+function add_user(user, password, admin, email, phone_number, full_name, image) {
   return new Promise((resolve, reject) => {
     db.run(
-      "INSERT INTO users (user,password, admin, email, phone_number, full_name) VALUES(?,?,?,?,?,?)",
-      [user, password, admin, email, phone_number, full_name],
+      "INSERT INTO users (user,password, admin, email, phone_number, full_name, image) VALUES(?,?,?,?,?,?,?)",
+      [user, password, admin, email, phone_number, full_name, image],
       (err) => {
         if (err) {
           reject(err);
@@ -223,11 +169,11 @@ function add_user(user, password, admin, email, phone_number, full_name) {
   });
 }
 
-function edit_user(user, password, admin, email, phone_number, full_name) {
+function edit_user(user, email, phone_number, full_name, image) {
   return new Promise((resolve, reject) => {
     db.run(
-      "UPDATE users SET password = ?, admin = ?, email = ?, phone_number = ?, full_name = ? WHERE user = ?",
-      [password, admin, email, phone_number, full_name, user],
+      "UPDATE users SET email = ?, phone_number = ?, full_name = ?, image = ? WHERE user = ?",
+      [email, phone_number, full_name, image, user],
       (err) => {
         if (err) {
           reject(err);
@@ -262,31 +208,24 @@ function search_for_user(user) {
 
 function read_db_users() {
   return new Promise((resolve, reject) => {
-    db.all(
-      "SELECT user, admin, email, phone_number, full_name FROM users",
-      function (err, data) {
-        if (err) {
-          reject(err);
-        }
-        resolve(data);
+    db.all("SELECT user, admin, email, phone_number, full_name FROM users", function (err, data) {
+      if (err) {
+        reject(err);
       }
-    );
+      resolve(data);
+    });
   });
 }
 
 function set_horario(dia, comeco, fim) {
   //dia -> 0->domingo 1->segunda 2->terca 3->quarta 4->quinta 5->sexta 6->sabado
   return new Promise((resolve, reject) => {
-    db.run(
-      "UPDATE horarios SET comeco = ?, fim = ? WHERE dia = ?",
-      [comeco, fim, dia],
-      (err) => {
-        if (err) {
-          reject(err);
-        }
-        resolve();
+    db.run("UPDATE horarios SET comeco = ?, fim = ? WHERE dia = ?", [comeco, fim, dia], (err) => {
+      if (err) {
+        reject(err);
       }
-    );
+      resolve();
+    });
   });
 }
 

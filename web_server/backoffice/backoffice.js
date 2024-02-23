@@ -15,7 +15,7 @@ function getMarcacoes() {
     });
 }
 
-function createProduct() {
+function uploadImage() {
   //upload image to server
   var file = document.getElementById("image_input").files[0];
   var formData = new FormData();
@@ -26,7 +26,9 @@ function createProduct() {
     method: "POST",
     body: formData,
   });
+}
 
+function createProduct() {
   var name = document.getElementById("name").value;
   var price = document.getElementById("price").value;
   var image = document.getElementById("image_input").value.split("\\").pop();
