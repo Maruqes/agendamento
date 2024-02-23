@@ -5,17 +5,7 @@ var auth = require("./auth.js");
 
 function containsSQLCode(str) {
   try {
-    const sqlKeywords = [
-      "SELECT",
-      "UPDATE",
-      "DELETE",
-      "INSERT",
-      "CREATE",
-      "DROP",
-      "ALTER",
-      "TRUNCATE",
-      "REPLACE",
-    ];
+    const sqlKeywords = ["SELECT", "UPDATE", "DELETE", "INSERT", "CREATE", "DROP", "ALTER", "TRUNCATE", "REPLACE"];
 
     return sqlKeywords.some((keyword) => str.toUpperCase().includes(keyword));
   } catch (err) {
@@ -25,13 +15,7 @@ function containsSQLCode(str) {
 
 function isValidPhoneNumber(user_number) {
   try {
-    if (
-      user_number[0] === "+" &&
-      user_number[1] === "3" &&
-      user_number[2] === "5" &&
-      user_number[3] === "1" &&
-      user_number.length === 13
-    ) {
+    if (user_number[0] === "+" && user_number[1] === "3" && user_number[2] === "5" && user_number[3] === "1" && user_number.length === 13) {
       return true;
     } else {
       return false;
@@ -84,14 +68,8 @@ async function create_new_product(body) {
     console.log("produto invalido");
     return 701;
   }
-  if (
-    containsSQLCode(name) ||
-    containsSQLCode(image) ||
-    containsSQLCode(description)
-  ) {
-    console.error(
-      `SQL injection detected: ${name} ${price} ${image} ${duration}`
-    );
+  if (containsSQLCode(name) || containsSQLCode(image) || containsSQLCode(description)) {
+    console.error(`SQL injection detected: ${name} ${price} ${image} ${duration}`);
     return 702;
   }
 
@@ -103,13 +81,7 @@ async function create_new_product(body) {
   }
 
   try {
-    await db.create_new_product_on_db(
-      name,
-      price,
-      image,
-      duration,
-      description
-    );
+    await db.create_new_product_on_db(name, price, image, duration, description);
     console.log(`Produto ${name} adicionado`);
   } catch (err) {
     console.log(`Erro ao adicionar produto ${name} err ${err}`);
@@ -124,14 +96,8 @@ async function edit_product(body) {
     console.log("produto invalido");
     return;
   }
-  if (
-    containsSQLCode(name) ||
-    containsSQLCode(image) ||
-    containsSQLCode(description)
-  ) {
-    console.error(
-      `SQL injection detected: ${name} ${price} ${image} ${duration}`
-    );
+  if (containsSQLCode(name) || containsSQLCode(image) || containsSQLCode(description)) {
+    console.error(`SQL injection detected: ${name} ${price} ${image} ${duration}`);
     return;
   }
 
@@ -176,17 +142,14 @@ function set_horario(dia, comeco, fim) {
   if (dia < 0 || dia > 6 || comeco < 0 || comeco > 24 || fim < 0 || fim > 24) {
     return 400;
   }
-  var comeco_hora = comeco.split(":")[0];
-  var comeco_minuto = comeco.split(":")[1];
-  var fim_hora = fim.split(":")[0];
-  var fim_minuto = fim.split(":")[1];
-
-  if (comeco_hora * 60 + comeco_minuto < fim_hora * 60 + fim_minuto) {
+  var comeco_hora = parseInt(comeco.split(":")[0]);
+  var comeco_minuto = parseInt(comeco.split(":")[1]);
+  var fim_hora = parseInt(fim.split(":")[0]);
+  var fim_minuto = parseInt(fim.split(":")[1]);
+  if (comeco_hora * 60 + comeco_minuto > fim_hora * 60 + fim_minuto) {
     return 400;
   }
-  console.log(
-    `[+] SETADO NOVO HORARIO dia = ${dia} comeco = ${comeco} fim = ${fim}`
-  );
+  console.log(`[+] SETADO NOVO HORARIO dia = ${dia} comeco = ${comeco} fim = ${fim}`);
   db.set_horario(dia, comeco, fim);
   return 200;
 }
@@ -205,16 +168,7 @@ function get_horario(res) {
 function runAtSpecificTimeOfDay(hour, minutes, func) {
   const twentyFourHours = 86400000;
   const now = new Date();
-  let eta_ms =
-    new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
-      hour,
-      minutes,
-      0,
-      0
-    ).getTime() - now;
+  let eta_ms = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minutes, 0, 0).getTime() - now;
   if (eta_ms < 0) {
     eta_ms += twentyFourHours;
   }

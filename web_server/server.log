@@ -1,4 +1,20 @@
-0:7:35 23-2-2024 -> Express server started
-0:7:37 23-2-2024 -> admin
-0:7:37 23-2-2024 -> Logged in admin if admin 1
-0:7:37 23-2-2024 -> User edited
+0:20:44 23-2-2024 -> Express server started
+0:20:45 23-2-2024 -> admin
+0:20:45 23-2-2024 -> Logged in admin if admin 1
+0:20:45 23-2-2024 -> comeco_hora = 510 comeco_minuto = 1080 
+0:20:45 23-2-2024 -> [+] SETADO NOVO HORARIO dia = 6 comeco = 8:30 fim = 18:00
+0:20:52 23-2-2024 -> admin
+0:20:52 23-2-2024 -> Logged in admin if admin 1
+0:20:52 23-2-2024 -> comeco_hora = 510 comeco_minuto = 780 
+0:20:52 23-2-2024 -> [+] SETADO NOVO HORARIO dia = 6 comeco = 8:30 fim = 13:00
+0:20:59 23-2-2024 -> admin
+0:20:59 23-2-2024 -> Logged in admin if admin 1
+0:20:59 23-2-2024 -> comeco_hora = 510 comeco_minuto = 511 
+0:20:59 23-2-2024 -> [+] SETADO NOVO HORARIO dia = 6 comeco = 8:30 fim = 8:31
+0:21:3 23-2-2024 -> admin
+0:21:3 23-2-2024 -> Logged in admin if admin 1
+0:21:3 23-2-2024 -> comeco_hora = 510 comeco_minuto = 510 
+0:21:3 23-2-2024 -> [+] SETADO NOVO HORARIO dia = 6 comeco = 8:30 fim = 8:30
+0:21:7 23-2-2024 -> admin
+0:21:7 23-2-2024 -> Logged in admin if admin 1
+0:21:7 23-2-2024 -> comeco_hora = 510 comeco_minuto = 509 
