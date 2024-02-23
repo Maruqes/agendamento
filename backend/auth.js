@@ -169,7 +169,7 @@ async function delete_user(user, who_is_deleting, resexpress) {
       resexpress.status(200).send("User deleted");
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err);3
     });
 }
 
@@ -191,6 +191,9 @@ function login_user_with_cookie(user_recieved, cookie) {
 function update_users_json(res) {
   db.read_db_users()
     .then((result) => {
+      for (var i = 0; i < result.length; i++) {
+        result[i].image = "images/" + result[i].image;
+      }
       res.send(result);
     })
     .catch((err) => {
@@ -203,6 +206,7 @@ function get_specific_user(user, res) {
     .then((result) => {
       if (result[0].user == user) {
         delete result[0].password;
+        result[0].image = "images/" + result[0].image;
         res.send(result);
       } else {
         res.send("User not found");

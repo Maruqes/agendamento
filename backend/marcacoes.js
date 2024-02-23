@@ -9,9 +9,7 @@ const { start } = require("repl");
 
 function order_errors(err, order, ip) {
   console.error(`ip = ${ip}`);
-  console.error(
-    `Erro na venda para ${order.email} de ${order.product.name} err ${err}`
-  );
+  console.error(`Erro na venda para ${order.email} de ${order.product.name} err ${err}`);
   console.log(`Erro na venda para ${order.email} de ${order.product.name}`);
 }
 
@@ -34,30 +32,22 @@ async function create_order(order, date, ip) {
       order.user,
       uuid
     );
-    console.log(
-      "Venda para " +
-        order.email +
-        " de '" +
-        order.product.name +
-        "' finalizada"
-    );
+    console.log("Venda para " + order.email + " de '" + order.product.name + "' finalizada");
     sms.send_sms("Your order has been created", order.user_number);
   } catch (err) {
     order_errors(err, order, ip);
   }
 }
 
-async function can_marcacao_fit(date, duration) {
-  const cur_marcacao = await db.read_marcacao_on_specific_day(
-    date[0].dia,
-    date[0].mes,
-    date[0].ano
-  );
+async function can_marcacao_fit(date, duration, id) {
+  const cur_marcacao = await db.read_marcacao_on_specific_day(date[0].dia, date[0].mes, date[0].ano);
 
   var start_mins = parseInt(date[0].hora) * 60 + parseInt(date[0].minuto);
   var end_mins = start_mins + parseInt(duration);
 
   for (var i = 0; i < cur_marcacao.length; i++) {
+    if (cur_marcacao[i].id == id) continue;
+
     var cur_start_mins = cur_marcacao[i].hora * 60 + cur_marcacao[i].minuto;
     var cur_end_mins = cur_start_mins + cur_marcacao[i].duration;
 
@@ -71,18 +61,14 @@ async function can_marcacao_fit(date, duration) {
   //////////////////////////
   var date = new Date(Date.UTC(date[0].ano, date[0].mes - 1, date[0].dia));
   const day1 = date.getDay();
-
+  console.log("dia-> " + day1);
   const horario_on_day = await db.read_horario_on_specific_day(day1);
 
   if (horario_on_day.length == 0) return false;
 
-  var horario_start_mins =
-    parseInt(horario_on_day[0].comeco.split(":")[0]) * 60 +
-    parseInt(horario_on_day[0].comeco.split(":")[1]);
+  var horario_start_mins = parseInt(horario_on_day[0].comeco.split(":")[0]) * 60 + parseInt(horario_on_day[0].comeco.split(":")[1]);
 
-  var horario_end_mins =
-    parseInt(horario_on_day[0].fim.split(":")[0]) * 60 +
-    parseInt(horario_on_day[0].fim.split(":")[1]);
+  var horario_end_mins = parseInt(horario_on_day[0].fim.split(":")[0]) * 60 + parseInt(horario_on_day[0].fim.split(":")[1]);
 
   if (start_mins < horario_start_mins || end_mins > horario_end_mins) {
     return false;
@@ -96,7 +82,7 @@ async function new_order_test(body, ip) {
 
   const product = await db.get_product_on_db(name);
 
-  if ((await can_marcacao_fit(date, product[0].duration)) == false) {
+  if ((await can_marcacao_fit(date, product[0].duration, 0)) == false) {
     return 704;
   }
 
@@ -109,11 +95,7 @@ async function new_order_test(body, ip) {
   }
 
   try {
-    if (
-      server.containsSQLCode(user_number) ||
-      server.containsSQLCode(email) ||
-      server.containsSQLCode(name)
-    ) {
+    if (server.containsSQLCode(user_number) || server.containsSQLCode(email) || server.containsSQLCode(name)) {
       console.error(`Bad input: ${user_number} ${email} ${name} ${date[0]}`);
       return 701;
     }
@@ -175,18 +157,11 @@ async function edit_marcacao(body) {
 
   const marcacao = await db.get_product_on_db_by_uuid(uuid);
 
-  if ((await can_marcacao_fit(date, marcacao[0].duration)) == false) {
+  if ((await can_marcacao_fit(date, marcacao[0].duration, marcacao[0].id)) == false) {
     return 704;
   }
   try {
-    await db.edit_marcacao(
-      uuid,
-      date[0].ano,
-      date[0].mes,
-      date[0].dia,
-      date[0].hora,
-      date[0].minuto
-    );
+    await db.edit_marcacao(uuid, date[0].ano, date[0].mes, date[0].dia, date[0].hora, date[0].minuto);
   } catch (err) {
     console.error(`Erro ao editar marcacao ${uuid} err ${err}`);
   }
