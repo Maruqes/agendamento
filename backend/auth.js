@@ -202,6 +202,7 @@ function get_specific_user(user, res) {
   db.search_for_user(user)
     .then((result) => {
       if (result[0].user == user) {
+        delete result[0].password;
         res.send(result);
       } else {
         res.send("User not found");

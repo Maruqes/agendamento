@@ -208,7 +208,7 @@ function search_for_user(user) {
 
 function read_db_users() {
   return new Promise((resolve, reject) => {
-    db.all("SELECT user, admin, email, phone_number, full_name FROM users", function (err, data) {
+    db.all("SELECT user, admin, email, phone_number, full_name, image FROM users", function (err, data) {
       if (err) {
         reject(err);
       }
