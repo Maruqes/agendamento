@@ -5,7 +5,8 @@ const ErrorLog = fs.createWriteStream(__dirname + "/Error.log", { flags: "w" });
 const logOutput = process.stdout;
 
 // the flag 'a' will update the stream log at every launch
-console.log = (e) => {
+console.log = (e) =>
+{
   let date_time = new Date();
   var date =
     date_time.getHours() +
@@ -24,7 +25,8 @@ console.log = (e) => {
   logOutput.write(date + util.format(e) + "\n");
 };
 
-console.error = (e) => {
+console.error = (e) =>
+{
   let date_time = new Date();
   var date =
     date_time.getHours() +

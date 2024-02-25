@@ -3,9 +3,11 @@ const authToken = "95eb49525dde3d75389428d509f62cc9";
 const client = require("twilio")(accountSid, authToken);
 var db = require("./db.js");
 
-function send_sms(body, to) {
+function send_sms(body, to)
+{
     console.log("SMS enviado para " + to + " com o texto: " + body);
-    try {
+    try
+    {
         // client.messages
         //     .create({
         //         body: body,
@@ -14,7 +16,8 @@ function send_sms(body, to) {
         //     })
         //     .then((message) => console.log(message.sid))
         //     .catch((err) => console.error(err), console.log("ERRO NO ENVIO DE SMS"), console.log("ERRO NO ENVIO DE SMS"), console.log("ERRO NO ENVIO DE SMS"));
-    } catch (err) {
+    } catch (err)
+    {
         console.error(err);
         console.log("ERRO NO ENVIO DE SMS");
         console.log("ERRO NO ENVIO DE SMS");
@@ -22,12 +25,15 @@ function send_sms(body, to) {
     }
 }
 
-async function daily_sms() {
+async function daily_sms()
+{
     var date = new Date();
     var marcacoes = await db.read_db_sms();
     var i = 0;
-    while (marcacoes[i] != undefined) {
-        if (marcacoes[i].dia == date.getDate() && marcacoes[i].mes == date.getMonth() + 1 && marcacoes[i].ano == date.getFullYear()) {
+    while (marcacoes[i] != undefined)
+    {
+        if (marcacoes[i].dia == date.getDate() && marcacoes[i].mes == date.getMonth() + 1 && marcacoes[i].ano == date.getFullYear())
+        {
             send_sms("Não se esqueça da sua marcação hoje pelas " + marcacoes[i].hora + ":" + +marcacoes[i].minuto, marcacoes[i].user_number);
         }
         i++;

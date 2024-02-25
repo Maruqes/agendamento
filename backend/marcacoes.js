@@ -7,16 +7,19 @@ const crypto = require("crypto");
 const { MissingJwtTokenError } = require("@shopify/shopify-api");
 const { start } = require("repl");
 
-function order_errors(err, order, ip) {
+function order_errors(err, order, ip)
+{
   console.error(`ip = ${ip}`);
   console.error(`Erro na venda para ${order.email} de ${order.product.name} err ${err}`);
   console.log(`Erro na venda para ${order.email} de ${order.product.name}`);
 }
 
-async function create_order(order, date, ip) {
+async function create_order(order, date, ip)
+{
   //add db
   let uuid = crypto.randomUUID();
-  try {
+  try
+  {
     await db.add_db(
       order.product.name,
       order.email,
@@ -34,27 +37,32 @@ async function create_order(order, date, ip) {
     );
     console.log("Venda para " + order.email + " de '" + order.product.name + "' finalizada");
     sms.send_sms("Your order has been created", order.user_number);
-  } catch (err) {
+  } catch (err)
+  {
     order_errors(err, order, ip);
   }
 }
 
-async function can_marcacao_fit(date, duration, id) {
+async function can_marcacao_fit(date, duration, id)
+{
   const cur_marcacao = await db.read_marcacao_on_specific_day(date[0].dia, date[0].mes, date[0].ano);
 
   var start_mins = parseInt(date[0].hora) * 60 + parseInt(date[0].minuto);
   var end_mins = start_mins + parseInt(duration);
 
-  for (var i = 0; i < cur_marcacao.length; i++) {
+  for (var i = 0; i < cur_marcacao.length; i++)
+  {
     if (cur_marcacao[i].id == id) continue;
 
     var cur_start_mins = cur_marcacao[i].hora * 60 + cur_marcacao[i].minuto;
     var cur_end_mins = cur_start_mins + cur_marcacao[i].duration;
 
-    if (start_mins >= cur_start_mins && start_mins < cur_end_mins) {
+    if (start_mins >= cur_start_mins && start_mins < cur_end_mins)
+    {
       return false;
     }
-    if (end_mins > cur_start_mins && end_mins <= cur_end_mins) {
+    if (end_mins > cur_start_mins && end_mins <= cur_end_mins)
+    {
       return false;
     }
   }
@@ -70,53 +78,74 @@ async function can_marcacao_fit(date, duration, id) {
 
   var horario_end_mins = parseInt(horario_on_day[0].fim.split(":")[0]) * 60 + parseInt(horario_on_day[0].fim.split(":")[1]);
 
-  if (start_mins < horario_start_mins || end_mins > horario_end_mins) {
+  if (start_mins < horario_start_mins || end_mins > horario_end_mins)
+  {
     return false;
   }
 
   return true;
 }
 
-async function new_order_test(body, ip) {
+async function new_order_test(body, ip)
+{
   const { user_number, email, name, date, complete_name, user } = body;
+  console.log(complete_name);
+  if (user_number == undefined || email == undefined || name == undefined || date == undefined || complete_name == undefined || user == undefined)
+  {
+    return 701;
+  }
 
   const product = await db.get_product_on_db(name);
 
-  if ((await can_marcacao_fit(date, product[0].duration, 0)) == false) {
+  if (product.length == 0)
+  {
+    return 703;
+  }
+  if ((await can_marcacao_fit(date, product[0].duration, 0)) == false)
+  {
     return 704;
   }
 
   var data = await db.search_for_user(user);
 
-  try {
-    if (user != data[0].user) return 400;
-  } catch (err) {
-    return 400;
+  try
+  {
+    if (user != data[0].user) return 705;
+  } catch (err)
+  {
+    return 705;
   }
 
-  try {
-    if (server.containsSQLCode(user_number) || server.containsSQLCode(email) || server.containsSQLCode(name)) {
+  try
+  {
+    if (server.containsSQLCode(user_number) || server.containsSQLCode(email) || server.containsSQLCode(name))
+    {
       console.error(`Bad input: ${user_number} ${email} ${name} ${date[0]}`);
       return 701;
     }
-  } catch (err) {
+  } catch (err)
+  {
     console.error(`Bad input: ${user_number} ${email} ${name} ${date[0]}`);
     return 701;
   }
 
-  try {
-    if (!server.isValidPhoneNumber(user_number)) {
+  try
+  {
+    if (!server.isValidPhoneNumber(user_number))
+    {
       console.error(`Numero de telefone invalido: ${user_number}`);
       return 702;
     }
-  } catch (err) {
+  } catch (err)
+  {
     console.error(`Bad input: ${user_number} ${email} ${name} ${date[0]}`);
     return 702;
   }
 
   console.log(`Venda para ${email} de '${name}' inicializada`);
 
-  try {
+  try
+  {
     const new_order = {
       email,
       complete_name,
@@ -124,13 +153,15 @@ async function new_order_test(body, ip) {
       product: product[0],
       user,
     };
-    if (new_order.product.name != name) {
+    if (new_order.product.name != name)
+    {
       throw new Error();
     }
     console.log(`Venda para ${email} de '${name}' em andamento`);
     create_order(new_order, date[0], ip);
     return 200;
-  } catch (err) {
+  } catch (err)
+  {
     console.error(`Cant find product "${name}" on db`);
     const new_order = {
       email,
@@ -140,30 +171,55 @@ async function new_order_test(body, ip) {
       user,
     };
     order_errors(err, new_order, ip);
-    return 703;
+    return 500;
   }
 }
 
-async function delete_marcacao(uuid) {
-  try {
+async function delete_marcacao(uuid)
+{
+  if (uuid == undefined) return 701;
+  const marcacao = await db.get_product_on_db_by_uuid(uuid);
+  if (marcacao.length == 0) return 702;
+
+  try
+  {
     await db.delete_marcacao(uuid);
-  } catch (err) {
+  } catch (err)
+  {
     console.error(`Erro ao remover marcacao ${uuid} err ${err}`);
+    return 500;
   }
+
+  return 200;
 }
 
-async function edit_marcacao(body) {
+async function edit_marcacao(body)
+{
   const { uuid, date } = body;
+
+  if (uuid == undefined || date == undefined)
+  {
+    return 701;
+  }
 
   const marcacao = await db.get_product_on_db_by_uuid(uuid);
 
-  if ((await can_marcacao_fit(date, marcacao[0].duration, marcacao[0].id)) == false) {
+  if (marcacao.length == 0)
+  {
+    return 702;
+  }
+
+  if ((await can_marcacao_fit(date, marcacao[0].duration, marcacao[0].id)) == false)
+  {
     return 704;
   }
-  try {
+  try
+  {
     await db.edit_marcacao(uuid, date[0].ano, date[0].mes, date[0].dia, date[0].hora, date[0].minuto);
-  } catch (err) {
+  } catch (err)
+  {
     console.error(`Erro ao editar marcacao ${uuid} err ${err}`);
+    return 500;
   }
   return 200;
 }
