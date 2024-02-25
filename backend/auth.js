@@ -68,10 +68,10 @@ function there_is_user(user, data)
 
 async function login_user(user, password, resexpress)
 {
-  if (user == "" || password == "")
+  if (user == "" || password == "" || user == undefined || password == undefined)
   {
     console.log("User or password empty");
-    resexpress.status(500).send("User or password empty");
+    resexpress.status(701).send("User or password empty");
     return;
   }
 
@@ -80,6 +80,7 @@ async function login_user(user, password, resexpress)
     if (sessions[i].user == user)
     {
       logout_user(sessions[i].token);
+      break;
     }
   }
 
@@ -99,7 +100,6 @@ async function login_user(user, password, resexpress)
         session_token = create_session(user, data[0].admin);
         console.log(session_token);
         resexpress.status(200).send(JSON.stringify('{ "session_token": "' + session_token + '" }'));
-
         return;
       } else
       {
@@ -116,20 +116,20 @@ async function login_user(user, password, resexpress)
 
 async function create_user(user, password, admin, email, phone_number, full_name, image, resexpress)
 {
+  if (user == "" || password == "" || user == undefined || password == undefined || admin == "" || admin == undefined || email == "" || email == undefined || phone_number == "" || phone_number == undefined || full_name == "" || full_name == undefined || image == "" || image == undefined)
+  {
+    console.log("Bad input");
+    resexpress.status(400).send("Bad input");
+    return;
+  }
+
   //verificar se user ja existe
   const existingUser = await db.search_for_user(user);
 
   if (existingUser[0])
   {
     console.log(`User ${user} already exists`);
-    resexpress.status(401).send("User already exists");
-    return;
-  }
-
-  if (user == "" || password == "")
-  {
-    console.log("User or password empty");
-    resexpress.status(500).send("User or password empty");
+    resexpress.status(701).send("User already exists");
     return;
   }
 
@@ -145,23 +145,32 @@ async function create_user(user, password, admin, email, phone_number, full_name
     .catch((err) =>
     {
       console.log(err);
+      resexpress.status(500).send("Internal Error");
     });
 }
 
 async function edit_user(user, email, phone_number, full_name, image, resexpress)
 {
+
+  if (user == "" || user == undefined || email == "" || email == undefined || phone_number == "" || phone_number == undefined || full_name == "" || full_name == undefined || image == "" || image == undefined)
+  {
+    console.log("Bad input");
+    resexpress.status(400).send("Bad input");
+    return;
+  }
+
   const existingUser = await db.search_for_user(user);
 
   if (!existingUser[0])
   {
     console.log(`User ${user} does not exist`);
-    resexpress.status(401).send("User does not exist");
+    resexpress.status(701).send("User does not exist");
     return;
   }
   if (existingUser[0].user != user)
   {
     console.log(`User ${user} does not exist`);
-    resexpress.status(401).send("User does not exist");
+    resexpress.status(701).send("User does not exist");
     return;
   }
 
@@ -174,6 +183,7 @@ async function edit_user(user, email, phone_number, full_name, image, resexpress
     .catch((err) =>
     {
       console.log(err);
+      resexpress.status(500).send("Internal Error");
     });
 }
 
@@ -184,19 +194,19 @@ async function delete_user(user, who_is_deleting, resexpress)
   if (who_is_deleting == user)
   {
     console.log(`User ${user} cannot delete himself`);
-    resexpress.status(401).send("User cannot delete himself");
+    resexpress.status(701).send("User cannot delete himself");
     return;
   }
   if (!existingUser[0])
   {
     console.log(`User ${user} does not exist`);
-    resexpress.status(401).send("User does not exist");
+    resexpress.status(400).send("User does not exist");
     return;
   }
   if (existingUser[0].user != user)
   {
     console.log(`User ${user} does not exist`);
-    resexpress.status(401).send("User does not exist");
+    resexpress.status(400).send("User does not exist");
     return;
   }
   db.delete_user(user)
@@ -209,24 +219,33 @@ async function delete_user(user, who_is_deleting, resexpress)
     .catch((err) =>
     {
       console.log(err);
-      3;
+      resexpress.status(500).send("Internal Error");
     });
 }
 
 function login_user_with_cookie(user_recieved, cookie)
 {
+  if (user_recieved == undefined || cookie == undefined)
+  {
+    console.log("User or cookie undefined");
+    return -1;
+  }
   console.log(user_recieved);
+
   var user = search_for_token(cookie);
+
   if (user == null)
   {
     console.log("User not found");
     return -1;
   }
+
   if (user_recieved != user.user)
   {
     console.log("User is wrong");
     return -1;
   }
+
   console.log("Logged in " + user.user + " if admin " + user.admin);
   return user.admin;
 }
@@ -236,7 +255,7 @@ function update_users_json(res)
   db.read_db_users()
     .then((result) =>
     {
-      for (var i = 0; i < result.length; i++)
+      for (var i = 0; i < result.length; i++) //remover isto daqui e passar para o frontEnd
       {
         result[i].image = "images/" + result[i].image;
       }
@@ -250,6 +269,12 @@ function update_users_json(res)
 
 function get_specific_user(user, res)
 {
+  if (user == undefined || user == "")
+  {
+    res.send("User not found");
+    res.status(400).send("User not found");
+    return;
+  }
   db.search_for_user(user)
     .then((result) =>
     {
@@ -271,6 +296,10 @@ function get_specific_user(user, res)
 
 function logout_user(cookie)
 {
+  if (cookie == undefined)
+  {
+    return;
+  }
   try
   {
     sessions = sessions.filter((session) =>

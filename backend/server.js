@@ -201,8 +201,10 @@ async function delete_product(product)
 
 function set_horario(dia, comeco, fim)
 {
-  //comeco = "10:00"
-  //fim = "12:00"
+  if (dia == undefined || comeco == undefined || fim == undefined)
+  {
+    return 400;
+  }
 
   if (dia < 0 || dia > 6 || comeco < 0 || comeco > 24 || fim < 0 || fim > 24)
   {
