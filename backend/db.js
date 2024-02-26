@@ -336,6 +336,37 @@ function read_horario_on_specific_day(dia)
   });
 }
 
+function set_bloqueio(dia, comeco, fim, uuid, user)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("INSERT INTO bloqueios (uuid, dia, comeco, fim, user) VALUES(?,?,?,?,?)", [uuid, dia, comeco, fim, user], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
+function get_bloqueio()
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.all("SELECT * FROM bloqueios", function (err, data)
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+
+}
+
 module.exports = {
   add_db,
   read_db,
@@ -357,4 +388,6 @@ module.exports = {
   set_horario,
   get_horario,
   read_horario_on_specific_day,
+  set_bloqueio,
+  get_bloqueio,
 };

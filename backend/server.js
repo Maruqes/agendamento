@@ -2,6 +2,7 @@ const { query } = require("express");
 var db = require("./db.js");
 var sms = require("./sms.js");
 var auth = require("./auth.js");
+const crypto = require("crypto");
 
 function containsSQLCode(str)
 {
@@ -36,7 +37,7 @@ function isValidPhoneNumber(user_number)
 
 async function update_agendamentos_json(res, username, user)
 {
-  if (username == "" || user == "")
+  if (username == "" || user == "" || username == undefined || user == undefined)
   {
     console.error("username or user is NULL");
     res.sendStatus(401);
@@ -63,6 +64,7 @@ async function update_agendamentos_json(res, username, user)
     .catch((err) =>
     {
       console.error(err);
+      res.sendStatus(500);
     });
 }
 
@@ -76,6 +78,7 @@ async function update_products_json(res)
     .catch((err) =>
     {
       console.error(err);
+      res.sendStatus(500);
     });
 }
 
@@ -223,7 +226,7 @@ function set_horario(dia, comeco, fim)
   return 200;
 }
 
-function get_horario(res)
+async function get_horario(res)
 {
   db.get_horario()
     .then((result) =>
@@ -233,8 +236,66 @@ function get_horario(res)
     .catch((err) =>
     {
       console.error(err);
+      res.sendStatus(500);
     });
 }
+
+
+async function set_bloqueio(dia, comeco, fim, user)
+{
+  //dia -> xx/xx/xxxx
+  if (dia == undefined || comeco == undefined || fim == undefined || user == undefined)
+  {
+    return 400;
+  }
+
+  const existingUser = await db.search_for_user(user);
+
+  if (!existingUser[0] || existingUser[0].user != user)
+  {
+    console.log(`User ${user} does not exist`);
+    return 701;
+  }
+
+  var day = dia.split("/")[0];
+  var mes = dia.split("/")[1];
+
+  if (day < 1 || day > 31 || mes < 1 || mes > 12)
+  {
+    return 400;
+  }
+
+
+  var comeco_hora = parseInt(comeco.split(":")[0]);
+  var comeco_minuto = parseInt(comeco.split(":")[1]);
+  var fim_hora = parseInt(fim.split(":")[0]);
+  var fim_minuto = parseInt(fim.split(":")[1]);
+  if (comeco_hora * 60 + comeco_minuto > fim_hora * 60 + fim_minuto)
+  {
+    return 400;
+  }
+
+  console.log(`[+] SETADO NOVO BLOQUEIO dia = ${dia} comeco = ${comeco} fim = ${fim} user = ${user}`);
+  let uuid = crypto.randomUUID();
+  db.set_bloqueio(dia, comeco, fim, uuid, user);
+  return 200;
+
+}
+
+async function get_bloqueio(res)
+{
+  db.get_bloqueio()
+    .then((result) =>
+    {
+      res.send(result);
+    })
+    .catch((err) =>
+    {
+      console.error(err);
+      res.sendStatus(500);
+    });
+}
+
 
 //////////////////////SHECULER//////////////////////
 function runAtSpecificTimeOfDay(hour, minutes, func)
@@ -272,4 +333,6 @@ module.exports = {
   containsSQLCode,
   set_horario,
   get_horario,
+  set_bloqueio,
+  get_bloqueio,
 };

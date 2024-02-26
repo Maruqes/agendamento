@@ -416,5 +416,48 @@ app.get("/get_horario", function (req, res)
   shop.get_horario(res);
 });
 
+app.post("/set_bloqueio", async function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+  if (autorizado == 1)
+  {
+    var result = await shop.set_bloqueio(
+      req.body.dia,
+      req.body.comeco,
+      req.body.fim,
+      req.body.user
+    );
+    res.sendStatus(result);
+  } else
+  {
+    res.sendStatus(401);
+  }
+});
+
+app.get("/get_bloqueio", function (req, res)
+{
+  shop.get_bloqueio(res);
+});
+
+app.post("/delete_bloqueio", async function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+  if (autorizado == 1)
+  {
+    var result = await shop.delete_bloqueio(req.body.uuid);
+    res.sendStatus(result);
+  } else
+  {
+    res.sendStatus(401);
+  }
+
+});
+
 app.listen(8080);
 console.log("Express server started");
