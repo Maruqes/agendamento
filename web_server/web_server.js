@@ -426,6 +426,8 @@ app.post("/set_bloqueio", async function (req, res)
   {
     var result = await shop.set_bloqueio(
       req.body.dia,
+      req.body.mes,
+      req.body.ano,
       req.body.comeco,
       req.body.fim,
       req.body.user

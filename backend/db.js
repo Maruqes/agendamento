@@ -336,11 +336,11 @@ function read_horario_on_specific_day(dia)
   });
 }
 
-function set_bloqueio(dia, comeco, fim, uuid, user)
+function set_bloqueio(dia, mes, ano, comeco, fim, uuid, user)
 {
   return new Promise((resolve, reject) =>
   {
-    db.run("INSERT INTO bloqueios (uuid, dia, comeco, fim, user) VALUES(?,?,?,?,?)", [uuid, dia, comeco, fim, user], (err) =>
+    db.run("INSERT INTO bloqueios (uuid, user, comeco, fim, dia, mes, ano) VALUES(?,?,?,?,?,?,?)", [uuid, user, comeco, fim, dia, mes, ano], (err) =>
     {
       if (err)
       {
@@ -364,7 +364,51 @@ function get_bloqueio()
       resolve(data);
     });
   });
+}
 
+function get_bloqueio_uuid(uuid)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.all("SELECT * FROM bloqueios WHERE uuid=?", [uuid], function (err, data)
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}
+
+function delete_bloqueio_on_db(uuid)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("DELETE FROM bloqueios WHERE uuid = ?", [uuid], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
+function read_bloqueio_on_specific_day(dia, mes, ano)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.all("SELECT * FROM bloqueios WHERE dia = ? AND mes = ? AND ano = ?", [dia, mes, ano], function (err, data)
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
 }
 
 module.exports = {
@@ -390,4 +434,7 @@ module.exports = {
   read_horario_on_specific_day,
   set_bloqueio,
   get_bloqueio,
+  get_bloqueio_uuid,
+  delete_bloqueio_on_db,
+  read_bloqueio_on_specific_day,
 };

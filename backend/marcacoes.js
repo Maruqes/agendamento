@@ -43,9 +43,13 @@ async function create_order(order, date, ip)
   }
 }
 
-async function can_marcacao_fit(date, duration, id)
+async function can_marcacao_fit(date, duration, id, user)
 {
+  //outras marcacoes
   const cur_marcacao = await db.read_marcacao_on_specific_day(date[0].dia, date[0].mes, date[0].ano);
+  const cur_bloqueio = await db.read_bloqueio_on_specific_day(date[0].dia, date[0].mes, date[0].ano);
+
+  if (cur_marcacao.length == 0 && cur_bloqueio.length == 0) return true;
 
   var start_mins = parseInt(date[0].hora) * 60 + parseInt(date[0].minuto);
   var end_mins = start_mins + parseInt(duration);
@@ -67,6 +71,7 @@ async function can_marcacao_fit(date, duration, id)
     }
   }
   //////////////////////////
+  console.log(date[0])
   var date = new Date(Date.UTC(date[0].ano, date[0].mes - 1, date[0].dia));
   const day1 = date.getDay();
   console.log("dia-> " + day1);
@@ -81,6 +86,23 @@ async function can_marcacao_fit(date, duration, id)
   if (start_mins < horario_start_mins || end_mins > horario_end_mins)
   {
     return false;
+  }
+
+
+  //bloqueios
+  for (var i = 0; i < cur_bloqueio.length; i++)
+  {
+    var hora_comeco = parseInt(cur_bloqueio[i].comeco.split(":")[0]) * 60 + parseInt(cur_bloqueio[i].comeco.split(":")[1]);
+    var hora_fim = parseInt(cur_bloqueio[i].fim.split(":")[0]) * 60 + parseInt(cur_bloqueio[i].fim.split(":")[1]);
+
+    if (start_mins >= hora_comeco && start_mins < hora_fim)
+    {
+      return false;
+    }
+    if (end_mins > hora_comeco && end_mins <= hora_fim)
+    {
+      return false;
+    }
   }
 
   return true;
@@ -101,7 +123,7 @@ async function new_order_test(body, ip)
   {
     return 703;
   }
-  if ((await can_marcacao_fit(date, product[0].duration, 0)) == false)
+  if ((await can_marcacao_fit(date, product[0].duration, 0, user)) == false)
   {
     return 704;
   }
@@ -209,7 +231,7 @@ async function edit_marcacao(body)
     return 702;
   }
 
-  if ((await can_marcacao_fit(date, marcacao[0].duration, marcacao[0].id)) == false)
+  if ((await can_marcacao_fit(date, marcacao[0].duration, marcacao[0].id, marcacao[0].user)) == false)
   {
     return 704;
   }

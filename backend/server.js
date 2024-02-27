@@ -241,30 +241,30 @@ async function get_horario(res)
 }
 
 
-async function set_bloqueio(dia, comeco, fim, user)
+async function set_bloqueio(dia, mes, ano, comeco, fim, user)
 {
   //dia -> xx/xx/xxxx
-  if (dia == undefined || comeco == undefined || fim == undefined || user == undefined)
+  if (dia == undefined || mes == undefined || ano == undefined || comeco == undefined || fim == undefined || user == undefined)
   {
     return 400;
   }
 
-  const existingUser = await db.search_for_user(user);
-
-  if (!existingUser[0] || existingUser[0].user != user)
+  if (user != '*')
   {
-    console.log(`User ${user} does not exist`);
-    return 701;
+    const existingUser = await db.search_for_user(user);
+
+    if (!existingUser[0] || existingUser[0].user != user)
+    {
+      console.log(`User ${user} does not exist`);
+      return 701;
+    }
   }
 
-  var day = dia.split("/")[0];
-  var mes = dia.split("/")[1];
 
-  if (day < 1 || day > 31 || mes < 1 || mes > 12)
+  if (dia < 1 || dia > 31 || mes < 1 || mes > 12)
   {
     return 400;
   }
-
 
   var comeco_hora = parseInt(comeco.split(":")[0]);
   var comeco_minuto = parseInt(comeco.split(":")[1]);
@@ -277,7 +277,7 @@ async function set_bloqueio(dia, comeco, fim, user)
 
   console.log(`[+] SETADO NOVO BLOQUEIO dia = ${dia} comeco = ${comeco} fim = ${fim} user = ${user}`);
   let uuid = crypto.randomUUID();
-  db.set_bloqueio(dia, comeco, fim, uuid, user);
+  db.set_bloqueio(dia, mes, ano, comeco, fim, uuid, user);
   return 200;
 
 }
@@ -294,6 +294,35 @@ async function get_bloqueio(res)
       console.error(err);
       res.sendStatus(500);
     });
+}
+
+async function delete_bloqueio(uuid)
+{
+  if (uuid == undefined || uuid == "")
+  {
+    console.log("uuid invalido");
+    return 701;
+  }
+  const existingBloqueio = await db.get_bloqueio_uuid(uuid);
+
+  if (!existingBloqueio[0] || existingBloqueio[0].uuid != uuid)
+  {
+    console.log(`Bloqueio ${uuid} does not exist`);
+    return 703;
+  }
+
+  try
+  {
+    await db.delete_bloqueio_on_db(uuid);
+    console.log(`Bloqueio ${uuid} removed`);
+  } catch (err)
+  {
+    console.log(`Error removing bloqueio ${uuid}: ${err}`);
+    console.error(`Error removing bloqueio ${uuid}: ${err}`);
+    return 500
+  }
+  return 200;
+
 }
 
 
@@ -335,4 +364,5 @@ module.exports = {
   get_horario,
   set_bloqueio,
   get_bloqueio,
+  delete_bloqueio,
 };
