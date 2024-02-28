@@ -458,8 +458,25 @@ app.post("/delete_bloqueio", async function (req, res)
   {
     res.sendStatus(401);
   }
-
 });
+
+app.post("/start_reset_password", async function (req, res)
+{
+  let result = await auth.reset_password_by_email(req.body.email);
+  res.sendStatus(result);
+});
+
+app.get("/reset_password_uuid/:uuid", function (req, res)
+{
+  res.sendFile(path.join(__dirname + "/reset_pass/index.html"));
+});
+
+app.post("/reset_password", async function (req, res)
+{
+  let result = await auth.reset_password(req.body.uuid, req.body.password);
+  res.sendStatus(result);
+});
+
 
 app.listen(8080);
 console.log("Express server started");

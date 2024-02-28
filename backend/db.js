@@ -411,6 +411,36 @@ function read_bloqueio_on_specific_day(dia, mes, ano)
   });
 }
 
+async function edit_password(email, password)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("UPDATE users SET password = ? WHERE email = ?", [password, email], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
+async function get_users_by_email(email)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.all("SELECT * FROM users WHERE email=?", [email], function (err, data)
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}
+
 module.exports = {
   add_db,
   read_db,
@@ -437,4 +467,6 @@ module.exports = {
   get_bloqueio_uuid,
   delete_bloqueio_on_db,
   read_bloqueio_on_specific_day,
+  edit_password,
+  get_users_by_email,
 };

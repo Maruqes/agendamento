@@ -1,5 +1,6 @@
 var db = require("./db.js");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 
 var sessions = [];
 
@@ -304,9 +305,10 @@ function logout_user(cookie)
   {
     sessions = sessions.filter((session) =>
     {
-      if (session.token === cookie)
+      if (session.token !== cookie)
       {
         console.log("Logged out user: " + session.user);
+        return session;
       }
     });
   } catch (err)
@@ -314,6 +316,123 @@ function logout_user(cookie)
     console.log(err);
   }
 }
+
+
+//reset passwords
+var reset_pass_tokens = [];
+
+function remove_reset_pass_token(token)
+{
+
+}
+
+function check_for_reset_password_token(uuid)
+{
+  let count = 0;
+
+  let interval = setInterval(function ()
+  {
+
+    count += 1;
+
+    if (count === 60) 
+    {
+      reset_pass_tokens = reset_pass_tokens.filter((token) =>   ////VER ESTA MERDA CARALHO
+      {
+        if (token.token !== uuid)
+        {
+          return token;
+        }
+      });
+      console.log("Stoped checking for reset password tokens");
+      clearInterval(interval);
+    }
+    console.log("Checking for reset password tokens");
+
+  }, 10000);
+}
+
+async function reset_password_by_email(email)
+{
+  if (email == undefined || email == "")
+  {
+    return 400;
+  }
+
+  const user_DB = await db.get_users_by_email(email);
+  console.log(user_DB);
+  if (user_DB.length === 0)
+  {
+    return 400;
+  }
+
+  //gerar a new link to reset password
+
+  let uuid = crypto.randomUUID();
+
+  reset_pass_tokens.push({ email: email, token: uuid });
+  check_for_reset_password_token(uuid);
+
+  console.log("http://localhost:8080/reset_password_uuid/" + uuid); //enviar email
+  return 200;
+}
+
+function delete_other_sessions(user)
+{
+  if (user == undefined || user === "")
+  {
+    return;
+  }
+  console.log(user)
+  console.log(sessions)
+  sessions = sessions.filter((session) =>
+  {
+    if (session.user !== user)
+    {
+      return session;
+    }
+  });
+  console.log("deleted other sessions")
+  console.log(sessions)
+}
+
+async function reset_password(uuid, password)
+{
+  if (uuid == undefined || password == undefined || uuid == "" || password == "")
+  {
+    return 400;
+  }
+
+  let user = reset_pass_tokens.filter((token) =>
+  {
+    if (token.token === uuid)
+    {
+      return token;
+    }
+  });
+
+  if (user.length === 0)
+  {
+    return 701;
+  }
+
+  const saltRounds = 10;
+  const hash = await bcrypt.hash(password, saltRounds);
+  return await db.edit_password(user[0].email, hash)
+    .then(async () =>
+    {
+      console.log("Password reseted");
+      await db.get_users_by_email(user[0].email).then((result) => { delete_other_sessions(result[0].user); });
+      return 200;
+    })
+    .catch((err) =>
+    {
+      console.log(err);
+      return 500;
+    });
+}
+
+
 sessions.push({ user: "admin", token: "admin", admin: 1 }); //PARA REMOVER
 sessions.push({ user: "admin0", token: "admin0", admin: 0 }); //PARA REMOVER
 console.log("REMOVER");
@@ -330,4 +449,6 @@ module.exports = {
   there_is_user,
   search_for_token,
   get_specific_user,
+  reset_password_by_email,
+  reset_password,
 };

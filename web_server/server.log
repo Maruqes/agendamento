@@ -1,12 +1,38 @@
-13:49:11 26-2-2024 -> Express server started
-13:49:15 26-2-2024 -> joao maraccao
-13:49:15 26-2-2024 -> { dia: '29', mes: '02', ano: '2024', hora: '12', minuto: '30' }
-13:49:15 26-2-2024 -> dia-> 4
-13:49:15 26-2-2024 -> hora_comeco-> 750
-13:49:15 26-2-2024 -> hora_fim-> 1440
-13:49:15 26-2-2024 -> hora_comeco-> 735
-13:49:15 26-2-2024 -> hora_fim-> 1440
-13:49:15 26-2-2024 -> Venda para tes2t@test2.com de 'massagem1' inicializada
-13:49:15 26-2-2024 -> Venda para tes2t@test2.com de 'massagem1' em andamento
-13:49:15 26-2-2024 -> Venda para tes2t@test2.com de 'massagem1' finalizada
-13:49:15 26-2-2024 -> SMS enviado para +351938534372 com o texto: Your order has been created
+11:59:31 28-2-2024 -> Express server started
+11:59:35 28-2-2024 -> Trying to login test
+11:59:36 28-2-2024 -> Logged in test if admin 0
+11:59:36 28-2-2024 -> ZiA7B13eG6bzLN37yaM8y1K5TIhsYNxmy1kvQ3gSK1EFsdt0oBoN5ZoJzM3U
+11:59:42 28-2-2024 -> Trying to login ola
+11:59:43 28-2-2024 -> Logged in ola if admin 0
+11:59:43 28-2-2024 -> uB82FiROgptCjafeXLbPkeSaLZtTFKvqhBMdqh9DiOP1CEki6HMRK15sTloD
+11:59:48 28-2-2024 -> test
+11:59:48 28-2-2024 -> Logged in test if admin 0
+11:59:48 28-2-2024 -> antes
+11:59:48 28-2-2024 -> [
+  { user: 'admin', token: 'admin', admin: 1 },
+  { user: 'admin0', token: 'admin0', admin: 0 },
+  {
+    user: 'test',
+    token: 'ZiA7B13eG6bzLN37yaM8y1K5TIhsYNxmy1kvQ3gSK1EFsdt0oBoN5ZoJzM3U',
+    admin: 0
+  },
+  {
+    user: 'ola',
+    token: 'uB82FiROgptCjafeXLbPkeSaLZtTFKvqhBMdqh9DiOP1CEki6HMRK15sTloD',
+    admin: 0
+  }
+]
+11:59:48 28-2-2024 -> Logged out user: admin
+11:59:48 28-2-2024 -> Logged out user: admin0
+11:59:48 28-2-2024 -> Logged out user: ola
+11:59:48 28-2-2024 -> depois-> 
+11:59:48 28-2-2024 -> [
+  { user: 'admin', token: 'admin', admin: 1 },
+  { user: 'admin0', token: 'admin0', admin: 0 },
+  {
+    user: 'ola',
+    token: 'uB82FiROgptCjafeXLbPkeSaLZtTFKvqhBMdqh9DiOP1CEki6HMRK15sTloD',
+    admin: 0
+  }
+]
+11:59:48 28-2-2024 -> Logout: test
