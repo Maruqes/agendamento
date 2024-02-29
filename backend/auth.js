@@ -298,9 +298,8 @@ function get_specific_user(user, res)
 function logout_user(cookie)
 {
   if (cookie == undefined)
-  {
     return;
-  }
+
   try
   {
     sessions = sessions.filter((session) =>
@@ -323,7 +322,31 @@ var reset_pass_tokens = [];
 
 function remove_reset_pass_token(token)
 {
+  if (token == undefined)
+    return;
 
+  try
+  {
+    reset_pass_tokens = reset_pass_tokens.filter((reset_pass_token) =>
+    {
+      if (reset_pass_token.token !== token)
+      {
+        return reset_pass_token;
+      }
+    });
+  } catch (err)
+  {
+    console.log(err);
+    return;
+  }
+}
+
+function find_reset_pass_token(token)
+{
+  if (token == undefined)
+    return;
+
+  return reset_pass_tokens.filter((reset_pass_token) => reset_pass_token.token === token);
 }
 
 function check_for_reset_password_token(uuid)
@@ -332,22 +355,22 @@ function check_for_reset_password_token(uuid)
 
   let interval = setInterval(function ()
   {
-
-    count += 1;
+    console.log("Checking for reset password tokens");
 
     if (count === 60) 
     {
-      reset_pass_tokens = reset_pass_tokens.filter((token) =>   ////VER ESTA MERDA CARALHO
-      {
-        if (token.token !== uuid)
-        {
-          return token;
-        }
-      });
+      remove_reset_pass_token(uuid)
       console.log("Stoped checking for reset password tokens");
       clearInterval(interval);
     }
-    console.log("Checking for reset password tokens");
+    else if (find_reset_pass_token(uuid).length === 0)
+    {
+      console.log("Stoped checking for reset password tokens");
+      clearInterval(interval);
+    }
+
+    count += 1;
+
 
   }, 10000);
 }
@@ -360,7 +383,7 @@ async function reset_password_by_email(email)
   }
 
   const user_DB = await db.get_users_by_email(email);
-  console.log(user_DB);
+
   if (user_DB.length === 0)
   {
     return 400;
@@ -423,6 +446,11 @@ async function reset_password(uuid, password)
     {
       console.log("Password reseted");
       await db.get_users_by_email(user[0].email).then((result) => { delete_other_sessions(result[0].user); });
+      console.log("antes")
+      console.log(reset_pass_tokens)
+      remove_reset_pass_token(uuid);
+      console.log("depois")
+      console.log(reset_pass_tokens)
       return 200;
     })
     .catch((err) =>
