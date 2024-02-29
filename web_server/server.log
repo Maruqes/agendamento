@@ -1,35 +1,6 @@
-10:27:1 29-2-2024 -> Express server started
-10:27:4 29-2-2024 -> admin
-10:27:4 29-2-2024 -> Logged in admin if admin 1
-10:27:4 29-2-2024 -> User teste does not exist
-10:27:7 29-2-2024 -> admin
-10:27:7 29-2-2024 -> Logged in admin if admin 1
-10:27:7 29-2-2024 -> [+] SETADO NOVO BLOQUEIO dia = 29 comeco = 00:00 fim = 12:00 user = test
-10:27:16 29-2-2024 -> joao maraccao
-10:27:16 29-2-2024 -> { dia: '29', mes: '02', ano: '2024', hora: '10', minuto: '00' }
-10:27:16 29-2-2024 -> dia-> 4
-10:27:16 29-2-2024 -> ola test
-10:27:16 29-2-2024 -> * test
-10:27:16 29-2-2024 -> bloq geral
-10:27:16 29-2-2024 -> test test
-10:27:16 29-2-2024 -> bloq user
-10:27:16 29-2-2024 -> joao maraccao
-10:27:16 29-2-2024 -> { dia: '29', mes: '02', ano: '2024', hora: '10', minuto: '00' }
-10:27:16 29-2-2024 -> dia-> 4
-10:27:16 29-2-2024 -> ola test
-10:27:16 29-2-2024 -> * test
-10:27:16 29-2-2024 -> bloq geral
-10:27:16 29-2-2024 -> test test
-10:27:16 29-2-2024 -> bloq user
-10:27:21 29-2-2024 -> joao maraccao
-10:27:21 29-2-2024 -> { dia: '29', mes: '02', ano: '2024', hora: '10', minuto: '00' }
-10:27:21 29-2-2024 -> dia-> 4
-10:27:21 29-2-2024 -> ola ola
-10:27:21 29-2-2024 -> bloq user
-10:27:21 29-2-2024 -> * ola
-10:27:21 29-2-2024 -> bloq geral
-10:27:21 29-2-2024 -> test ola
-10:27:21 29-2-2024 -> Venda para tes2t@test2.com de 'massagem1' inicializada
-10:27:21 29-2-2024 -> Venda para tes2t@test2.com de 'massagem1' em andamento
-10:27:21 29-2-2024 -> Venda para tes2t@test2.com de 'massagem1' finalizada
-10:27:21 29-2-2024 -> SMS enviado para +351938534372 com o texto: Your order has been created
+18:12:54 29-2-2024 -> Express server started
+18:12:55 29-2-2024 -> admin
+18:12:55 29-2-2024 -> Logged in admin if admin 1
+18:12:55 29-2-2024 -> User permission changed
+18:12:59 29-2-2024 -> admin
+18:12:59 29-2-2024 -> Logged in admin if admin 1

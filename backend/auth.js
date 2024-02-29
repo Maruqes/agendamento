@@ -461,6 +461,38 @@ async function reset_password(uuid, password)
 }
 
 
+async function change_user_permission(user, permission)
+{
+  if (user == undefined || permission == undefined)
+  {
+    return 400;
+  }
+  if (parseInt(permission) !== 0 && parseInt(permission) !== 1)
+  {
+    return 400;
+  }
+
+  const user_DB = await db.search_for_user(user);
+  if (user_DB.length === 0)
+  {
+    return 701;
+  }
+
+
+  return await db.change_user_permission(user, permission)
+    .then(() =>
+    {
+      console.log("User permission changed");
+      return 200;
+    })
+    .catch((err) =>
+    {
+      console.log(err);
+      return 500;
+    });
+}
+
+
 sessions.push({ user: "admin", token: "admin", admin: 1 }); //PARA REMOVER
 sessions.push({ user: "admin0", token: "admin0", admin: 0 }); //PARA REMOVER
 console.log("REMOVER");
@@ -479,4 +511,5 @@ module.exports = {
   get_specific_user,
   reset_password_by_email,
   reset_password,
+  change_user_permission,
 };

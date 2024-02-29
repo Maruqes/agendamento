@@ -53,6 +53,9 @@ app.post("/upload", (req, res) =>
   res.sendStatus(200);
 });
 
+
+
+////marcacoes
 app.post("/new", async function (req, res)
 {
   var result = await marcacoes.new_order_test(req.body, req.ip);
@@ -126,7 +129,12 @@ app.get("/get_marcacoes", function (req, res)
     res.sendStatus(401);
   }
 });
+////////////////////////
 
+
+
+
+////products
 app.post("/create_product", async function (req, res)
 {
   var autorizado = auth.login_user_with_cookie(
@@ -227,13 +235,9 @@ app.post("/edit_product", async function (req, res)
     res.sendStatus(401);
   }
 });
+////////////////////////
 
-app.post("/login", function (req, res)
-{
-  console.log("Trying to login " + req.body.user);
-  auth.login_user(req.body.user, req.body.password, res);
-});
-
+////users
 app.post("/create_user", function (req, res)
 {
   var autorizado = auth.login_user_with_cookie(
@@ -314,27 +318,6 @@ app.post("/edit_user", function (req, res)
   }
 });
 
-app.post("/login_cookie", function (req, res)
-{
-  var autorizado = auth.login_user_with_cookie(
-    req.body.username,
-    req.body.cookie
-  );
-  if (autorizado >= 0)
-  {
-    res.sendFile(path.join(__dirname + "/backoffice/backoffice.html"));
-  } else
-  {
-    res.sendStatus(401);
-  }
-});
-
-//js files
-app.get("/backoffice.js", function (req, res)
-{
-  res.sendFile(path.join(__dirname + "/backoffice/backoffice.js"));
-});
-
 app.get("/get_users", function (req, res)
 {
   var autorizado = auth.login_user_with_cookie(
@@ -347,6 +330,30 @@ app.get("/get_users", function (req, res)
   } else if (autorizado == 0)
   {
     auth.get_specific_user(req.query.username, res);
+  } else
+  {
+    res.sendStatus(401);
+  }
+});
+////////////////////////
+
+
+////login
+app.post("/login", function (req, res)
+{
+  console.log("Trying to login " + req.body.user);
+  auth.login_user(req.body.user, req.body.password, res);
+});
+
+app.post("/login_cookie", function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+  if (autorizado >= 0)
+  {
+    res.sendFile(path.join(__dirname + "/backoffice/backoffice.html"));
   } else
   {
     res.sendStatus(401);
@@ -369,7 +376,11 @@ app.post("/logout", function (req, res)
     res.sendStatus(401);
   }
 });
+////////////////////////
 
+
+
+//////images
 app.get("/images/:name", function (req, res)
 {
   if (
@@ -390,7 +401,9 @@ app.get("/images/:name", function (req, res)
     res.sendStatus(403);
   }
 });
+////////////////////////
 
+//////horarios/bloqueios
 app.post("/set_horario", async function (req, res)
 {
   var autorizado = auth.login_user_with_cookie(
@@ -459,7 +472,9 @@ app.post("/delete_bloqueio", async function (req, res)
     res.sendStatus(401);
   }
 });
+////////////////////////
 
+///reset password
 app.post("/start_reset_password", async function (req, res)
 {
   let result = await auth.reset_password_by_email(req.body.email);
@@ -475,6 +490,44 @@ app.post("/reset_password", async function (req, res)
 {
   let result = await auth.reset_password(req.body.uuid, req.body.password);
   res.sendStatus(result);
+});
+
+
+
+//////
+app.post("/change_user_permission", async function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+  if (autorizado == 1)
+  {
+    var result = await auth.change_user_permission(
+      req.body.user,
+      req.body.permission
+    );
+    if (result == 701)
+    {
+      res.status(result).send("User does not exist");
+
+    } else
+    {
+      res.sendStatus(result);
+
+    }
+  } else
+  {
+    res.sendStatus(401);
+  }
+});
+
+
+
+//js files
+app.get("/backoffice.js", function (req, res)
+{
+  res.sendFile(path.join(__dirname + "/backoffice/backoffice.js"));
 });
 
 

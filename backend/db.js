@@ -441,6 +441,22 @@ async function get_users_by_email(email)
   });
 }
 
+async function change_user_permission(user, admin)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("UPDATE users SET admin = ? WHERE user = ?", [admin, user], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+
+}
+
 module.exports = {
   add_db,
   read_db,
@@ -469,4 +485,5 @@ module.exports = {
   read_bloqueio_on_specific_day,
   edit_password,
   get_users_by_email,
+  change_user_permission,
 };

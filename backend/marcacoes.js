@@ -56,7 +56,8 @@ async function can_marcacao_fit(date, duration, id, user)
 
   for (var i = 0; i < cur_marcacao.length; i++)
   {
-    if (cur_marcacao[i].id == id) continue;
+    if (cur_marcacao[i].id == id) continue; // nao confilitir com a propria marcacao
+    if (cur_marcacao[i].user != user) continue; // nao confilitir com marcacoes de outros usuarios
 
     var cur_start_mins = cur_marcacao[i].hora * 60 + cur_marcacao[i].minuto;
     var cur_end_mins = cur_start_mins + cur_marcacao[i].duration;
@@ -94,15 +95,29 @@ async function can_marcacao_fit(date, duration, id, user)
   {
     var hora_comeco = parseInt(cur_bloqueio[i].comeco.split(":")[0]) * 60 + parseInt(cur_bloqueio[i].comeco.split(":")[1]);
     var hora_fim = parseInt(cur_bloqueio[i].fim.split(":")[0]) * 60 + parseInt(cur_bloqueio[i].fim.split(":")[1]);
+    console.log(cur_bloqueio[i].user + " " + user)
+    if (cur_bloqueio[i].user == user)
+    {
+      if (start_mins >= hora_comeco && start_mins < hora_fim)
+      {
+        return false;
+      }
+      if (end_mins > hora_comeco && end_mins <= hora_fim)
+      {
+        return false;
+      }
+    } else if (cur_bloqueio[i].user == '*')
+    {
+      if (start_mins >= hora_comeco && start_mins < hora_fim)
+      {
+        return false;
+      }
+      if (end_mins > hora_comeco && end_mins <= hora_fim)
+      {
+        return false;
+      }
+    }
 
-    if (start_mins >= hora_comeco && start_mins < hora_fim)
-    {
-      return false;
-    }
-    if (end_mins > hora_comeco && end_mins <= hora_fim)
-    {
-      return false;
-    }
   }
 
   return true;
