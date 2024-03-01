@@ -454,10 +454,100 @@ async function change_user_permission(user, admin)
       resolve();
     });
   });
+}
 
+async function DEBUG_DB()
+{
+  return new Promise((resolve, reject) =>
+  {
+    let responder = [];
+
+    const usersPromise = new Promise((resolve, reject) =>
+    {
+      db.all("SELECT * FROM users", function (err, data)
+      {
+        if (err)
+        {
+          reject(err);
+        } else
+        {
+          resolve(data);
+        }
+      });
+    });
+
+    const productsPromise = new Promise((resolve, reject) =>
+    {
+      db.all("SELECT * FROM products", function (err, data)
+      {
+        if (err)
+        {
+          reject(err);
+        } else
+        {
+          resolve(data);
+        }
+      });
+    });
+
+    const marcacoesPromise = new Promise((resolve, reject) =>
+    {
+      db.all("SELECT * FROM marcacoes", function (err, data)
+      {
+        if (err)
+        {
+          reject(err);
+        } else
+        {
+          resolve(data);
+        }
+      });
+    });
+
+    const horariosPromise = new Promise((resolve, reject) =>
+    {
+      db.all("SELECT * FROM horarios", function (err, data)
+      {
+        if (err)
+        {
+          reject(err);
+        } else
+        {
+          resolve(data);
+        }
+      });
+    });
+
+    const bloqueiosPromise = new Promise((resolve, reject) =>
+    {
+      db.all("SELECT * FROM bloqueios", function (err, data)
+      {
+        if (err)
+        {
+          reject(err);
+        } else
+        {
+          resolve(data);
+        }
+      });
+    });
+
+    Promise.all([usersPromise, productsPromise, marcacoesPromise, horariosPromise, bloqueiosPromise])
+      .then(([users, products, marcacoes, horarios, bloqueios]) =>
+      {
+        responder.push({ "users": users });
+        responder.push({ "products": products });
+        responder.push({ "marcacoes": marcacoes });
+        responder.push({ "horarios": horarios });
+        responder.push({ "bloqueios": bloqueios });
+        resolve(responder);
+      })
+      .catch(reject);
+  });
 }
 
 module.exports = {
+  DEBUG_DB,
   add_db,
   read_db,
   get_product_on_db,

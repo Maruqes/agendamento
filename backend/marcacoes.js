@@ -145,6 +145,8 @@ async function new_order_test(body, ip)
 
   var data = await db.search_for_user(user);
 
+  if (data.length == 0) return 705;
+
   try
   {
     if (user != data[0].user) return 705;

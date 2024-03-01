@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Database Tables</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        button {
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        pre {
+            background-color: #333;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .table-heading {
+            font-size: 18px;
+            margin-top: 30px;
+        }
+    </style>
+    <script>
+        // Function to make the API request and display the tables
+        async function fetchTables()
+        {
+            try
+            {
+                const response = await fetch('/debug_db');
+                const data = await response.json();
+                console.log(data)
+                // Display the users table
+                const usersTable = document.getElementById('usersTable');
+                usersTable.innerHTML = JSON.stringify(data[0].users, null, 2);
+
+                // Display the marcacoes table
+                const marcacoesTable = document.getElementById('marcacoesTable');
+                marcacoesTable.innerHTML = JSON.stringify(data[2].marcacoes, null, 2);
+
+                // Display the bloqueios table
+                const bloqueiosTable = document.getElementById('bloqueiosTable');
+                bloqueiosTable.innerHTML = JSON.stringify(data[4].bloqueios, null, 2);
+
+                // Display the horarios table
+                const horariosTable = document.getElementById('horariosTable');
+                horariosTable.innerHTML = JSON.stringify(data[3].horarios, null, 2);
+
+                // Display the products table
+                const productsTable = document.getElementById('productsTable');
+                productsTable.innerHTML = JSON.stringify(data[1].products, null, 2);
+            } catch (error)
+            {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Database Tables</h1>
+
+    <button onclick="fetchTables()">Fetch Tables</button>
+
+    <h2 class="table-heading">Users Table</h2>
+    <pre id="usersTable"></pre>
+
+    <h2 class="table-heading">Marcacoes Table</h2>
+    <pre id="marcacoesTable"></pre>
+
+    <h2 class="table-heading">Bloqueios Table</h2>
+    <pre id="bloqueiosTable"></pre>
+
+    <h2 class="table-heading">Horarios Table</h2>
+    <pre id="horariosTable"></pre>
+
+    <h2 class="table-heading">Products Table</h2>
+    <pre id="productsTable"></pre>
+</body>
+
+</html>

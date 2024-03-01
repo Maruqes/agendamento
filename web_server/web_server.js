@@ -4,6 +4,7 @@ var path = require("path");
 const bodyParser = require("body-parser");
 var shop = require("../backend/server.js");
 var auth = require("../backend/auth.js");
+var db = require("../backend/db.js");
 var marcacoes = require("../backend/marcacoes.js");
 const cors = require("cors");
 const console = require("./logs").console;
@@ -47,7 +48,6 @@ app.post("/upload", (req, res) =>
     (err) =>
     {
       if (err) throw err;
-      console.log("The file has been saved!");
     }
   );
   res.sendStatus(200);
@@ -494,6 +494,8 @@ app.post("/reset_password", async function (req, res)
 
 
 
+
+
 //////
 app.post("/change_user_permission", async function (req, res)
 {
@@ -523,13 +525,34 @@ app.post("/change_user_permission", async function (req, res)
 });
 
 
-
 //js files
 app.get("/backoffice.js", function (req, res)
 {
   res.sendFile(path.join(__dirname + "/backoffice/backoffice.js"));
 });
 
+
+////debug ---> TO REMOVE
+
+app.get("/debug_db", async function (req, res)
+{
+  await db.DEBUG_DB()
+    .then((result) =>
+    {
+      res.send(result);
+    })
+    .catch((err) =>
+    {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+app.get("/debug_db_html", function (req, res)
+{
+  res.sendFile(path.join(__dirname + "/backoffice/see_db.html"));
+});
+console.log("REMOVE DEBUG ROUTES");
 
 app.listen(8080);
 console.log("Express server started");
