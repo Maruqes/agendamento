@@ -45,7 +45,7 @@ all of this being strings
 
 #### Edit an appointment
 
-```http
+```POST
   POST /edit_marcacao
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -56,7 +56,7 @@ all of this being strings
 
 #### Delete an appointment
 
-```http
+```POST
   POST /delete_marcacao
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -69,7 +69,7 @@ all of this being strings
 #### Get all appointments
 
 ```GET
-  POST /get_marcacoes?username=${username}&cookie=${cookie}&user=${user}
+  GET /get_marcacoes?username=${username}&cookie=${cookie}&user=${user}
 ```
 | Parâmetro    | Tipo       | Descrição                           |
 | :----------  | :--------- | :---------------------------------- |
