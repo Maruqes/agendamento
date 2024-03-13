@@ -21,7 +21,7 @@ The 'name' sometimes can me taken as the service of the appointment and there ar
 
 #### Create a new appointment
 
-```http
+```POST
   POST /new
 ```
 
@@ -80,7 +80,7 @@ all of this being strings
 ## Product Related
 
 #### Create a product
-```http
+```POST
   POST /create_product
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -101,7 +101,7 @@ all of this being strings
 ```
 
 #### Delete a product
-```http
+```POST
   POST /delete_Product
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -113,7 +113,7 @@ all of this being strings
 
 
 #### Edit a product
-```http
+```POST
   POST /edit_product
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -130,7 +130,7 @@ all of this being strings
 ## User Related
 
 ### Login
-```http
+```POST
   POST /login
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -140,7 +140,7 @@ all of this being strings
 
 
 ### Create a user
-```http
+```POST
   POST /create_user
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -156,7 +156,7 @@ all of this being strings
 | `image`       | `string`   | The new user image|
 
 ### Edit a user
-```http
+```POST
   POST /edit_user
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -170,7 +170,7 @@ all of this being strings
 | `image`       | `string`   | The edit user image|
 
 ### Delete a user
-```http
+```POST
   POST /delete_user
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -181,7 +181,7 @@ all of this being strings
 
 
 ### Login with cookie
-```http
+```POST
   POST /login_cookie
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -200,7 +200,7 @@ all of this being strings
 | `cookie`       | `string`   | A login cookie from that user|
 
 ### Logout with cookie
-```http
+```POST
   POST /logout
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -212,7 +212,7 @@ all of this being strings
 ## Schedules
 
 ### Set schedules for appointments
-```http
+```POST
   POST /set_horario
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -224,7 +224,7 @@ all of this being strings
 | `fim`       | `string`   | Ending hours (ex-> "20:15")|
 
 ### Get schedules
-```http
+```GET
   GET /get_horario
 ```
 
@@ -233,7 +233,7 @@ all of this being strings
 Lock can be used for vacation for example, they are certain space of time that there can not be appointments.
 
 ### Set locks
-```http
+```POST
   POST /set_bloqueio
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -249,12 +249,12 @@ Lock can be used for vacation for example, they are certain space of time that t
 
 
 ### Get locks
-```http
+```GET
   GET /get_bloqueio
 ```
 
 ### Delete locks
-```http
+```POST
   POST /delete_bloqueio
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -267,7 +267,7 @@ Lock can be used for vacation for example, they are certain space of time that t
 ## Other
 
 ### Reset password
-```http
+```POST
   POST /start_reset_password
 ```
 | Parâmetro    | Tipo       | Descrição                           |
@@ -276,7 +276,7 @@ Lock can be used for vacation for example, they are certain space of time that t
 
 
 ### Reset password
-```http
+```POST
   POST /change_user_permission
 ```
 | Parâmetro    | Tipo       | Descrição                           |
