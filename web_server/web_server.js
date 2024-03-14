@@ -532,11 +532,28 @@ app.get("/backoffice.js", function (req, res)
 });
 
 
-////debug ---> TO REMOVE
+///get_all_db_data
+app.get("/get_all_db_data", async function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.query.username,
+    req.query.cookie
+  );
+  if (autorizado == 1)
+  {
+    var result = await db.get_all_db_data();
+    res.send(result);
+  } else
+  {
+    res.sendStatus(401);
+  }
+});
 
+////debug ---> TO REMOVE
+console.log("ADDING DEBUG ROUTES TO REMOVE");
 app.get("/debug_db", async function (req, res)
 {
-  await db.DEBUG_DB()
+  await db.get_all_db_data()
     .then((result) =>
     {
       res.send(result);

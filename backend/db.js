@@ -456,7 +456,7 @@ async function change_user_permission(user, admin)
   });
 }
 
-async function DEBUG_DB()
+async function get_all_db_data()
 {
   return new Promise((resolve, reject) =>
   {
@@ -471,6 +471,10 @@ async function DEBUG_DB()
           reject(err);
         } else
         {
+          data.forEach((element) =>
+          {
+            delete element.password;
+          });
           resolve(data);
         }
       });
@@ -544,10 +548,11 @@ async function DEBUG_DB()
       })
       .catch(reject);
   });
+
 }
 
 module.exports = {
-  DEBUG_DB,
+  get_all_db_data,
   add_db,
   read_db,
   get_product_on_db,

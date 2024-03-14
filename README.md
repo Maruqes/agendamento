@@ -286,4 +286,15 @@ Lock can be used for vacation for example, they are certain space of time that t
 | `user`       | `string`   | The user getting permissions changed|
 | `permission`       | `string`   | 0->normal // 1->admin|
 
+
+### Get all database (except password) for statistic purposes
+```GET
+  GET /get_all_db_data?username=${username}&cookie=${cookie}
+```
+| Parâmetro    | Tipo       | Descrição                           |
+| :----------  | :--------- | :---------------------------------- |
+| `username`       | `string`   | The username of a user   |
+| `cookie`       | `string`   | A login cookie from that user|
+
+
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
