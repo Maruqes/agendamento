@@ -71,7 +71,7 @@ async function can_marcacao_fit(date, duration, id, user)
       return false;
     }
   }
-  //////////////////////////
+  ///////////////////////////
   console.log(date[0])
   var date = new Date(Date.UTC(date[0].ano, date[0].mes - 1, date[0].dia));
   const day1 = date.getDay();
