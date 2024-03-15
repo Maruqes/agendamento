@@ -551,6 +551,26 @@ async function get_all_db_data()
 
 }
 
+async function save_message_on_chat(user, message)
+{
+  let date_ob = new Date();
+  let date = date_ob.toISOString().split(".")[0];
+
+
+  return new Promise((resolve, reject) =>
+  {
+    db.run("INSERT INTO chat (user, message,date) VALUES(?,?,?)", [user, message, date], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+
+}
+
 module.exports = {
   get_all_db_data,
   add_db,
@@ -581,4 +601,5 @@ module.exports = {
   edit_password,
   get_users_by_email,
   change_user_permission,
+  save_message_on_chat,
 };

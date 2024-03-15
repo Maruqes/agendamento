@@ -496,7 +496,12 @@ async function change_user_permission(user, permission)
 
 sessions.push({ user: "admin", token: "admin", admin: 1 }); //PARA REMOVER
 sessions.push({ user: "admin0", token: "admin0", admin: 0 }); //PARA REMOVER
-sessions.push({ user: defines.OUR_USER, token: "admin1", admin: 1 }); //PARA REMOVER
+
+for (var i = 0; i < defines.OUR_USERS.length; i++)
+{
+  sessions.push({ user: defines.OUR_USERS[i].username, token: defines.OUR_USERS[i].username, admin: 1 });
+}
+
 console.log("REMOVER");
 console.log(sessions);
 console.log("REMOVER");

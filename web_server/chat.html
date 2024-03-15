@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WebSocket Chat</title>
+</head>
+
+<body>
+    <button onclick="send_msg()">send</button>
+    <div id="messages"></div>
+
+    <script>
+        // Create a new WebSocket connection
+        let username = "our_user0"
+        let password = "our_password0"
+
+        let url = window.location.href;
+        url = url.replace("http", "ws")
+        url = url.replace("chat", "")
+        url = url + "ws?username=" + username + "&cookie=" + password
+        console.log(url)
+        const socket = new WebSocket(url);
+
+        // When the connection is established
+        socket.onopen = function ()
+        {
+            console.log('WebSocket connection established.');
+        };
+
+        // When a message is received
+        socket.onmessage = function (event)
+        {
+            const message = event.data;
+
+            // Create a new paragraph element
+            const paragraph = document.createElement('p');
+            paragraph.textContent = message;
+
+            // Append the paragraph to the messages div
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.appendChild(paragraph);
+            //socket.send("msg recieved " + message)
+        };
+
+        // When an error occurs
+        socket.onerror = function (error)
+        {
+            console.error('WebSocket error:', error);
+        };
+
+        // When the connection is closed
+        socket.onclose = function ()
+        {
+            console.log('WebSocket connection closed.');
+        };
+
+        function send_msg()
+        {
+            socket.send('Hello, Server!');
+        }
+    </script>
+</body>
+
+</html>

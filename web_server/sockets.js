@@ -5,25 +5,47 @@ const db = require('../backend/db.js');
 const wsServer = new ws.Server({ noServer: true })
 
 var sockets_arr = [];
+var sockets_admin_arr = [];
 
-function check_connection_state(ws, username)
+function check_connection_state(ws, username, admin)
 {
-    if (ws.readyState == ws.CLOSED)
+    if (admin)
     {
-        console.log('wsServer err/close');
-        for (var i = 0; i < sockets_arr.length; i++)
+        if (ws.readyState == ws.CLOSED)
         {
-            if (sockets_arr[i].ws == ws)
+            console.log('wsServer err/close');
+            for (var i = 0; i < sockets_admin_arr.length; i++)
             {
-                console.log('wsServer err/close ' + i + ' ' + username);
-                sockets_arr.splice(i, 1);
-                i--;
-                break;
+                if (sockets_admin_arr[i].ws == ws)
+                {
+                    console.log('wsServer err/close admin ' + i + ' ' + username);
+                    sockets_admin_arr.splice(i, 1);
+                    i--;
+                    break;
+                }
             }
+            return false;
         }
-        return false;
+        return true;
+    } else
+    {
+        if (ws.readyState == ws.CLOSED)
+        {
+            console.log('wsServer err/close');
+            for (var i = 0; i < sockets_arr.length; i++)
+            {
+                if (sockets_arr[i].ws == ws)
+                {
+                    console.log('wsServer err/close user' + i + ' ' + username);
+                    sockets_arr.splice(i, 1);
+                    i--;
+                    break;
+                }
+            }
+            return false;
+        }
+        return true;
     }
-    return true;
 
 }
 
@@ -32,10 +54,26 @@ function send_message_to_all_clients(message, username)
 {
     for (var i = 0; i < sockets_arr.length; i++)
     {
-        check_connection_state(sockets_arr[i].ws, sockets_arr[i].username);
-
+        let res = check_connection_state(sockets_arr[i].ws, sockets_arr[i].username, 0);
+        if (res == false)
+        {
+            i--
+            continue;
+        }
         sockets_arr[i].ws.send(username + ' said: ' + message + "  " + i);
     }
+
+    for (var i = 0; i < sockets_admin_arr.length; i++)
+    {
+        let res = check_connection_state(sockets_admin_arr[i].ws, sockets_admin_arr[i].username, 1);
+        if (res == false)
+        {
+            i--
+            continue;
+        }
+        sockets_admin_arr[i].ws.send(username + ' said: ' + message + "  " + i);
+    }
+    db.save_message_on_chat(username, message);
 }
 
 function create_ws_connection(httpServer)
@@ -47,6 +85,20 @@ function create_ws_connection(httpServer)
         let username = params.get('username');
         let cookie = params.get('cookie');
 
+        for (var i = 0; i < defines.OUR_USERS.length; i++)
+        {
+            if (defines.OUR_USERS[i].username == username && defines.OUR_USERS[i].password == cookie)
+            {
+                wsServer.handleUpgrade(req, socket, head, (ws) =>
+                {
+                    wsServer.emit('connection', ws, req);
+                    sockets_admin_arr.push({ ws: ws, username: username });
+                });
+                console.log('admin connected ' + username);
+                return
+            }
+        }
+
         let autorizado = auth.login_user_with_cookie(cookie, username);
 
         console.log(autorizado);
@@ -55,8 +107,9 @@ function create_ws_connection(httpServer)
             wsServer.handleUpgrade(req, socket, head, (ws) =>
             {
                 wsServer.emit('connection', ws, req);
-                sockets_arr.push({ ws: ws, username: params.get('username') });
+                sockets_arr.push({ ws: ws, username: username });
             });
+            console.log('user connected ' + username);
             return;
         } else
         {
@@ -71,12 +124,24 @@ function create_ws_connection(httpServer)
     {
         ws.on('message', (message) =>
         {
-            console.log(defines.STORE_NAME + ' received: ' + message);
-            for (var i = 0; i < sockets_arr.length; i++)
+            let temp_socket = sockets_arr.find((element) => element.ws == ws);
+            if (temp_socket != undefined)
             {
-                ///send msgs to db here and call function to send to all clients
-                send_message_to_all_clients(message, sockets_arr[i].username);
+                console.log(defines.STORE_NAME + ' received: ' + message + ' from ' + temp_socket.username);
+                send_message_to_all_clients(message, temp_socket.username);
+                return;
             }
+            else
+            {
+                temp_socket = sockets_admin_arr.find((element) => element.ws == ws);
+                if (temp_socket != undefined)
+                {
+                    console.log(defines.STORE_NAME + ' received: ' + message + ' from ' + temp_socket.username);
+                    send_message_to_all_clients(message, temp_socket.username);
+                    return;
+                }
+            }
+            console.log('wsServer err');
         });
     });
 

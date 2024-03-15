@@ -103,10 +103,16 @@
   <input type="number" id="service_minute" name="service_minute" placeholder="Enter the service minute">
   <button id="create_marcacao-button" onclick="create_marcacao()">Marcar</button>
   <button id="test" onclick="test()">Test</button>
+  <div id="messages"></div>
+
 </body>
 <script>
 
-  const socket = new WebSocket('ws://localhost:8080/ws?username=admin0&cookie=admin0');
+  let url = window.location.href;
+  url = url.replace("http", "ws")
+  url = url + "ws?username=admin0&cookie=admin0"
+  console.log(url)
+  const socket = new WebSocket(url);
 
 
   socket.onopen = function ()
@@ -118,6 +124,13 @@
   {
     const message = event.data;
     console.log('Received message:', message);
+
+    const paragraph = document.createElement('p');
+    paragraph.textContent = message;
+
+    // Append the paragraph to the messages div
+    const messagesDiv = document.getElementById('messages');
+    messagesDiv.appendChild(paragraph);
   };
 
   socket.onerror = function (error)

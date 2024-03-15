@@ -1,38 +1,25 @@
-8:35:59 15-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
-8:35:59 15-3-2024 -> REMOVE DEBUG ROUTES
-8:35:59 15-3-2024 -> Express server started
-8:36:2 15-3-2024 -> ola
-8:36:2 15-3-2024 -> User not found
-8:36:2 15-3-2024 -> admin0
-8:36:2 15-3-2024 -> Logged in admin0 if admin 0
-8:36:2 15-3-2024 -> 0
-8:36:3 15-3-2024 -> ola
-8:36:3 15-3-2024 -> User not found
-8:36:3 15-3-2024 -> admin0
-8:36:3 15-3-2024 -> Logged in admin0 if admin 0
-8:36:3 15-3-2024 -> 0
-8:36:6 15-3-2024 -> admin0
-8:36:6 15-3-2024 -> Logged in admin0 if admin 0
-8:36:6 15-3-2024 -> 0
-8:36:6 15-3-2024 -> ola
-8:36:6 15-3-2024 -> User not found
-8:36:9 15-3-2024 -> ola
-8:36:9 15-3-2024 -> User not found
-8:36:9 15-3-2024 -> admin0
-8:36:9 15-3-2024 -> Logged in admin0 if admin 0
-8:36:9 15-3-2024 -> 0
-8:36:11 15-3-2024 -> Loja 1 received: Hello, Server!
-8:36:11 15-3-2024 -> Loja 1 received: Hello, Server!
-8:36:12 15-3-2024 -> Loja 1 received: Hello, Server!
-8:36:12 15-3-2024 -> Loja 1 received: Hello, Server!
-8:36:12 15-3-2024 -> Loja 1 received: Hello, Server!
-8:36:12 15-3-2024 -> Loja 1 received: Hello, Server!
-8:36:17 15-3-2024 -> Loja 1 received: Hello, Server!
-8:36:17 15-3-2024 -> wsServer err/close
-8:36:17 15-3-2024 -> wsServer err/close 0 admin0
-8:36:17 15-3-2024 -> Loja 1 received: Hello, Server!
-8:36:17 15-3-2024 -> Loja 1 received: Hello, Server!
-8:36:22 15-3-2024 -> Loja 1 received: Hello, Server!
-8:36:22 15-3-2024 -> wsServer err/close
-8:36:22 15-3-2024 -> wsServer err/close 1 admin0
-8:36:22 15-3-2024 -> Loja 1 received: Hello, Server!
+10:40:16 15-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
+10:40:16 15-3-2024 -> REMOVE DEBUG ROUTES
+10:40:16 15-3-2024 -> Express server started
+10:40:21 15-3-2024 -> admin connected our_user0
+10:40:21 15-3-2024 -> ola
+10:40:21 15-3-2024 -> User not found
+10:40:21 15-3-2024 -> admin0
+10:40:21 15-3-2024 -> Logged in admin0 if admin 0
+10:40:21 15-3-2024 -> 0
+10:40:21 15-3-2024 -> user connected admin0
+10:40:23 15-3-2024 -> Loja 1 received: Hello, Server! from admin0
+10:40:31 15-3-2024 -> Loja 1 received: Hello, Server! from our_user0
+10:40:36 15-3-2024 -> Loja 1 received: Hello, Server! from admin0
+10:40:36 15-3-2024 -> Loja 1 received: Hello, Server! from admin0
+10:40:36 15-3-2024 -> Loja 1 received: Hello, Server! from admin0
+10:40:43 15-3-2024 -> ola
+10:40:43 15-3-2024 -> User not found
+10:40:43 15-3-2024 -> admin0
+10:40:43 15-3-2024 -> Logged in admin0 if admin 0
+10:40:43 15-3-2024 -> 0
+10:40:43 15-3-2024 -> user connected admin0
+10:40:46 15-3-2024 -> Loja 1 received: Hello, Server! from admin0
+10:40:46 15-3-2024 -> wsServer err/close
+10:40:46 15-3-2024 -> wsServer err/close user0 admin0
+10:40:46 15-3-2024 -> Loja 1 received: Hello, Server! from admin0

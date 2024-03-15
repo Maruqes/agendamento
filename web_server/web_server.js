@@ -550,6 +550,11 @@ app.get("/get_all_db_data", async function (req, res)
   }
 });
 
+app.get("/chat", function (req, res)
+{
+  res.sendFile(path.join(__dirname + "/chat.html"));
+});
+
 ////debug ---> TO REMOVE
 console.log("ADDING DEBUG ROUTES TO REMOVE");
 app.get("/debug_db", async function (req, res)
@@ -566,7 +571,7 @@ app.get("/debug_db", async function (req, res)
     });
 });
 
-app.get("/debug_db_html", function (req, res)
+app.get("/  ", function (req, res)
 {
   res.sendFile(path.join(__dirname + "/backoffice/see_db.html"));
 });
