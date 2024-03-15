@@ -1,9 +1,17 @@
-19:37:14 14-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
-19:37:14 14-3-2024 -> REMOVE DEBUG ROUTES
-19:37:14 14-3-2024 -> Express server started
-19:37:33 14-3-2024 -> admin
-19:37:33 14-3-2024 -> Logged in admin if admin 1
-19:37:43 14-3-2024 -> admin0
-19:37:43 14-3-2024 -> Logged in admin0 if admin 0
-19:37:47 14-3-2024 -> admin
-19:37:47 14-3-2024 -> Logged in admin if admin 1
+0:53:35 15-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
+0:53:35 15-3-2024 -> REMOVE DEBUG ROUTES
+0:53:35 15-3-2024 -> Express server started
+0:53:36 15-3-2024 -> ola
+0:53:36 15-3-2024 -> User not found
+0:53:36 15-3-2024 -> admin0 admin0
+0:53:36 15-3-2024 -> admin0
+0:53:36 15-3-2024 -> Logged in admin0 if admin 0
+0:53:36 15-3-2024 -> 0
+0:53:37 15-3-2024 -> ola
+0:53:37 15-3-2024 -> User not found
+0:53:37 15-3-2024 -> admin0 admin0
+0:53:37 15-3-2024 -> admin0
+0:53:37 15-3-2024 -> Logged in admin0 if admin 0
+0:53:37 15-3-2024 -> 0
+0:53:38 15-3-2024 -> received: Hello, Server!
+0:53:38 15-3-2024 -> Loja 1

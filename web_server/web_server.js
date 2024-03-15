@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 var shop = require("../backend/server.js");
 var auth = require("../backend/auth.js");
 var db = require("../backend/db.js");
+var socket = require("../web_server/sockets.js");
 var marcacoes = require("../backend/marcacoes.js");
 const cors = require("cors");
 const console = require("./logs").console;
@@ -571,5 +572,8 @@ app.get("/debug_db_html", function (req, res)
 });
 console.log("REMOVE DEBUG ROUTES");
 
-app.listen(8080);
+httpServer = app.listen(8080);
 console.log("Express server started");
+
+socket.create_ws_connection(httpServer);
+
