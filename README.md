@@ -297,4 +297,78 @@ Lock can be used for vacation for example, they are certain space of time that t
 | `cookie`       | `string`   | A login cookie from that user|
 
 
+## Chat
+To get the chat working on the front end read this.
+This works with WebSockets with a simple login and sendim messages.
+The objective is to have support between clients/users/admins with the owner of the product
+
+### First create a WebSocket with
+```
+let username = "your_user1"
+let password = "your_password1"
+
+let url = window.location.href;
+url = url.replace("http", "ws")
+url = url.replace("chat", "")
+url = url + "ws?username=" + username + "&cookie=" + password
+console.log(url)
+const socket = new WebSocket(url);
+```
+this passwords can be defined as a normal user/admin or on the defines.js file (owner hosting the server)
+
+### Set some basic functions
+
+```
+socket.onopen = function ()
+{
+    console.log('WebSocket connection established.');
+};
+
+socket.onerror = function (error)
+{
+    console.error('WebSocket error:', error);
+};
+
+socket.onclose = function ()
+{
+    console.log('WebSocket connection closed.');
+};
+```
+
+### Recieve messages
+The message is sent in the following format
+```
+user/*DIV*/message
+```
+This happens so you dont have the need of recieving 2 messages woth user and other with the actual message.
+Just divide the message where you got /\*DIV\*/
+```
+socket.onmessage = function (event)
+{
+    const message = event.data;
+    //do something with the message
+};
+```
+
+### Send messages
+
+```
+socket.send('Your Message');
+```
+
+On the files we have a /chat.html file sent to **/chat** route for testing purposes
+
+
+We also have a route to get the messages
+### Get messages
+```GET
+  GET /get_chat_msg?username={username}&cookie={cookie}&number_of_messages={number_of_messages}
+```
+| Parâmetro    | Tipo       | Descrição                           |
+| :----------  | :--------- | :---------------------------------- |
+| `username`       | `string`   | The username of a user   |
+| `cookie`       | `string`   | A login cookie from that user|
+| `number_of_messages`       | `int`   | Number of messages you want starting from the last sent|
+
+
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
