@@ -1,25 +1,38 @@
-10:40:16 15-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
-10:40:16 15-3-2024 -> REMOVE DEBUG ROUTES
-10:40:16 15-3-2024 -> Express server started
-10:40:21 15-3-2024 -> admin connected our_user0
-10:40:21 15-3-2024 -> ola
-10:40:21 15-3-2024 -> User not found
-10:40:21 15-3-2024 -> admin0
-10:40:21 15-3-2024 -> Logged in admin0 if admin 0
-10:40:21 15-3-2024 -> 0
-10:40:21 15-3-2024 -> user connected admin0
-10:40:23 15-3-2024 -> Loja 1 received: Hello, Server! from admin0
-10:40:31 15-3-2024 -> Loja 1 received: Hello, Server! from our_user0
-10:40:36 15-3-2024 -> Loja 1 received: Hello, Server! from admin0
-10:40:36 15-3-2024 -> Loja 1 received: Hello, Server! from admin0
-10:40:36 15-3-2024 -> Loja 1 received: Hello, Server! from admin0
-10:40:43 15-3-2024 -> ola
-10:40:43 15-3-2024 -> User not found
-10:40:43 15-3-2024 -> admin0
-10:40:43 15-3-2024 -> Logged in admin0 if admin 0
-10:40:43 15-3-2024 -> 0
-10:40:43 15-3-2024 -> user connected admin0
-10:40:46 15-3-2024 -> Loja 1 received: Hello, Server! from admin0
-10:40:46 15-3-2024 -> wsServer err/close
-10:40:46 15-3-2024 -> wsServer err/close user0 admin0
-10:40:46 15-3-2024 -> Loja 1 received: Hello, Server! from admin0
+18:51:6 16-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
+18:51:6 16-3-2024 -> REMOVE DEBUG ROUTES
+18:51:6 16-3-2024 -> Express server started
+18:51:8 16-3-2024 -> our_user0
+18:51:8 16-3-2024 -> User not found
+18:51:10 16-3-2024 -> User or cookie undefined
+18:51:10 16-3-2024 -> -1
+18:51:33 16-3-2024 -> our_user0
+18:51:33 16-3-2024 -> User not found
+18:51:35 16-3-2024 -> User or cookie undefined
+18:51:35 16-3-2024 -> -1
+18:51:43 16-3-2024 -> our_user0
+18:51:43 16-3-2024 -> User not found
+18:51:46 16-3-2024 -> admin connected our_user0
+18:52:21 16-3-2024 -> our_user0
+18:52:21 16-3-2024 -> User not found
+18:52:23 16-3-2024 -> admin connected our_user0
+18:52:24 16-3-2024 -> User or cookie undefined
+18:52:24 16-3-2024 -> admin0
+18:52:24 16-3-2024 -> Logged in admin0 if admin 0
+18:52:24 16-3-2024 -> 0
+18:52:24 16-3-2024 -> user connected admin0
+18:52:26 16-3-2024 -> Loja 1 received: Hello, ServerDEWJIUHI9EWD! from our_user0
+18:52:26 16-3-2024 -> wsServer err/close
+18:52:26 16-3-2024 -> wsServer err/close admin 0 our_user0
+18:52:26 16-3-2024 -> saved message our_user0 Hello, ServerDEWJIUHI9EWD!
+18:52:27 16-3-2024 -> Loja 1 received: Hello, ServerDEWJIUHI9EWD! from our_user0
+18:52:27 16-3-2024 -> saved message our_user0 Hello, ServerDEWJIUHI9EWD!
+18:52:28 16-3-2024 -> Loja 1 received: Hello, ServerDEWJIUHI9EWD! from our_user0
+18:52:28 16-3-2024 -> saved message our_user0 Hello, ServerDEWJIUHI9EWD!
+18:52:31 16-3-2024 -> Loja 1 received: Hello, Server! from admin0
+18:52:31 16-3-2024 -> saved message admin0 Hello, Server!
+18:52:31 16-3-2024 -> Loja 1 received: Hello, Server! from admin0
+18:52:31 16-3-2024 -> saved message admin0 Hello, Server!
+18:52:31 16-3-2024 -> Loja 1 received: Hello, Server! from admin0
+18:52:31 16-3-2024 -> saved message admin0 Hello, Server!
+18:52:42 16-3-2024 -> our_user0
+18:52:42 16-3-2024 -> User not found

@@ -11,17 +11,16 @@
 
     <script>
         // Create a new WebSocket connection
-        let username = "our_user0"
-        let password = "our_password0"
+        //get params username and cookie from url
+        let urlParams = new URLSearchParams(window.location.search);
 
         let url = window.location.href;
+
         url = url.replace("http", "ws")
-        url = url.replace("chat", "")
-        url = url + "ws?username=" + username + "&cookie=" + password
+        url = url.replace("chat", "ws")
         console.log(url)
         const socket = new WebSocket(url);
 
-        // When the connection is established
         socket.onopen = function ()
         {
             console.log('WebSocket connection established.');
@@ -56,7 +55,7 @@
 
         function send_msg()
         {
-            socket.send('Hello, Server!');
+            socket.send('Hello, ServerDEWJIUHI9EWD!');
         }
     </script>
 </body>

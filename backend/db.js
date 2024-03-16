@@ -556,10 +556,9 @@ async function save_message_on_chat(user, message)
   let date_ob = new Date();
   let date = date_ob.toISOString().split(".")[0];
 
-
   return new Promise((resolve, reject) =>
   {
-    db.run("INSERT INTO chat (user, message,date) VALUES(?,?,?)", [user, message, date], (err) =>
+    db.run("INSERT INTO chat (user, message,date) VALUES(?,?,?)", [user, message.toString(), date], (err) =>
     {
       if (err)
       {
@@ -568,6 +567,39 @@ async function save_message_on_chat(user, message)
       resolve();
     });
   });
+
+}
+
+async function get_chat_msg(message_number)
+{
+  if (message_number == '*')
+  {
+    return new Promise((resolve, reject) =>
+    {
+      db.all("SELECT * FROM chat", function (err, data)
+      {
+        if (err)
+        {
+          reject(err);
+        }
+        resolve(data);
+      });
+    });
+
+  } else
+  {
+    return new Promise((resolve, reject) =>
+    {
+      db.all("SELECT * FROM chat ORDER BY date DESC LIMIT ?", [message_number], function (err, data)
+      {
+        if (err)
+        {
+          reject(err);
+        }
+        resolve(data);
+      });
+    });
+  }
 
 }
 
@@ -602,4 +634,5 @@ module.exports = {
   get_users_by_email,
   change_user_permission,
   save_message_on_chat,
+  get_chat_msg,
 };

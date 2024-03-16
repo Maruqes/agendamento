@@ -7,6 +7,7 @@ var auth = require("../backend/auth.js");
 var db = require("../backend/db.js");
 var socket = require("../web_server/sockets.js");
 var marcacoes = require("../backend/marcacoes.js");
+const defines = require("../web_server/defines.js");
 const cors = require("cors");
 const console = require("./logs").console;
 const setRateLimit = require("express-rate-limit");
@@ -552,7 +553,34 @@ app.get("/get_all_db_data", async function (req, res)
 
 app.get("/chat", function (req, res)
 {
-  res.sendFile(path.join(__dirname + "/chat.html"));
+
+  var autorizado_ADMINS = defines.CHECK_OUR_USERS(req.query.username, req.query.cookie);
+  if (autorizado_ADMINS == 1)
+  {
+    res.sendFile(path.join(__dirname + "/chat.html"));
+  } else
+  {
+    res.sendStatus(401);
+  }
+});
+
+app.get("/get_chat_msg", async function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.query.username,
+    req.query.cookie
+  );
+
+  var autorizado_ADMINS = defines.CHECK_OUR_USERS(req.query.username, req.query.cookie);
+
+  if (autorizado >= 0 || autorizado_ADMINS == 1)
+  {
+    var result = await db.get_chat_msg(req.query.number_of_messages);
+    res.send(result);
+  } else
+  {
+    res.sendStatus(401);
+  }
 });
 
 ////debug ---> TO REMOVE
@@ -571,10 +599,11 @@ app.get("/debug_db", async function (req, res)
     });
 });
 
-app.get("/  ", function (req, res)
+app.get("/debug_db_html", function (req, res)
 {
   res.sendFile(path.join(__dirname + "/backoffice/see_db.html"));
 });
+
 console.log("REMOVE DEBUG ROUTES");
 
 httpServer = app.listen(8080);
