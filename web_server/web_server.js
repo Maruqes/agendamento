@@ -583,6 +583,104 @@ app.get("/get_chat_msg", async function (req, res)
   }
 });
 
+
+/////////////////////
+//estabelecimentoS
+
+app.post("/create_estabelecimento", async function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+  if (autorizado == 1)
+  {
+    var result = await shop.create_new_estabelecimento(req.body);
+    if (result == 701)
+    {
+      res.status(result).send("invalid estabelecimento");
+    } else if (result == 702)
+    {
+      res.status(result).send("SQL injection detected");
+
+    } else
+    {
+      res.sendStatus(result);
+    }
+  } else
+  {
+    res.sendStatus(401);
+  }
+});
+
+app.get("/get_estabelecimentos", async function (req, res)
+{
+  await db.get_estabelecimentos().then((result) =>
+  {
+    res.send(result);
+  }).catch((err) =>
+  {
+    console.error(err);
+    res.sendStatus(500);
+  });
+});
+
+
+app.post("/delete_estabelecimento", async function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+  if (autorizado == 1)
+  {
+    var result = await shop.delete_estabelecimento(req.body.id);
+    if (result == 703)
+    {
+      res.status(result).send("Estabelecimento does not exist");
+    } else if (result == 701)
+    {
+      res.status(result).send("invalid estabelecimento");
+    } else
+    {
+      res.sendStatus(result);
+    }
+  } else
+  {
+    res.sendStatus(401);
+  }
+});
+
+app.post("/edit_estabelecimento", async function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+  if (autorizado == 1)
+  {
+    var result = await shop.edit_estabelecimento(req.body);
+    if (result == 701)
+    {
+      res.status(result).send("invalid estabelecimento");
+    } else if (result == 702)
+    {
+      res.status(result).send("SQL injection detected");
+
+    } else if (result == 703)
+    {
+      res.status(result).send("Estabelecimento does not exists");
+    }
+    else
+    {
+      res.sendStatus(result);
+    }
+  } else
+  {
+    res.sendStatus(401);
+  }
+});
+
 ////debug ---> TO REMOVE
 console.log("ADDING DEBUG ROUTES TO REMOVE");
 app.get("/debug_db", async function (req, res)

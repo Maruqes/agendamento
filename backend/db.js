@@ -536,14 +536,46 @@ async function get_all_db_data()
       });
     });
 
-    Promise.all([usersPromise, productsPromise, marcacoesPromise, horariosPromise, bloqueiosPromise])
-      .then(([users, products, marcacoes, horarios, bloqueios]) =>
+    const estabelecimentosPromise = new Promise((resolve, reject) =>
+    {
+      db.all("SELECT * FROM estabelecimentos", function (err, data)
+      {
+        if (err)
+        {
+          reject(err);
+        } else
+        {
+          resolve(data);
+        }
+      });
+    });
+
+    const chat_logsPromise = new Promise((resolve, reject) =>
+    {
+      db.all("SELECT * FROM chat", function (err, data)
+      {
+        if (err)
+        {
+          reject(err);
+        } else
+        {
+          resolve(data);
+        }
+      }
+      );
+    });
+
+
+    Promise.all([usersPromise, productsPromise, marcacoesPromise, horariosPromise, bloqueiosPromise, estabelecimentosPromise, chat_logsPromise])
+      .then(([users, products, marcacoes, horarios, bloqueios, estabelecimentos, chat_logs]) =>
       {
         responder.push({ "users": users });
         responder.push({ "products": products });
         responder.push({ "marcacoes": marcacoes });
         responder.push({ "horarios": horarios });
         responder.push({ "bloqueios": bloqueios });
+        responder.push({ "estabelecimentos": estabelecimentos });
+        responder.push({ "chat_logs": chat_logs });
         resolve(responder);
       })
       .catch(reject);
@@ -603,6 +635,85 @@ async function get_chat_msg(message_number)
 
 }
 
+
+async function add_estabelecimento(name, address, phone, image, description)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("INSERT INTO estabelecimentos (name, address, phone, image, description) VALUES(?,?,?,?,?)", [name, address, phone, image, description], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
+async function get_estabelecimentos()
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.all("SELECT * FROM estabelecimentos", function (err, data)
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}
+
+async function get_estabelecimento_by_id(id)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.all("SELECT * FROM estabelecimentos WHERE id=?", [id], function (err, data)
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+
+}
+
+async function remove_estabelecimento(id)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("DELETE FROM estabelecimentos WHERE id = ?", [id], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
+async function edit_estabelecimento(id, name, address, phone, image, description)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("UPDATE estabelecimentos SET name= ?, address = ?, phone = ?, image = ?, description = ? WHERE id = ?", [name, address, phone, image, description, id], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
+
+
 module.exports = {
   get_all_db_data,
   add_db,
@@ -635,4 +746,9 @@ module.exports = {
   change_user_permission,
   save_message_on_chat,
   get_chat_msg,
+  add_estabelecimento,
+  get_estabelecimentos,
+  get_estabelecimento_by_id,
+  remove_estabelecimento,
+  edit_estabelecimento,
 };
