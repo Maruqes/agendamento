@@ -125,6 +125,7 @@ async function create_user(user, password, admin, email, phone_number, full_name
     return;
   }
 
+
   //verificar se user ja existe
   const existingUser = await db.search_for_user(user);
 
@@ -407,8 +408,6 @@ function delete_other_sessions(user)
   {
     return;
   }
-  console.log(user)
-  console.log(sessions)
   sessions = sessions.filter((session) =>
   {
     if (session.user !== user)
@@ -416,8 +415,6 @@ function delete_other_sessions(user)
       return session;
     }
   });
-  console.log("deleted other sessions")
-  console.log(sessions)
 }
 
 async function reset_password(uuid, password)
@@ -445,13 +442,9 @@ async function reset_password(uuid, password)
   return await db.edit_password(user[0].email, hash)
     .then(async () =>
     {
-      console.log("Password reseted");
+      console.log("Password reseted from user: " + user[0].email);
       await db.get_users_by_email(user[0].email).then((result) => { delete_other_sessions(result[0].user); });
-      console.log("antes")
-      console.log(reset_pass_tokens)
       remove_reset_pass_token(uuid);
-      console.log("depois")
-      console.log(reset_pass_tokens)
       return 200;
     })
     .catch((err) =>

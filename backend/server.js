@@ -344,12 +344,6 @@ async function create_new_estabelecimento(body)
   }
 
 
-  if (!isValidPhoneNumber(phone))
-  {
-    console.log(`Phone ${phone} is invalid`);
-    return 704;
-  }
-
   try
   {
     await db.add_estabelecimento(name, address, phone, image, description);
@@ -417,11 +411,6 @@ async function edit_estabelecimento(body)
     return 703;
   }
 
-  if (!isValidPhoneNumber(phone))
-  {
-    console.log(`Phone ${phone} is invalid`);
-    return 704;
-  }
 
   try
   {
