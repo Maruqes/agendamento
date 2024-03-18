@@ -246,7 +246,7 @@ app.post("/create_user", function (req, res)
     req.body.username,
     req.body.cookie
   );
-  if (req.body.user_permission != 0 && req.body.user_permission != 1)
+  if (req.body.user_permission != 0 || req.body.user_permission != 1)
     return res.send("USER perms are wrong needs to be 0 or 1");
 
   if (autorizado == 1)

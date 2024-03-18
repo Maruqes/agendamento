@@ -1,23 +1,9 @@
-11:28:47 17-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
-11:28:47 17-3-2024 -> REMOVE DEBUG ROUTES
-11:28:47 17-3-2024 -> Express server started
-11:31:31 17-3-2024 -> admin
-11:31:31 17-3-2024 -> Logged in admin if admin 1
-11:31:31 17-3-2024 -> Estabelecimento barb_test2 added
-11:31:39 17-3-2024 -> admin
-11:31:39 17-3-2024 -> Logged in admin if admin 1
-11:31:39 17-3-2024 -> Estabelecimento 1 removed
-11:31:52 17-3-2024 -> admin
-11:31:52 17-3-2024 -> Logged in admin if admin 1
-11:31:52 17-3-2024 -> Estabelecimento barb_test added
-11:31:59 17-3-2024 -> admin0
-11:31:59 17-3-2024 -> Logged in admin0 if admin 0
-11:37:57 17-3-2024 -> admin
-11:37:57 17-3-2024 -> Logged in admin if admin 1
-11:37:57 17-3-2024 -> Estabelecimento 1 does not exist
-11:37:58 17-3-2024 -> admin
-11:37:58 17-3-2024 -> Logged in admin if admin 1
-11:37:58 17-3-2024 -> Estabelecimento 1 does not exist
-11:38:7 17-3-2024 -> admin
-11:38:7 17-3-2024 -> Logged in admin if admin 1
-11:38:7 17-3-2024 -> Estabelecimento 2 edited
+16:45:55 18-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
+16:45:55 18-3-2024 -> REMOVE DEBUG ROUTES
+16:45:55 18-3-2024 -> Express server started
+16:46:20 18-3-2024 -> admin
+16:46:20 18-3-2024 -> Logged in admin if admin 1
+16:46:20 18-3-2024 -> User test already exists
+16:46:25 18-3-2024 -> admin
+16:46:25 18-3-2024 -> Logged in admin if admin 1
+16:46:25 18-3-2024 -> User created
