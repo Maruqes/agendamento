@@ -585,6 +585,7 @@ app.get("/get_chat_msg", async function (req, res)
 
 
 /////////////////////
+//starting establecimentos
 //estabelecimentoS
 
 app.post("/create_estabelecimento", async function (req, res)
