@@ -68,6 +68,12 @@
                 // Display the products table
                 const productsTable = document.getElementById('productsTable');
                 productsTable.innerHTML = JSON.stringify(data[1].products, null, 2);
+
+                const establecimentosTable = document.getElementById('establecimentosTable');
+                establecimentosTable.innerHTML = JSON.stringify(data[5].estabelecimentos, null, 2);
+
+                const chat_logsTable = document.getElementById('chat_logsTable');
+                chat_logsTable.innerHTML = JSON.stringify(data[6].chat_logs, null, 2);
             } catch (error)
             {
                 console.error('Error:', error);
@@ -95,6 +101,12 @@
 
     <h2 class="table-heading">Products Table</h2>
     <pre id="productsTable"></pre>
+
+    <h2 class="table-heading">Establecimentos Table</h2>
+    <pre id="establecimentosTable"></pre>
+
+    <h2 class="table-heading">Chats Table</h2>
+    <pre id="chat_logsTable"></pre>
 </body>
 
 </html>
