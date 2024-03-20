@@ -5,8 +5,6 @@ var auth = require("./auth.js");
 var server = require("./server.js");
 const estabelecimentos = require("./estabelecimentos.js");
 const crypto = require("crypto");
-const { MissingJwtTokenError } = require("@shopify/shopify-api");
-const { start } = require("repl");
 
 function order_errors(err, order, ip)
 {
@@ -45,13 +43,26 @@ async function create_order(order, date, ip)
   }
 }
 
+async function check_user_estabelecimento(user, estabelecimento_id)
+{
+  const data = await db.search_for_user(user);
+  if (data.length == 0) return false;
+  const estabelecimentos = data[0].estabelecimento_id.split(",").map(Number);
+  if (estabelecimentos.includes(estabelecimento_id)) return true;
+  console.log("Users is not in the estebelcimento")
+  return false;
+}
+
+
 async function can_marcacao_fit(date, duration, id, user, estabelecimento_id)
 {
+
+  if (await check_user_estabelecimento(user, estabelecimento_id) == false) return false;
+
   //outras marcacoes
   const cur_marcacao = await db.read_marcacao_on_specific_day(date[0].dia, date[0].mes, date[0].ano, estabelecimento_id); //VER ESTAS FUNC
   const cur_bloqueio = await db.read_bloqueio_on_specific_day(date[0].dia, date[0].mes, date[0].ano, estabelecimento_id);
 
-  if (cur_marcacao.length == 0 && cur_bloqueio.length == 0) return true;
 
   var start_mins = parseInt(date[0].hora) * 60 + parseInt(date[0].minuto);
   var end_mins = start_mins + parseInt(duration);
@@ -75,6 +86,7 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id)
       return false;
     }
   }
+
   /////////////////////////////
   var date = new Date(Date.UTC(date[0].ano, date[0].mes - 1, date[0].dia));
   const day1 = date.getDay();
@@ -82,6 +94,8 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id)
   const horario_on_day = await db.read_horario_on_specific_day(day1, estabelecimento_id);
 
   if (horario_on_day.length == 0) return false;
+
+  console.log(horario_on_day[0])
 
   var horario_start_mins = parseInt(horario_on_day[0].comeco.split(":")[0]) * 60 + parseInt(horario_on_day[0].comeco.split(":")[1]);
 

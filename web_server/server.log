@@ -1,10 +1,66 @@
-12:4:24 20-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
-12:4:24 20-3-2024 -> REMOVE DEBUG ROUTES
-12:4:24 20-3-2024 -> Express server started
-12:4:26 20-3-2024 -> joao maraccao
-12:4:26 20-3-2024 -> Does not fit becouse of start_mins
-12:4:32 20-3-2024 -> joao maraccao
-12:4:32 20-3-2024 -> Venda para tes2t@test2.com de 'test3' inicializada
-12:4:32 20-3-2024 -> Venda para tes2t@test2.com de 'test3' em andamento
-12:4:32 20-3-2024 -> Venda para tes2t@test2.com de 'test3' finalizada
-12:4:32 20-3-2024 -> SMS enviado para +351938534372 com o texto: Your order has been created
+12:48:1 20-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
+12:48:1 20-3-2024 -> REMOVE DEBUG ROUTES
+12:48:1 20-3-2024 -> Express server started
+12:48:3 20-3-2024 -> admin
+12:48:3 20-3-2024 -> Logged in admin if admin 1
+12:48:3 20-3-2024 -> [+] SETADO NOVO BLOQUEIO dia = 29 comeco = 21:00 fim = 22:00 user = test444
+12:48:11 20-3-2024 -> joao maraccao
+12:48:11 20-3-2024 -> dia-> 3
+12:48:11 20-3-2024 -> { estabelecimento_id: 4, dia: 3, comeco: '14:30', fim: '23:00' }
+12:48:11 20-3-2024 -> Venda para tes2t@test2.com de 'test3' inicializada
+12:48:11 20-3-2024 -> Venda para tes2t@test2.com de 'test3' em andamento
+12:48:11 20-3-2024 -> Venda para tes2t@test2.com de 'test3' finalizada
+12:48:11 20-3-2024 -> SMS enviado para +351938534372 com o texto: Your order has been created
+12:48:41 20-3-2024 -> admin
+12:48:41 20-3-2024 -> Logged in admin if admin 1
+12:48:41 20-3-2024 -> [+] SETADO NOVO BLOQUEIO dia = 20 comeco = 21:00 fim = 22:00 user = test444
+12:48:48 20-3-2024 -> admin
+12:48:48 20-3-2024 -> Logged in admin if admin 1
+12:48:48 20-3-2024 -> [+] SETADO NOVO BLOQUEIO dia = 20 comeco = 21:00 fim = 22:00 user = test444
+12:48:52 20-3-2024 -> admin
+12:48:52 20-3-2024 -> Logged in admin if admin 1
+12:48:52 20-3-2024 -> [+] SETADO NOVO BLOQUEIO dia = 20 comeco = 21:00 fim = 22:00 user = test444
+12:49:0 20-3-2024 -> joao maraccao
+12:49:0 20-3-2024 -> dia-> 3
+12:49:0 20-3-2024 -> { estabelecimento_id: 4, dia: 3, comeco: '14:30', fim: '23:00' }
+12:49:0 20-3-2024 -> test444 test444
+12:49:0 20-3-2024 -> Does not fit becouse of bloqueio
+12:49:16 20-3-2024 -> joao maraccao
+12:49:16 20-3-2024 -> dia-> 3
+12:49:16 20-3-2024 -> { estabelecimento_id: 4, dia: 3, comeco: '14:30', fim: '23:00' }
+12:49:16 20-3-2024 -> Venda para tes2t@test2.com de 'test3' inicializada
+12:49:16 20-3-2024 -> Venda para tes2t@test2.com de 'test3' em andamento
+12:49:16 20-3-2024 -> Venda para tes2t@test2.com de 'test3' finalizada
+12:49:16 20-3-2024 -> SMS enviado para +351938534372 com o texto: Your order has been created
+12:49:24 20-3-2024 -> admin
+12:49:24 20-3-2024 -> Logged in admin if admin 1
+12:49:24 20-3-2024 -> [+] SETADO NOVO BLOQUEIO dia = 20 comeco = 21:00 fim = 22:00 user = test444
+12:49:39 20-3-2024 -> joao maraccao
+12:49:39 20-3-2024 -> dia-> 3
+12:49:39 20-3-2024 -> { estabelecimento_id: 4, dia: 3, comeco: '14:30', fim: '23:00' }
+12:49:39 20-3-2024 -> test444 test444
+12:49:39 20-3-2024 -> Does not fit becouse of bloqueio
+12:49:47 20-3-2024 -> joao maraccao
+12:49:47 20-3-2024 -> dia-> 3
+12:49:47 20-3-2024 -> { estabelecimento_id: 4, dia: 3, comeco: '14:30', fim: '23:00' }
+12:49:47 20-3-2024 -> Does not fit becouse of horario
+12:49:51 20-3-2024 -> joao maraccao
+12:49:51 20-3-2024 -> dia-> 3
+12:49:51 20-3-2024 -> { estabelecimento_id: 4, dia: 3, comeco: '14:30', fim: '23:00' }
+12:49:51 20-3-2024 -> Does not fit becouse of horario
+12:50:8 20-3-2024 -> joao maraccao
+12:50:8 20-3-2024 -> dia-> 3
+12:50:8 20-3-2024 -> { estabelecimento_id: 4, dia: 3, comeco: '14:30', fim: '23:00' }
+12:50:8 20-3-2024 -> Does not fit becouse of horario
+12:50:48 20-3-2024 -> joao maraccao
+12:50:48 20-3-2024 -> dia-> 3
+12:50:48 20-3-2024 -> { estabelecimento_id: 4, dia: 3, comeco: '14:30', fim: '23:00' }
+12:50:48 20-3-2024 -> Does not fit becouse of horario
+12:50:51 20-3-2024 -> joao maraccao
+12:50:51 20-3-2024 -> dia-> 3
+12:50:51 20-3-2024 -> { estabelecimento_id: 4, dia: 3, comeco: '14:30', fim: '23:00' }
+12:50:51 20-3-2024 -> test444 test444
+12:50:51 20-3-2024 -> Venda para tes2t@test2.com de 'test3' inicializada
+12:50:51 20-3-2024 -> Venda para tes2t@test2.com de 'test3' em andamento
+12:50:52 20-3-2024 -> Venda para tes2t@test2.com de 'test3' finalizada
+12:50:52 20-3-2024 -> SMS enviado para +351938534372 com o texto: Your order has been created
