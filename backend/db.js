@@ -5,13 +5,13 @@ const db = new sqlite3.Database("../backend/base.db", sqlite3.OPEN_READWRITE, (e
   if (err) return console.log(err.message);
 });
 
-function add_db(service, email, user_number, ano, mes, dia, hora, minuto, duration, price, complete_name, user, uuid)
+function add_db(service, email, user_number, ano, mes, dia, hora, minuto, duration, price, complete_name, user, uuid, estabelecimento_id)
 {
   return new Promise((resolve, reject) =>
   {
     db.run(
-      "INSERT INTO marcacoes (id, email, user_number, service, duration, ano, mes, dia, hora, minuto, price_at_moment,complete_name, user) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
-      [uuid, email, user_number, service, duration, ano, mes, dia, hora, minuto, price, complete_name, user],
+      "INSERT INTO marcacoes (id, email, user_number, service, duration, ano, mes, dia, hora, minuto, price_at_moment,complete_name, user, estabelecimento_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+      [uuid, email, user_number, service, duration, ano, mes, dia, hora, minuto, price, complete_name, user, estabelecimento_id],
       (err) =>
       {
         if (err)
@@ -98,11 +98,11 @@ function read_db(user)
   });
 }
 
-function read_marcacao_on_specific_day(dia, mes, ano)
+function read_marcacao_on_specific_day(dia, mes, ano, estabelecimento_id)
 {
   return new Promise((resolve, reject) =>
   {
-    db.all("SELECT * FROM marcacoes WHERE dia = ? AND mes = ? AND ano = ?", [dia, mes, ano], function (err, data)
+    db.all("SELECT * FROM marcacoes WHERE dia = ? AND mes = ? AND ano = ? AND estabelecimento_id = ?", [dia, mes, ano, estabelecimento_id], function (err, data)
     {
       if (err)
       {
@@ -117,7 +117,7 @@ function read_db_products()
 {
   return new Promise((resolve, reject) =>
   {
-    db.all("SELECT name,price,image,duration, description FROM products", function (err, data)
+    db.all("SELECT name,estabelecimento_id,price,image,duration, description FROM products", function (err, data)
     {
       if (err)
       {
@@ -158,11 +158,12 @@ function get_product_on_db(name)
   });
 }
 
-function create_new_product_on_db(name, price, image, duration, description)
+function create_new_product_on_db(name, estabelecimento_id, price, image, duration, description)
 {
+  estabelecimento_id = estabelecimento_id.join(",");
   return new Promise((resolve, reject) =>
   {
-    db.run("INSERT INTO products (name,price,image,duration, description) VALUES(?,?,?,?,?)", [name, price, image, duration, description], (err) =>
+    db.run("INSERT INTO products (name,estabelecimento_id,price,image,duration, description) VALUES(?,?,?,?,?,?)", [name, estabelecimento_id, price, image, duration, description], (err) =>
     {
       if (err)
       {
@@ -173,13 +174,14 @@ function create_new_product_on_db(name, price, image, duration, description)
   });
 }
 
-function edit_product_on_db(name, price, image, duration, description)
+function edit_product_on_db(name, estabelecimento_id, price, image, duration, description)
 {
+  estabelecimento_id = estabelecimento_id.join(",");
   return new Promise((resolve, reject) =>
   {
     db.run(
-      "UPDATE products SET price = ?, image = ?, duration = ?, description = ? WHERE name = ?",
-      [price, image, duration, description, name],
+      "UPDATE products SET estabelecimento_id = ?, price = ?, image = ?, duration = ?, description = ? WHERE name = ?",
+      [estabelecimento_id, price, image, duration, description, name],
       (err) =>
       {
         if (err)
@@ -207,13 +209,16 @@ function delete_product_on_db(product)
   });
 }
 
-function add_user(user, password, admin, email, phone_number, full_name, image)
+
+/////USERS
+function add_user(user, password, estabelecimento_id, admin, email, phone_number, full_name, image)
 {
+  estabelecimento_id = estabelecimento_id.join(",");
   return new Promise((resolve, reject) =>
   {
     db.run(
-      "INSERT INTO users (user,password, admin, email, phone_number, full_name, image) VALUES(?,?,?,?,?,?,?)",
-      [user, password, admin, email, phone_number, full_name, image],
+      "INSERT INTO users (user,password, estabelecimento_id, admin, email, phone_number, full_name, image) VALUES(?,?,?,?,?,?,?,?)",
+      [user, password, estabelecimento_id, admin, email, phone_number, full_name, image],
       (err) =>
       {
         if (err)
@@ -226,13 +231,14 @@ function add_user(user, password, admin, email, phone_number, full_name, image)
   });
 }
 
-function edit_user(user, email, phone_number, full_name, image)
+function edit_user(user, estabelecimento_id, email, phone_number, full_name, image)
 {
+  estabelecimento_id = estabelecimento_id.join(",");
   return new Promise((resolve, reject) =>
   {
     db.run(
-      "UPDATE users SET email = ?, phone_number = ?, full_name = ?, image = ? WHERE user = ?",
-      [email, phone_number, full_name, image, user],
+      "UPDATE users SET estabelecimento_id = ?, email = ?, phone_number = ?, full_name = ?, image = ? WHERE user = ?",
+      [estabelecimento_id, email, phone_number, full_name, image, user],
       (err) =>
       {
         if (err)
@@ -279,7 +285,7 @@ function read_db_users()
 {
   return new Promise((resolve, reject) =>
   {
-    db.all("SELECT user, admin, email, phone_number, full_name, image FROM users", function (err, data)
+    db.all("SELECT user, estabelecimento_id, admin, email, phone_number, full_name, image FROM users", function (err, data)
     {
       if (err)
       {
@@ -290,12 +296,14 @@ function read_db_users()
   });
 }
 
-function set_horario(dia, comeco, fim)
+
+///////HORARIOS
+function set_horario(estabelecimento_id, dia, comeco, fim)
 {
   //dia -> 0->domingo 1->segunda 2->terca 3->quarta 4->quinta 5->sexta 6->sabado
   return new Promise((resolve, reject) =>
   {
-    db.run("UPDATE horarios SET comeco = ?, fim = ? WHERE dia = ?", [comeco, fim, dia], (err) =>
+    db.run("UPDATE horarios SET comeco = ?, fim = ? WHERE dia = ? AND estabelecimento_id = ?", [comeco, fim, dia, estabelecimento_id], (err) =>
     {
       if (err)
       {
@@ -321,11 +329,11 @@ function get_horario()
   });
 }
 
-function read_horario_on_specific_day(dia)
+function read_horario_on_specific_day(dia, estabelecimento_id)
 {
   return new Promise((resolve, reject) =>
   {
-    db.all("SELECT * FROM horarios WHERE dia = ?", [dia], function (err, data)
+    db.all("SELECT * FROM horarios WHERE dia = ? AND estabelecimento_id = ?", [dia, estabelecimento_id], function (err, data)
     {
       if (err)
       {
@@ -336,11 +344,11 @@ function read_horario_on_specific_day(dia)
   });
 }
 
-function set_bloqueio(dia, mes, ano, comeco, fim, uuid, user)
+function set_bloqueio(estabelecimento_id, dia, mes, ano, comeco, fim, uuid, user, repeat)
 {
   return new Promise((resolve, reject) =>
   {
-    db.run("INSERT INTO bloqueios (uuid, user, comeco, fim, dia, mes, ano) VALUES(?,?,?,?,?,?,?)", [uuid, user, comeco, fim, dia, mes, ano], (err) =>
+    db.run("INSERT INTO bloqueios (uuid, estabelecimento_id, user, comeco, fim, dia, mes, ano,repeat) VALUES(?,?,?,?,?,?,?,?,?)", [uuid, estabelecimento_id, user, comeco, fim, dia, mes, ano, repeat], (err) =>
     {
       if (err)
       {
@@ -396,11 +404,11 @@ function delete_bloqueio_on_db(uuid)
   });
 }
 
-function read_bloqueio_on_specific_day(dia, mes, ano)
+function read_bloqueio_on_specific_day(dia, mes, ano, estabelecimento_id)
 {
   return new Promise((resolve, reject) =>
   {
-    db.all("SELECT * FROM bloqueios WHERE dia = ? AND mes = ? AND ano = ?", [dia, mes, ano], function (err, data)
+    db.all("SELECT * FROM bloqueios WHERE dia = ? AND mes = ? AND ano = ? AND estabelecimento_id = ?", [dia, mes, ano, estabelecimento_id], function (err, data)
     {
       if (err)
       {
@@ -696,6 +704,41 @@ async function remove_estabelecimento(id)
     });
   });
 }
+async function add_horario_estabelecimento(name)
+{
+
+  return new Promise((resolve, reject) =>
+  {
+    db.get("SELECT seq from sqlite_sequence WHERE name='estabelecimentos'", function (err, data)
+    {
+      if (err)
+      {
+        console.log(err);
+        reject(err);
+      } else
+      {
+        let id = data.seq;
+        for (var i = 0; i < 7; i++)
+        {
+          db.run(
+            "INSERT INTO horarios (estabelecimento_id, dia, comeco, fim) VALUES(?,?,?,?)",
+            [id, i, "00:00", "00:01"],
+            (err) =>
+            {
+              if (err)
+              {
+                console.log(err);
+                reject(err);
+              }
+              resolve();
+            }
+          );
+        }
+      }
+    });
+  });
+}
+
 
 async function edit_estabelecimento(id, name, address, phone, image, description)
 {
@@ -751,4 +794,5 @@ module.exports = {
   get_estabelecimento_by_id,
   remove_estabelecimento,
   edit_estabelecimento,
+  add_horario_estabelecimento,
 };

@@ -3,6 +3,7 @@ var db = require("./db.js");
 var sms = require("./sms.js");
 var auth = require("./auth.js");
 var server = require("./server.js");
+const estabelecimentos = require("./estabelecimentos.js");
 const crypto = require("crypto");
 const { MissingJwtTokenError } = require("@shopify/shopify-api");
 const { start } = require("repl");
@@ -33,7 +34,8 @@ async function create_order(order, date, ip)
       order.product.price,
       order.complete_name,
       order.user,
-      uuid
+      uuid,
+      order.estabelecimento_id
     );
     console.log("Venda para " + order.email + " de '" + order.product.name + "' finalizada");
     sms.send_sms("Your order has been created", order.user_number);
@@ -43,11 +45,11 @@ async function create_order(order, date, ip)
   }
 }
 
-async function can_marcacao_fit(date, duration, id, user)
+async function can_marcacao_fit(date, duration, id, user, estabelecimento_id)
 {
   //outras marcacoes
-  const cur_marcacao = await db.read_marcacao_on_specific_day(date[0].dia, date[0].mes, date[0].ano);
-  const cur_bloqueio = await db.read_bloqueio_on_specific_day(date[0].dia, date[0].mes, date[0].ano);
+  const cur_marcacao = await db.read_marcacao_on_specific_day(date[0].dia, date[0].mes, date[0].ano, estabelecimento_id); //VER ESTAS FUNC
+  const cur_bloqueio = await db.read_bloqueio_on_specific_day(date[0].dia, date[0].mes, date[0].ano, estabelecimento_id);
 
   if (cur_marcacao.length == 0 && cur_bloqueio.length == 0) return true;
 
@@ -64,19 +66,20 @@ async function can_marcacao_fit(date, duration, id, user)
 
     if (start_mins >= cur_start_mins && start_mins < cur_end_mins)
     {
+      console.log("Does not fit becouse of start_mins")
       return false;
     }
     if (end_mins > cur_start_mins && end_mins <= cur_end_mins)
     {
+      console.log("Does not fit becouse of end_mins")
       return false;
     }
   }
   /////////////////////////////
-  console.log(date[0])
   var date = new Date(Date.UTC(date[0].ano, date[0].mes - 1, date[0].dia));
   const day1 = date.getDay();
   console.log("dia-> " + day1);
-  const horario_on_day = await db.read_horario_on_specific_day(day1);
+  const horario_on_day = await db.read_horario_on_specific_day(day1, estabelecimento_id);
 
   if (horario_on_day.length == 0) return false;
 
@@ -86,6 +89,7 @@ async function can_marcacao_fit(date, duration, id, user)
 
   if (start_mins < horario_start_mins || end_mins > horario_end_mins)
   {
+    console.log("Does not fit becouse of horario")
     return false;
   }
 
@@ -100,20 +104,24 @@ async function can_marcacao_fit(date, duration, id, user)
     {
       if (start_mins >= hora_comeco && start_mins < hora_fim)
       {
+        console.log("Does not fit becouse of bloqueio")
         return false;
       }
       if (end_mins > hora_comeco && end_mins <= hora_fim)
       {
+        console.log("Does not fit becouse of bloqueio")
         return false;
       }
     } else if (cur_bloqueio[i].user == '*')
     {
       if (start_mins >= hora_comeco && start_mins < hora_fim)
       {
+        console.log("Does not fit becouse of bloqueio")
         return false;
       }
       if (end_mins > hora_comeco && end_mins <= hora_fim)
       {
+        console.log("Does not fit becouse of bloqueio")
         return false;
       }
     }
@@ -125,7 +133,7 @@ async function can_marcacao_fit(date, duration, id, user)
 
 async function new_order_test(body, ip)
 {
-  const { user_number, email, name, date, complete_name, user } = body;
+  const { user_number, email, name, estabelecimento_id, date, complete_name, user } = body;
   console.log(complete_name);
   if (user_number == undefined || email == undefined || name == undefined || date == undefined || complete_name == undefined || user == undefined)
   {
@@ -138,7 +146,7 @@ async function new_order_test(body, ip)
   {
     return 703;
   }
-  if ((await can_marcacao_fit(date, product[0].duration, 0, user)) == false)
+  if ((await can_marcacao_fit(date, product[0].duration, 0, user, estabelecimento_id)) == false)
   {
     return 704;
   }
@@ -181,6 +189,11 @@ async function new_order_test(body, ip)
     return 702;
   }
 
+  if (await estabelecimentos.does_estabelecimento_exist(estabelecimento_id) == false)
+  {
+    return 706;
+  }
+
   console.log(`Venda para ${email} de '${name}' inicializada`);
 
   try
@@ -191,6 +204,7 @@ async function new_order_test(body, ip)
       user_number,
       product: product[0],
       user,
+      estabelecimento_id,
     };
     if (new_order.product.name != name)
     {
