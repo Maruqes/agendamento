@@ -1,12 +1,32 @@
-18:3:51 21-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
-18:3:51 21-3-2024 -> REMOVE DEBUG ROUTES
-18:3:51 21-3-2024 -> Express server started
-18:3:53 21-3-2024 -> 123
-18:3:53 21-3-2024 -> User not found
-18:3:58 21-3-2024 -> Trying to login 123
-18:3:58 21-3-2024 -> Logged in 123 if admin 0
-18:3:58 21-3-2024 -> WMktP1gvkYHbs34cMCcp9Xt7dVs3ahlooQoKOCs9I9QTyM2dN5tZY6Pe4B6r
-18:3:58 21-3-2024 -> 123
-18:3:58 21-3-2024 -> Logged in 123 if admin 0
-18:5:8 21-3-2024 -> 123
-18:5:8 21-3-2024 -> Logged in 123 if admin 0
+19:47:35 21-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
+19:47:35 21-3-2024 -> REMOVE DEBUG ROUTES
+19:47:35 21-3-2024 -> Express server started
+19:47:39 21-3-2024 -> 123
+19:47:39 21-3-2024 -> User not found
+19:47:45 21-3-2024 -> Trying to login 123
+19:47:45 21-3-2024 -> Logged in 123 if admin 1
+19:47:45 21-3-2024 -> J6O2YkOJn3KgBSthdCbNj91NooEjm51I9dP6qSWd6PQiRBSQeEoxmqZyYET2
+19:47:45 21-3-2024 -> 123
+19:47:45 21-3-2024 -> Logged in 123 if admin 1
+19:47:45 21-3-2024 -> admin
+19:47:45 21-3-2024 -> Logged in admin if admin 1
+19:47:50 21-3-2024 -> 123
+19:47:50 21-3-2024 -> Logged in 123 if admin 1
+19:48:5 21-3-2024 -> 123
+19:48:5 21-3-2024 -> Logged in 123 if admin 1
+19:48:7 21-3-2024 -> 123
+19:48:7 21-3-2024 -> Logged in 123 if admin 1
+19:48:23 21-3-2024 -> 123
+19:48:23 21-3-2024 -> Logged in 123 if admin 1
+19:48:24 21-3-2024 -> 123
+19:48:24 21-3-2024 -> Logged in 123 if admin 1
+19:48:25 21-3-2024 -> 123
+19:48:25 21-3-2024 -> Logged in 123 if admin 1
+19:48:25 21-3-2024 -> 123
+19:48:25 21-3-2024 -> Logged in 123 if admin 1
+19:48:25 21-3-2024 -> 123
+19:48:25 21-3-2024 -> Logged in 123 if admin 1
+19:48:30 21-3-2024 -> 123
+19:48:30 21-3-2024 -> Logged in 123 if admin 1
+19:48:54 21-3-2024 -> 123
+19:48:54 21-3-2024 -> Logged in 123 if admin 1

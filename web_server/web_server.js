@@ -56,6 +56,21 @@ app.get("/colaboradores", function (req, res)
   }
 });
 
+app.get("/calendario", function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.cookies.username,
+    req.cookies.session_token
+  );
+  if (autorizado >= 0)
+  {
+    res.sendFile(path.join(__dirname + "/Admin3.0/calendar1.html"));
+  } else
+  {
+    res.sendStatus(401);
+  }
+});
+
 
 app.use(express.static("images"));
 app.post("/upload", (req, res) =>
