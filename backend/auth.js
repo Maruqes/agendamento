@@ -1,5 +1,6 @@
 var db = require("./db.js");
 const defines = require("../web_server/defines.js");
+const estabelecimentos = require("./estabelecimentos.js");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 
@@ -116,9 +117,9 @@ async function login_user(user, password, resexpress)
     });
 }
 
-async function create_user(user, password, admin, email, phone_number, full_name, image, resexpress)
+async function create_user(user, password, estabelecimento_id, admin, email, phone_number, full_name, image, resexpress)
 {
-  if (user == "" || password == "" || user == undefined || password == undefined || admin == "" || admin == undefined || email == "" || email == undefined || phone_number == "" || phone_number == undefined || full_name == "" || full_name == undefined || image == "" || image == undefined)
+  if (user == "" || password == "" || user == undefined || password == undefined || admin == "" || admin == undefined || email == "" || email == undefined || phone_number == "" || phone_number == undefined || full_name == "" || full_name == undefined || image == "" || image == undefined || estabelecimento_id == "" || estabelecimento_id == undefined)
   {
     console.log("Bad input");
     resexpress.status(400).send("Bad input");
@@ -136,13 +137,30 @@ async function create_user(user, password, admin, email, phone_number, full_name
     return;
   }
 
+  if (!Array.isArray(estabelecimento_id))
+  {
+    console.log("estabelecimento_id must be an array");
+    resexpress.status(400).send("estabelecimento_id must be an array");
+    return;
+  }
+
+  for (var i = 0; i < estabelecimento_id.length; i++)
+  {
+    if (estabelecimento_id[i] == "" || estabelecimento_id[i] == undefined || await estabelecimentos.does_estabelecimento_exist(estabelecimento_id[i]) == false)
+    {
+      console.log("Estabelecimento " + estabelecimento_id[i] + " is invalid");
+      resexpress.status(400).send("Estabelecimento " + estabelecimento_id[i] + " is invalid");
+      return;
+    }
+  }
+
   const saltRounds = 10;
 
   const hash = await bcrypt.hash(password, saltRounds);
-  db.add_user(user, hash, admin, email, phone_number, full_name, image)
+  db.add_user(user, hash, estabelecimento_id, admin, email, phone_number, full_name, image)
     .then(() =>
     {
-      console.log("User created");
+      console.log("[+] User created " + user);
       resexpress.status(200).send("User created");
     })
     .catch((err) =>
@@ -152,7 +170,7 @@ async function create_user(user, password, admin, email, phone_number, full_name
     });
 }
 
-async function edit_user(user, email, phone_number, full_name, image, resexpress)
+async function edit_user(user, estabelecimento_id, email, phone_number, full_name, image, resexpress)
 {
 
   if (user == "" || user == undefined || email == "" || email == undefined || phone_number == "" || phone_number == undefined || full_name == "" || full_name == undefined || image == "" || image == undefined)
@@ -177,10 +195,28 @@ async function edit_user(user, email, phone_number, full_name, image, resexpress
     return;
   }
 
-  db.edit_user(user, email, phone_number, full_name, image)
+  if (!Array.isArray(estabelecimento_id))
+  {
+    console.log("estabelecimento_id must be an array");
+    resexpress.status(400).send("estabelecimento_id must be an array");
+    return;
+  }
+
+  for (var i = 0; i < estabelecimento_id.length; i++)
+  {
+    if (estabelecimento_id[i] == "" || estabelecimento_id[i] == undefined || await estabelecimentos.does_estabelecimento_exist(estabelecimento_id[i]) == false)
+    {
+      console.log("Estabelecimento " + estabelecimento_id[i] + " is invalid");
+      resexpress.status(400).send("Estabelecimento " + estabelecimento_id[i] + " is invalid");
+      return;
+    }
+  }
+
+
+  db.edit_user(user, estabelecimento_id, email, phone_number, full_name, image)
     .then(() =>
     {
-      console.log("User edited");
+      console.log("[i] User edited " + user);
       resexpress.status(200).send("User edited");
     })
     .catch((err) =>
@@ -216,7 +252,7 @@ async function delete_user(user, who_is_deleting, resexpress)
     .then(() =>
     {
       sessions = sessions.filter((session) => session.user !== user);
-      console.log("User deleted");
+      console.log("[-] User deleted " + user);
       resexpress.status(200).send("User deleted");
     })
     .catch((err) =>

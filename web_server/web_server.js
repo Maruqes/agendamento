@@ -7,6 +7,8 @@ var auth = require("../backend/auth.js");
 var db = require("../backend/db.js");
 var socket = require("../web_server/sockets.js");
 var marcacoes = require("../backend/marcacoes.js");
+var estabelecimentos = require("../backend/estabelecimentos.js");
+var horarios = require("../backend/horarios.js");
 const defines = require("../web_server/defines.js");
 const cors = require("cors");
 const console = require("./logs").console;
@@ -77,7 +79,31 @@ app.post("/new", async function (req, res)
   } else if (result == 702)
   {
     res.status(702).send("Invalid phone number");
-  } else
+  } else if (result == 706)
+  {
+    res.status(706).send("Estabelecimento does ont exist");
+  }
+  else if (result == 801)
+  {
+    res.status(801).send("User is not in the estabelecimento");
+  }
+  else if (result == 802)
+  {
+    res.status(802).send("Existe uma marcacao a decorrer");
+  }
+  else if (result == 803)
+  {
+    res.status(803).send("Does not fit becouse of horario");
+  }
+  else if (result == 804)
+  {
+    res.status(804).send("Does not fit becouse of bloqueio");
+  }
+  else if (result == 805)
+  {
+    res.status(805).send("Product does not exist in this estabelecimento");
+  }
+  else
   {
     res.sendStatus(result);
   }
@@ -161,6 +187,9 @@ app.post("/create_product", async function (req, res)
     {
       res.status(result).send("Price is not a number or negative");
 
+    } else if (result == 705)
+    {
+      res.status(result).send("Probelem with Estabelecimento");
     } else
     {
       res.sendStatus(result);
@@ -228,6 +257,10 @@ app.post("/edit_product", async function (req, res)
     {
       res.status(result).send("Price is not a number or negative");
 
+    } else if (result == 705)
+    {
+      res.status(result).send("Probelem with Estabelecimento");
+
     } else
     {
       res.sendStatus(result);
@@ -254,6 +287,7 @@ app.post("/create_user", function (req, res)
     auth.create_user(
       req.body.user,
       req.body.password,
+      req.body.estabelecimento_id,
       req.body.user_permission,
       req.body.email,
       req.body.phone_number,
@@ -293,6 +327,7 @@ app.post("/edit_user", function (req, res)
   {
     auth.edit_user(
       req.body.user,
+      req.body.estabelecimento_id,
       req.body.email,
       req.body.phone_number,
       req.body.full_name,
@@ -414,12 +449,19 @@ app.post("/set_horario", async function (req, res)
   );
   if (autorizado == 1)
   {
-    var result = await shop.set_horario(
+    var result = await horarios.set_horario(
+      req.body.estabelecimento_id,
       req.body.dia,
       req.body.comeco,
       req.body.fim
     );
-    res.sendStatus(result);
+    if (result == 703)
+    {
+      res.status(result).send("Estabelecimento does not exist");
+    } else
+    {
+      res.sendStatus(result);
+    }
   } else
   {
     res.sendStatus(401);
@@ -428,7 +470,7 @@ app.post("/set_horario", async function (req, res)
 
 app.get("/get_horario", function (req, res)
 {
-  shop.get_horario(res);
+  horarios.get_horario(res);
 });
 
 app.post("/set_bloqueio", async function (req, res)
@@ -439,15 +481,30 @@ app.post("/set_bloqueio", async function (req, res)
   );
   if (autorizado == 1)
   {
-    var result = await shop.set_bloqueio(
+    var result = await horarios.set_bloqueio(
+      req.body.estabelecimento_id,
       req.body.dia,
       req.body.mes,
       req.body.ano,
       req.body.comeco,
       req.body.fim,
-      req.body.user
+      req.body.user,
+      req.body.repeat
     );
-    res.sendStatus(result);
+    if (result == 703)
+    {
+      res.status(result).send("Estabelecimento does not exist");
+    } else if (result == 704)
+    {
+      res.status(result).send("Invalid repeat");
+    } else if (result == 701)
+    {
+      res.status(result).send("User does not exist");
+    }
+    else
+    {
+      res.sendStatus(result);
+    }
   } else
   {
     res.sendStatus(401);
@@ -456,7 +513,7 @@ app.post("/set_bloqueio", async function (req, res)
 
 app.get("/get_bloqueio", function (req, res)
 {
-  shop.get_bloqueio(res);
+  horarios.get_bloqueio(res);
 });
 
 app.post("/delete_bloqueio", async function (req, res)
@@ -467,7 +524,7 @@ app.post("/delete_bloqueio", async function (req, res)
   );
   if (autorizado == 1)
   {
-    var result = await shop.delete_bloqueio(req.body.uuid);
+    var result = await horarios.delete_bloqueio(req.body.uuid);
     res.sendStatus(result);
   } else
   {
@@ -596,7 +653,7 @@ app.post("/create_estabelecimento", async function (req, res)
   );
   if (autorizado == 1)
   {
-    var result = await shop.create_new_estabelecimento(req.body);
+    var result = await estabelecimentos.create_new_estabelecimento(req.body);
     if (result == 701)
     {
       res.status(result).send("invalid estabelecimento");
@@ -635,7 +692,7 @@ app.post("/delete_estabelecimento", async function (req, res)
   );
   if (autorizado == 1)
   {
-    var result = await shop.delete_estabelecimento(req.body.id);
+    var result = await estabelecimentos.delete_estabelecimento(req.body.id);
     if (result == 703)
     {
       res.status(result).send("Estabelecimento does not exist");
@@ -660,7 +717,7 @@ app.post("/edit_estabelecimento", async function (req, res)
   );
   if (autorizado == 1)
   {
-    var result = await shop.edit_estabelecimento(req.body);
+    var result = await estabelecimentos.edit_estabelecimento(req.body);
     if (result == 701)
     {
       res.status(result).send("invalid estabelecimento");

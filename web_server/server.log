@@ -1,21 +1,6 @@
-17:47:47 18-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
-17:47:47 18-3-2024 -> REMOVE DEBUG ROUTES
-17:47:47 18-3-2024 -> Express server started
-17:47:49 18-3-2024 -> undefined
-17:47:49 18-3-2024 -> User or cookie undefined
-17:48:44 18-3-2024 -> admin
-17:48:44 18-3-2024 -> admin
-17:48:44 18-3-2024 -> Logged in admin if admin 1
-17:48:44 18-3-2024 -> User created
-17:48:47 18-3-2024 -> admin
-17:48:47 18-3-2024 -> admin
-17:48:47 18-3-2024 -> Logged in admin if admin 1
-17:48:47 18-3-2024 -> User test3 already exists
-17:48:56 18-3-2024 -> admin
-17:48:56 18-3-2024 -> admin
-17:48:56 18-3-2024 -> Logged in admin if admin 1
-17:48:56 18-3-2024 -> User created
-17:49:28 18-3-2024 -> admin
-17:49:28 18-3-2024 -> admin
-17:49:28 18-3-2024 -> Logged in admin if admin 1
-17:49:28 18-3-2024 -> User created
+16:14:49 21-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
+16:14:49 21-3-2024 -> REMOVE DEBUG ROUTES
+16:14:49 21-3-2024 -> Express server started
+16:14:52 21-3-2024 -> admin
+16:14:52 21-3-2024 -> Logged in admin if admin 1
+16:14:52 21-3-2024 -> [+] Estabelecimento barb3 added
