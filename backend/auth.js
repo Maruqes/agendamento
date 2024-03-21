@@ -160,7 +160,7 @@ async function create_user(user, password, estabelecimento_id, admin, email, pho
   db.add_user(user, hash, estabelecimento_id, admin, email, phone_number, full_name, image)
     .then(() =>
     {
-      console.log("User created");
+      console.log("[+] User created " + user);
       resexpress.status(200).send("User created");
     })
     .catch((err) =>
@@ -216,7 +216,7 @@ async function edit_user(user, estabelecimento_id, email, phone_number, full_nam
   db.edit_user(user, estabelecimento_id, email, phone_number, full_name, image)
     .then(() =>
     {
-      console.log("User edited");
+      console.log("[i] User edited " + user);
       resexpress.status(200).send("User edited");
     })
     .catch((err) =>
@@ -252,7 +252,7 @@ async function delete_user(user, who_is_deleting, resexpress)
     .then(() =>
     {
       sessions = sessions.filter((session) => session.user !== user);
-      console.log("User deleted");
+      console.log("[-] User deleted " + user);
       resexpress.status(200).send("User deleted");
     })
     .catch((err) =>

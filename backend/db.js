@@ -344,11 +344,11 @@ function read_horario_on_specific_day(dia, estabelecimento_id)
   });
 }
 
-function set_bloqueio(estabelecimento_id, dia, mes, ano, comeco, fim, uuid, user, repeat)
+function set_bloqueio(estabelecimento_id, dia, mes, ano, comeco, fim, uuid, user, repeat, dia_da_semana)
 {
   return new Promise((resolve, reject) =>
   {
-    db.run("INSERT INTO bloqueios (uuid, estabelecimento_id, user, comeco, fim, dia, mes, ano,repeat) VALUES(?,?,?,?,?,?,?,?,?)", [uuid, estabelecimento_id, user, comeco, fim, dia, mes, ano, repeat], (err) =>
+    db.run("INSERT INTO bloqueios (uuid, estabelecimento_id, user, comeco, fim, dia, mes, ano,repeat,dia_da_semana) VALUES(?,?,?,?,?,?,?,?,?,?)", [uuid, estabelecimento_id, user, comeco, fim, dia, mes, ano, repeat, dia_da_semana], (err) =>
     {
       if (err)
       {
@@ -417,6 +417,22 @@ function read_bloqueio_on_specific_day(dia, mes, ano, estabelecimento_id)
       resolve(data);
     });
   });
+}
+
+async function read_bloqueios_repeat(dia_da_semana, estabelecimento_id)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.all("SELECT * FROM bloqueios WHERE dia_da_semana = ? AND estabelecimento_id = ?", [dia_da_semana, estabelecimento_id], function (err, data)
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+
 }
 
 async function edit_password(email, password)
@@ -784,6 +800,7 @@ module.exports = {
   get_bloqueio_uuid,
   delete_bloqueio_on_db,
   read_bloqueio_on_specific_day,
+  read_bloqueios_repeat,
   edit_password,
   get_users_by_email,
   change_user_permission,

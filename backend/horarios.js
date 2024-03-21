@@ -105,9 +105,13 @@ async function set_bloqueio(estabelecimento_id, dia, mes, ano, comeco, fim, user
         return 400;
     }
 
+    var date = new Date(Date.UTC(ano, mes - 1, dia));
+    const day1 = date.getDay();
+    console.log("dia-> " + day1);
+
     console.log(`[+] SETADO NOVO BLOQUEIO dia = ${dia} comeco = ${comeco} fim = ${fim} user = ${user}`);
     let uuid = crypto.randomUUID();
-    db.set_bloqueio(estabelecimento_id, dia, mes, ano, comeco, fim, uuid, user, repeat);
+    db.set_bloqueio(estabelecimento_id, dia, mes, ano, comeco, fim, uuid, user, repeat, day1);
     return 200;
 
 }
@@ -144,7 +148,7 @@ async function delete_bloqueio(uuid)
     try
     {
         await db.delete_bloqueio_on_db(uuid);
-        console.log(`Bloqueio ${uuid} removed`);
+        console.log(`[-] Bloqueio ${uuid} removed`);
     } catch (err)
     {
         console.log(`Error removing bloqueio ${uuid}: ${err}`);

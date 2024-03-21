@@ -82,7 +82,28 @@ app.post("/new", async function (req, res)
   } else if (result == 706)
   {
     res.status(706).send("Estabelecimento does ont exist");
-  } else
+  }
+  else if (result == 801)
+  {
+    res.status(801).send("User is not in the estabelecimento");
+  }
+  else if (result == 802)
+  {
+    res.status(802).send("Existe uma marcacao a decorrer");
+  }
+  else if (result == 803)
+  {
+    res.status(803).send("Does not fit becouse of horario");
+  }
+  else if (result == 804)
+  {
+    res.status(804).send("Does not fit becouse of bloqueio");
+  }
+  else if (result == 805)
+  {
+    res.status(805).send("Product does not exist in this estabelecimento");
+  }
+  else
   {
     res.sendStatus(result);
   }

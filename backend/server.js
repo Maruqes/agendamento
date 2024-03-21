@@ -137,7 +137,7 @@ async function create_new_product(body)
   try
   {
     await db.create_new_product_on_db(name, estabelecimento_id, price, image, duration, description);
-    console.log(`Produto ${name} adicionado`);
+    console.log(`[+] Produto ${name} adicionado`);
   } catch (err)
   {
     console.log(`Erro ao adicionar produto ${name} err ${err}`);
