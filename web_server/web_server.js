@@ -14,6 +14,7 @@ const cors = require("cors");
 const console = require("./logs").console;
 const setRateLimit = require("express-rate-limit");
 const fs = require("fs");
+const cookieParser = require("cookie-parser");
 
 const rateLimitMiddleware = setRateLimit({
   windowMs: 15 * 1000, //15 secs
@@ -27,15 +28,35 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+app.use(cookieParser());
 app.set("trust proxy", true);
 //app.use(rateLimitMiddleware);
 app.use(fileUpload());
 
+app.use(express.static("Admin3.0/public"));
+
 app.get("/", function (req, res)
 {
-  // TESTES
-  res.sendFile(path.join(__dirname + "/login_page.html"));
+  res.sendFile(path.join(__dirname + "/Admin3.0/login.html"));
 });
+
+
+app.get("/colaboradores", function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.cookies.username,
+    req.cookies.session_token
+  );
+  if (autorizado >= 0)
+  {
+    res.sendFile(path.join(__dirname + "/Admin3.0/collab.html"));
+  } else
+  {
+    res.sendStatus(401);
+  }
+});
+
+
 app.use(express.static("images"));
 app.post("/upload", (req, res) =>
 {

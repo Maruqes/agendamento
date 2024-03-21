@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Blank</title>
+
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <!--Script Jquery-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!--Notify.js-->
+    <script src="js/notify.min.js"></script>
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+
+<body data-theme="marine-blue">
+      <div class="wrapper">
+        <nav class="d-flex flex-column flex-shrink-0 sidebar">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none logos">
+              <div class="logo"><div class="logo1"></div></div>
+              <span class="fs-4 logoname">JGStore</span>  
+            </a>
+            <hr style="opacity: 0.02;">
+            <div class="cont" style="overflow: auto;">
+            <ul class="nav nav-pills flex-column mb-auto ">
+              <div class="sidebar-header">Negócio</div>
+              <li class="nav-item">
+                <a href="#" class="nav-link active" aria-current="page">
+                  <i class="fa-solid fa-gauge"></i>
+                  Dashboard
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link link-dark">
+                  <i class="fa-solid fa-chart-pie"></i>
+                  Estatisticas
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link link-dark">
+                  <i class="fa-solid fa-calendar"></i>
+                  Calendario
+                </a>
+              </li> 
+              <li>
+                <a href="#" class="nav-link link-dark">
+                  <i class="fa-solid fa-book-bookmark"></i>
+                  Agenda
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link link-dark">
+                  <i class="fa-solid fa-briefcase"></i>
+                  Serviços
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link link-dark">
+                  <i class="fa-solid fa-people-group"></i>
+                  Funcionários
+                </a>
+              </li> 
+              <li>
+                <a href="#" class="nav-link link-dark">
+                  <i class="fa-solid fa-star"></i>
+                  Habilidades
+                </a>
+              </li>
+
+              <div class="sidebar-header">Definições do Negócio</div>
+              <li>
+                <a href="#" class="nav-link link-dark">
+                  <i class="fa-solid fa-clock"></i>
+                  Hórarios
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link link-dark">
+                  <i class="fa-solid fa-lock"></i>
+                  Bloqueios
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link link-dark">
+                  <i class="fa-solid fa-paintbrush"></i>
+                  Tema do Calendario
+                </a>
+              </li>
+
+              <li>
+                <a href="#" class="nav-link link-dark">
+                  <i class="fa-solid fa-palette"></i>
+                  Tema da Aplicação
+                </a>
+              </li>
+              
+            </ul>
+        </div>
+            <div class="dropdown">
+              <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle avatar" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                <!--<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">-->
+                
+                  <svg class="user-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,12.5c-3.04,0-5.5,1.73-5.5,3.5s2.46,3.5,5.5,3.5,5.5-1.73,5.5-3.5-2.46-3.5-5.5-3.5Zm0-.5c1.66,0,3-1.34,3-3s-1.34-3-3-3-3,1.34-3,3,1.34,3,3,3Z"></path></svg>
+                
+                <strong>João Barbosa</strong>
+              </a>
+              <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                <li><a class="dropdown-item" href="#">New project...</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Sign out</a></li>
+              </ul>
+            </div>
+          </nav> 
+          
+        <div class="main">
+          <div class="container menu">
+            <nav class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
+              <div href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none area1 d-none">
+                <b>Algo Aqui</b>
+              </div>
+        
+              <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 area2">
+                <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">Features</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
+              </ul>
+        
+              <div class="col-md-3 text-end area3">
+                <div class="bloco d-flex"><i class="fa-regular fa-bell"></i></div>
+                <div class="bloco d-flex"><i class="fa-regular fa-message"></i></div>
+                <div class="bloco d-flex" onclick="toggleFullscreen()"><i class="fa-solid fa-expand"></i></div>
+                <div class="dropdown">
+                  <button class="btn btn-outline-primary dropdown-toggle drop-store" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-store i-store"></i> <span style="font-weight: 500;">JGStore Braga</span>
+                  </button>
+                  <ul class="dropdown-menu drop-store-list">
+                    <div class="scroll">
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Porto</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo" style="background-color: #3889CC;"><div class="logo1" style="background-color: #7bb8ea4d;"></div></div>JGStore Braga</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Lisboa</span></a></li>
+
+
+
+
+ <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Porto</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo" style="background-color: #3889CC;"><div class="logo1" style="background-color: #7bb8ea4d;"></div></div>JGStore Braga</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Lisboa</span></a></li> <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Viana do Castelo viana do castelo</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo" style="background-color: #3889CC;"><div class="logo1" style="background-color: #7bb8ea4d;"></div></div>JGStore Braga</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Lisboa</span></a></li> <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Porto</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo" style="background-color: #3889CC;"><div class="logo1" style="background-color: #7bb8ea4d;"></div></div>JGStore Braga</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Lisboa</span></a></li> <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Porto</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo" style="background-color: #3889CC;"><div class="logo1" style="background-color: #7bb8ea4d;"></div></div>JGStore Braga</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Lisboa</span></a></li> <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Porto</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo" style="background-color: #3889CC;"><div class="logo1" style="background-color: #7bb8ea4d;"></div></div>JGStore Braga</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Lisboa</span></a></li> <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Porto</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo" style="background-color: #3889CC;"><div class="logo1" style="background-color: #7bb8ea4d;"></div></div>JGStore Braga</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Lisboa</span></a></li> <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Porto</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo" style="background-color: #3889CC;"><div class="logo1" style="background-color: #7bb8ea4d;"></div></div>JGStore Braga</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Lisboa</span></a></li> <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Porto</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo" style="background-color: #3889CC;"><div class="logo1" style="background-color: #7bb8ea4d;"></div></div>JGStore Braga</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Lisboa</span></a></li> <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Porto</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo" style="background-color: #3889CC;"><div class="logo1" style="background-color: #7bb8ea4d;"></div></div>JGStore Braga</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Lisboa</span></a></li> <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Porto</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo" style="background-color: #3889CC;"><div class="logo1" style="background-color: #7bb8ea4d;"></div></div>JGStore Braga</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Lisboa</span></a></li> <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Porto</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo" style="background-color: #3889CC;"><div class="logo1" style="background-color: #7bb8ea4d;"></div></div>JGStore Braga</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Lisboa</span></a></li> <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Porto</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo" style="background-color: #3889CC;"><div class="logo1" style="background-color: #7bb8ea4d;"></div></div>JGStore Braga</span></a></li>
+                    <li><a class="dropdown-item" href="#"><span><div class="logo"><div class="logo1"></div></div>JGStore Lisboa</span></a></li>
+                    </div>
+
+
+
+
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+          
+          <main class="content">
+            <div class="container-fluid p-0">
+
+                <div class="mb-3 d-flex justify-content-md-between">
+                    <h1 class="h3 d-inline align-middle">Colaboradores</h1>
+                    
+                    <button type="button" class="btn btn-primary btn-colab-new" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="fa-solid fa-plus" style="margin-right: 7px;"></i>Novo</button>
+                </div>
+                <!-- Modal Add-->
+                <script>
+                  function criaUser(){
+                      return new Promise((resolve, reject) => {
+
+                          const nomeCompleto = document.getElementById('nomeCompleto').value;
+                          const username = document.getElementById('username').value;
+                          const password = document.getElementById('password').value;
+                          const telefone = document.getElementById('telefone').value;
+                          const email = document.getElementById('email').value;
+                          const permissao = document.getElementById('permissao').value;
+
+                          const data = {
+                              "username": "admin",
+                              "cookie": "admin",
+                              "user": username,
+                              "password": password,
+                              "user_permission": permissao, 
+                              "email": email,
+                              "phone_number": telefone,
+                              "full_name": nomeCompleto,
+                              "image": "TEST.png"
+                          };
+                          console.log(data);
+
+                          fetch("http://31.14.238.125:8080/create_user", {
+                            method: "POST",
+                            body: JSON.stringify(data),
+                            headers: {
+                                "Content-type": "application/json; charset=UTF-8"
+                            }
+                          })
+                        .then(response => {
+                            if(response.ok){
+                              localStorage.setItem('showNotification', 'true');
+                              localStorage.setItem('notificationMessage', 'Colaborador criado com sucesso!');
+                              localStorage.setItem('notificationType', 'success');
+                              window.location.reload();
+                            } else if(response.status == 701){
+                              localStorage.setItem('showNotification', 'true');
+                              localStorage.setItem('notificationMessage', 'Este colaborador já existe!');
+                              localStorage.setItem('notificationType', 'error');
+                              window.location.reload();
+                            }else if(response.status == 400){
+                              localStorage.setItem('showNotification', 'true');
+                              localStorage.setItem('notificationMessage', 'Deve preencher todos os campos.');
+                              localStorage.setItem('notificationType', 'error');
+                              window.location.reload();
+                            }
+                        }).catch(error => console.log(error));
+                      });
+                                        
+                  }
+
+              </script>
+                <div class="modal fade" id="modal_add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Adicionar Colaborador</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body" id="modal-body">
+                        
+                        <form class="row g-3 needs-validation" novalidate>
+                          <div class="col-md-12">
+                            <label for="validationCustom01" class="form-label" ></label>
+                            <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome completo" required>
+                            <div class="valid-feedback">
+                              Muito bem!
+                            </div>
+                            <div class="invalid-feedback">
+                              Introduza o nome do colaborador.
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="validationCustomUsername" class="form-label"></label>
+                            <div class="input-group has-validation">
+                              <span class="input-group-text">@</span>
+                              <input type="text" class="form-control" id="username" aria-describedby="inputGroupPrepend" placeholder="username" required>
+                              <div class="invalid-feedback">
+                                Escolha um username único.
+                              </div>
+                              <div class="valid-feedback">
+                                Muito bem!
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="validationCustom03" class="form-label"></label>
+                            <input type="password" class="form-control" id="password" placeholder="Password" required>
+                            <div class="invalid-feedback">
+                              Introduza uma password.
+                            </div>
+                            <div class="valid-feedback">
+                              Muito bem!
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <label for="validationCustom03" class="form-label"></label>
+                            <input type="email" class="form-control" id="email" placeholder="Email" required>
+                            <div class="invalid-feedback">
+                              Introduza o seu email.
+                            </div>
+                            <div class="valid-feedback">
+                              Muito bem!
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="validationCustom03" class="form-label"></label>
+                            <input type="text" class="form-control" id="telefone" placeholder="Telefone" required>
+                            <div class="invalid-feedback">
+                              Introduza o seu número de telefone.
+                            </div>
+                            <div class="valid-feedback">
+                              Muito bem!
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="validationCustom04" class="form-label"></label>
+                            <select class="form-select" id="permissao" required>
+                              <option selected disabled value="">Permissões</option>
+                              <option value="1">Administrador</option>
+                              <option value="0">Funcionário</option>
+                            </select>
+                            <div class="invalid-feedback">
+                              Escolha uma permissão para este colaborador.
+                            </div>
+                            <div class="valid-feedback">
+                              Muito bem!
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" onclick="criaUser(event)" style="background-color: var(--color-primary); border-color: var(--color-primary);">Adicionar</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                
+                
+                <!--Fim Modal Add-->
+
+                <!-- Modal Edit-->
+                <div class="modal fade" id="modal_edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form class="row g-3 needs-validation" id="form-edit" novalidate>
+                          <div class="col-md-12">
+                            <label for="validationCustom01" class="form-label" ></label>
+                            <input type="text" class="form-control" id="nomeCompleto_edit" placeholder="Nome completo" required>
+                            <div class="valid-feedback">
+                              Muito bem!
+                            </div>
+                            <div class="invalid-feedback">
+                              Introduza o nome do colaborador.
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <label for="validationCustom03" class="form-label"></label>
+                            <input type="email" class="form-control" id="email_edit" placeholder="Email" required>
+                            <div class="invalid-feedback">
+                              Introduza o seu email.
+                            </div>
+                            <div class="valid-feedback">
+                              Muito bem!
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="validationCustomUsername" class="form-label"></label>
+                            <div class="input-group has-validation">
+                              <span class="input-group-text">@</span>
+                              <input type="text" class="form-control" id="username_edit" aria-describedby="inputGroupPrepend" placeholder="username" required>
+                              <div class="invalid-feedback">
+                                Escolha um username único.
+                              </div>
+                              <div class="valid-feedback">
+                                Muito bem!
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="validationCustom03" class="form-label"></label>
+                            <input type="text" class="form-control" id="telefone_edit" placeholder="Telefone" required>
+                            <div class="invalid-feedback">
+                              Introduza o seu número de telefone.
+                            </div>
+                            <div class="valid-feedback">
+                              Muito bem!
+                            </div>
+                          </div>
+                          
+                        </div>                        
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" onclick="editUserRequest()" class="btn btn-primary">Salvar</button>
+                        </div>
+                        
+                      </form>
+                      <script>
+                        function editUserRequest() {
+
+                          var user = {
+                                username: 'admin',
+                                cookie: 'admin',
+                                user: document.getElementById('username_edit').value,
+                                email: document.getElementById('email_edit').value,
+                                phone_number: document.getElementById('telefone_edit').value,
+                                full_name: document.getElementById('nomeCompleto_edit').value,
+                                image: 'EDIT_IMAGE.png' 
+                            };
+                            fetch("http://31.14.238.125:8080/edit_user", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(user),
+                            })
+                            .then(response => {
+                              if(response.ok){
+                              localStorage.setItem('showNotification', 'true');
+                              localStorage.setItem('notificationMessage', 'Colaborador editado com sucesso.');
+                              localStorage.setItem('notificationType', 'success');
+                              window.location.reload();
+                            } else if(response.status == 701){
+                              localStorage.setItem('showNotification', 'true');
+                              localStorage.setItem('notificationMessage', '701 - User already exists.');
+                              localStorage.setItem('notificationType', 'error');
+                              window.location.reload();
+                            } else if(response.status == 400){
+                              localStorage.setItem('showNotification', 'true');
+                              localStorage.setItem('notificationMessage', 'Deve preencher todos os campos.');
+                              localStorage.setItem('notificationType', 'error');
+                              window.location.reload();
+                            }
+                            })
+                            .then(data => {
+                                console.log('Success:', data);
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                            });
+                        }
+                        
+                      </script>
+                    </div>
+                  </div>
+                </div>
+                <!--Fim Modal Edit-->
+                <!-- Modal Delet-->
+                <div class="modal fade" id="modal_delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Excluir</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Têm a certeza que deseja excluir <span><b id="userToDelete"></b></span> ?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteUserRequest()">Excluir</button>
+                      </div>
+                    </div>
+                  </div>
+                  <script>
+                    function deleteUserRequest() {
+
+                      var user = {
+                            username: 'admin',
+                            cookie: 'admin',
+                            user: userToDelete,
+                        };
+                        fetch("http://31.14.238.125:8080/delete_user", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(user),
+                        })
+                        .then(response => {
+                          if(response.ok){
+                              localStorage.setItem('showNotification', 'true');
+                              localStorage.setItem('notificationMessage', 'Colaborador excluido com sucesso.');
+                              localStorage.setItem('notificationType', 'success');
+                              window.location.reload();
+                            } else if(response.status == 701){
+                              localStorage.setItem('showNotification', 'true');
+                              localStorage.setItem('notificationMessage', 'Não pode apagar a sua própria conta.');
+                              localStorage.setItem('notificationType', 'error');
+                              window.location.reload();
+                            } else if(response.status == 400){
+                              localStorage.setItem('showNotification', 'true');
+                              localStorage.setItem('notificationMessage', 'User does not exist');
+                              localStorage.setItem('notificationType', 'error');
+                              window.location.reload();
+                            }
+                            })
+                        .then(data => {
+                            console.log('Success:', data);
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                    }
+                    
+                  </script>
+                </div>
+                <!--Fim Modal Delet-->
+                <!-- Listagem Colaboradores-->
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card card-colab-list">
+                            <div class="card-body">
+                                <table class="table table-responsive table-striped colab-table" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Username</th>
+                                            <th class="d-none d-md-table-cell">Contacto</th>
+                                            <th class="d-none d-md-table-cell">Email</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="colab-table">
+                                        
+                                        <script>
+                                            getUsers().then((data) => {
+                                                for (let i = 0; i < data.length; i++) {
+                                                    document.getElementById("colab-table").innerHTML += "<tr><td><img src='img/avatars/avatar.jpg' width='32' height='32' class='rounded-circle my-n1' alt='Avatar'></td><td>" + data[i].user + "</td><td class='d-none d-md-table-cell'>" + data[i].phone_number + "</td><td class='d-none d-md-table-cell'>" + data[i].email + "</td><td>" + (data[i].admin === 0 ? "<span class='badge bg-success'>Funcionário</span>" : "<span class='badge bg-danger'>Administrador</span>") + "</td><td><a data-bs-toggle='modal' data-bs-target='#modal_edit' data-nomeCompleto='" + data[i].full_name + "' data-email='" + data[i].email + "' data-user='" + data[i].user + "' data-telefone='" + data[i].phone_number + "' ><i class='fa-regular fa-pen-to-square'></i></a></td><td><a data-bs-toggle='modal' data-bs-target='#modal_delete' data-user='" + data[i].user + "'><i class='fa-regular fa-trash-can'></i></a></td></tr>";
+                                                }
+                                            });
+
+                                            function getUsers() {
+                                                return new Promise((resolve, reject) => {
+                                                    fetch("http://31.14.238.125:8080/get_users?cookie=admin&username=admin")
+                                                        .then((response) => response.json())
+                                                        .then((data) => {
+                                                            resolve(data);
+                                                        })
+                                                        .catch((error) => {
+                                                            console.error("Error: ", error);
+                                                            reject(error);
+                                                        });
+                                                });
+                                            }
+                                        </script>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Fim Listagem Colaboradores-->
+
+            </div>           
+          </main>
+          <footer class="footer">
+            <div class="container-fluid">
+              <div class="row text-muted">
+                <div class="col-6 text-start">
+                  <p class="mb-0">
+                    <a href="#" class="text-decoration-none"><div class="logo"><div class="logo1"><span class="logoname-footer">JGStore </span></a> </div></div>
+                      
+                  </p>
+                </div>
+                <div class="col-6 text-end">
+                  <ul class="list-inline">
+                    <li class="list-inline-item">
+                      <a class="text-muted" href="#">Support</a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="text-muted" href="#">Help Center</a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="text-muted" href="#">Privacy</a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="text-muted" href="#">Terms</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div> 
+      </div> 
+    <!-- Script Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <!--Fontes e Icons-->
+    <script src="https://kit.fontawesome.com/aeca222388.js" crossorigin="anonymous"></script>
+    
+    <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,3 +1,12 @@
-16:58:59 21-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
-16:58:59 21-3-2024 -> REMOVE DEBUG ROUTES
-16:58:59 21-3-2024 -> Express server started
+18:3:51 21-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
+18:3:51 21-3-2024 -> REMOVE DEBUG ROUTES
+18:3:51 21-3-2024 -> Express server started
+18:3:53 21-3-2024 -> 123
+18:3:53 21-3-2024 -> User not found
+18:3:58 21-3-2024 -> Trying to login 123
+18:3:58 21-3-2024 -> Logged in 123 if admin 0
+18:3:58 21-3-2024 -> WMktP1gvkYHbs34cMCcp9Xt7dVs3ahlooQoKOCs9I9QTyM2dN5tZY6Pe4B6r
+18:3:58 21-3-2024 -> 123
+18:3:58 21-3-2024 -> Logged in 123 if admin 0
+18:5:8 21-3-2024 -> 123
+18:5:8 21-3-2024 -> Logged in 123 if admin 0
