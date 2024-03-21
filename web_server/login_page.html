@@ -92,61 +92,10 @@
       <button onclick="login_func()">Login</button>
     </div>
   </div>
-  <input type="complete_name" id="complete_name" name="complete_name" placeholder="Enter the complete_name">
-  <input type="name" id="name" name="name" placeholder="Enter the product">
-  <input type="email" id="email" name="email" placeholder="Enter your email">
-  <input type="number" id="user_number" name="user_number" placeholder="Enter your user number">
-  <input type="number" id="service_year" name="service_year" placeholder="Enter the service year">
-  <input type="number" id="service_month" name="service_month" placeholder="Enter the service month">
-  <input type="number" id="service_day" name="service_day" placeholder="Enter the service day">
-  <input type="number" id="service_hour" name="service_hour" placeholder="Enter the service hour">
-  <input type="number" id="service_minute" name="service_minute" placeholder="Enter the service minute">
-  <button id="create_marcacao-button" onclick="create_marcacao()">Marcar</button>
-  <button id="test" onclick="test()">Test</button>
-  <div id="messages"></div>
+
 
 </body>
 <script>
-
-  let url = window.location.href;
-  url = url.replace("http", "ws")
-  url = url + "ws?username=admin0&cookie=admin0"
-  console.log(url)
-  const socket = new WebSocket(url);
-
-
-  socket.onopen = function ()
-  {
-    console.log('WebSocket connection established.');
-  };
-
-  socket.onmessage = function (event)
-  {
-    const message = event.data;
-    console.log('Received message:', message);
-
-    const paragraph = document.createElement('p');
-    paragraph.textContent = message;
-
-    // Append the paragraph to the messages div
-    const messagesDiv = document.getElementById('messages');
-    messagesDiv.appendChild(paragraph);
-  };
-
-  socket.onerror = function (error)
-  {
-    console.error('WebSocket error:', error);
-  };
-
-  socket.onclose = function ()
-  {
-    console.log('WebSocket connection closed.');
-  };
-
-  function test()
-  {
-    socket.send('Hello, Server!');
-  }
 
 
   function getCookie(name)
