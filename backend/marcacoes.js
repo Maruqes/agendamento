@@ -69,6 +69,7 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, pr
 
   //verificar se a marcacao cabe
   console.log("Temos " + cur_marcacao.length + " marcacoes")
+  console.log("Temos " + cur_bloqueio.length + " bloqueios")
   for (var i = 0; i < cur_marcacao.length; i++)
   {
     if (cur_marcacao[i].id == id) continue; // nao confilitir com a propria marcacao
@@ -142,7 +143,8 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, pr
     }
   }
 
-  const bloqueios_repeat = await db.read_bloqueios_repeat(estabelecimento_id, day1);
+  const bloqueios_repeat = await db.read_bloqueios_repeat(day1, estabelecimento_id);
+  console.log("Temos " + bloqueios_repeat.length + " bloqueios repeat")
   for (var i = 0; i < bloqueios_repeat.length; i++)
   {
     if (bloqueios_repeat[i].repeat == 0) continue;

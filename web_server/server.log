@@ -1,6 +1,9 @@
-16:14:49 21-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
-16:14:49 21-3-2024 -> REMOVE DEBUG ROUTES
-16:14:49 21-3-2024 -> Express server started
-16:14:52 21-3-2024 -> admin
-16:14:52 21-3-2024 -> Logged in admin if admin 1
-16:14:52 21-3-2024 -> [+] Estabelecimento barb3 added
+16:53:5 21-3-2024 -> ADDING DEBUG ROUTES TO REMOVE
+16:53:5 21-3-2024 -> REMOVE DEBUG ROUTES
+16:53:5 21-3-2024 -> Express server started
+16:53:8 21-3-2024 -> joao maraccao
+16:53:8 21-3-2024 -> Temos 0 marcacoes
+16:53:8 21-3-2024 -> Temos 0 bloqueios
+16:53:8 21-3-2024 -> dia-> 5
+16:53:8 21-3-2024 -> Temos 1 bloqueios repeat
+16:53:8 21-3-2024 -> Does not fit becouse of bloqueio repeat
