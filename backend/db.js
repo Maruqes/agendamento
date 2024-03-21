@@ -771,6 +771,21 @@ async function edit_estabelecimento(id, name, address, phone, image, description
   });
 }
 
+async function remove_estabelecimento_from_horario(estebelecimento_id)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("DELETE FROM horarios WHERE estabelecimento_id = ?", [estebelecimento_id], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
 
 
 module.exports = {
@@ -812,4 +827,5 @@ module.exports = {
   remove_estabelecimento,
   edit_estabelecimento,
   add_horario_estabelecimento,
+  remove_estabelecimento_from_horario,
 };

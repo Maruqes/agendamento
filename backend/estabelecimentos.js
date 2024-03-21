@@ -81,6 +81,7 @@ async function delete_estabelecimento(id)
     try
     {
         await db.remove_estabelecimento(id);
+        await db.remove_estabelecimento_from_horario(id)
         console.log(`[-] Estabelecimento ${id} removed`);
     } catch (err)
     {
