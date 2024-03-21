@@ -261,11 +261,11 @@ function start_sheculer()
 start_sheculer();
 
 module.exports = {
+  containsSQLCode,
   update_agendamentos_json,
   create_new_product,
   update_products_json,
   delete_product,
   edit_product,
   isValidPhoneNumber,
-  containsSQLCode,
 };

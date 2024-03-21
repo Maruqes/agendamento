@@ -1,7 +1,19 @@
 const { query } = require("express");
-const { containsSQLCode } = require("./server.js");
 var db = require("./db.js");
 const crypto = require("crypto");
+
+function containsSQLCode(str)
+{
+    try
+    {
+        const sqlKeywords = ["SELECT", "UPDATE", "DELETE", "INSERT", "CREATE", "DROP", "ALTER", "TRUNCATE", "REPLACE"];
+
+        return sqlKeywords.some((keyword) => str.toUpperCase().includes(keyword));
+    } catch (err)
+    {
+        return false;
+    }
+}
 
 async function does_estabelecimento_exist(id)
 {
