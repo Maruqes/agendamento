@@ -313,15 +313,17 @@
               
                       function editUserRequest() {
                           var estabelecimento1 = Array.from(select1.selectedOptions).map(option => Number(option.value));
+                          const cookie = getCookie('session_token');
+                          const user1 = getCookie('username');
               
                           var user = {
-                              username: 'admin',
-                              cookie: 'admin',
+                              username: user1,
+                              cookie: cookie,
                               user: document.getElementById('username_edit').value,
                               email: document.getElementById('email_edit').value,
                               phone_number: document.getElementById('telefone_edit').value,
                               full_name: document.getElementById('nomeCompleto_edit').value,
-                              estabelecimento: estabelecimento1,
+                              estabelecimento_id: estabelecimento1,
                               image: 'EDIT_IMAGE.png' 
                           };
               
@@ -466,8 +468,8 @@
                     function deleteUserRequest() {
 
                       var user = {
-                            username: 'admin',
-                            cookie: 'admin',
+                            username: user,
+                            cookie: cookie,
                             user: userToDelete,
                         };
                         fetch("/delete_user", {
