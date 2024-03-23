@@ -369,6 +369,7 @@ app.post("/edit_user", function (req, res)
     }
     auth.edit_user(
       req.body.user,
+      req.body.estabelecimento_id,
       req.body.email,
       req.body.phone_number,
       req.body.full_name,
