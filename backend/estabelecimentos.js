@@ -96,7 +96,6 @@ async function delete_estabelecimento(id)
 async function edit_estabelecimento(body)
 {
     const { id, name, address, phone, image, description } = body;
-
     if (id == undefined || name == undefined || address == undefined || phone == undefined || image == undefined || description == undefined || id == "" || name == "" || address == "" || phone == "")
     {
         console.log("estabelecimento invalido");
