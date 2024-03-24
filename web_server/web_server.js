@@ -528,6 +528,9 @@ app.post("/set_bloqueio", async function (req, res)
     } else if (result == 701)
     {
       res.status(result).send("User does not exist");
+    } else if (result == 702)
+    {
+      res.status(result).send("Invalid date, exists a marcacao on that");
     }
     else
     {

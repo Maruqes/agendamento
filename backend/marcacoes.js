@@ -33,7 +33,8 @@ async function create_order(order, date, ip)
       order.complete_name,
       order.user,
       uuid,
-      order.estabelecimento_id
+      order.estabelecimento_id,
+      order.dia_da_semana
     );
     console.log(" [+] Venda para " + order.email + " de '" + order.product.name + "' finalizada");
     sms.send_sms("Your order has been created", order.user_number);
@@ -265,6 +266,7 @@ async function new_order_test(body, ip)
 
   try
   {
+    let dia_da_semana = new Date(Date.UTC(date[0].ano, date[0].mes - 1, date[0].dia)).getDay();
     const new_order = {
       email,
       complete_name,
@@ -272,6 +274,7 @@ async function new_order_test(body, ip)
       product: product[0],
       user,
       estabelecimento_id,
+      dia_da_semana,
     };
     if (new_order.product.name != name)
     {

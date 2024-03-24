@@ -5,13 +5,13 @@ const db = new sqlite3.Database("../backend/base.db", sqlite3.OPEN_READWRITE, (e
   if (err) return console.log(err.message);
 });
 
-function add_db(service, email, user_number, ano, mes, dia, hora, minuto, duration, price, complete_name, user, uuid, estabelecimento_id)
+function add_db(service, email, user_number, ano, mes, dia, hora, minuto, duration, price, complete_name, user, uuid, estabelecimento_id, dia_da_semana)
 {
   return new Promise((resolve, reject) =>
   {
     db.run(
-      "INSERT INTO marcacoes (id, email, user_number, service, duration, ano, mes, dia, hora, minuto, price_at_moment,complete_name, user, estabelecimento_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-      [uuid, email, user_number, service, duration, ano, mes, dia, hora, minuto, price, complete_name, user, estabelecimento_id],
+      "INSERT INTO marcacoes (id, email, user_number, service, duration, ano, mes, dia, hora, minuto, price_at_moment,complete_name, user, estabelecimento_id,dia_da_semana) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+      [uuid, email, user_number, service, duration, ano, mes, dia, hora, minuto, price, complete_name, user, estabelecimento_id, dia_da_semana],
       (err) =>
       {
         if (err)
@@ -97,6 +97,39 @@ function read_db(user)
     });
   });
 }
+
+async function read_marcacoes_on_dia_da_semana(dia_da_semana, estabelecimento_id, user)
+{
+  if (user == "*")
+  {
+    return new Promise((resolve, reject) =>
+    {
+      db.all("SELECT * FROM marcacoes WHERE dia_da_semana = ? AND estabelecimento_id = ?", [dia_da_semana, estabelecimento_id], function (err, data)
+      {
+        if (err)
+        {
+          reject(err);
+        }
+        resolve(data);
+      });
+    });
+  } else
+  {
+    return new Promise((resolve, reject) =>
+    {
+      db.all("SELECT * FROM marcacoes WHERE dia_da_semana = ? AND estabelecimento_id = ? AND user = ?", [dia_da_semana, estabelecimento_id, user], function (err, data)
+      {
+        if (err)
+        {
+          reject(err);
+        }
+        resolve(data);
+      });
+    });
+
+  }
+}
+
 
 function read_marcacao_on_specific_day(dia, mes, ano, estabelecimento_id)
 {
@@ -792,6 +825,7 @@ module.exports = {
   get_all_db_data,
   add_db,
   read_db,
+  read_marcacoes_on_dia_da_semana,
   get_product_on_db,
   read_db_sms,
   create_new_product_on_db,
