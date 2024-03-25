@@ -88,7 +88,11 @@ async function check_if_bloqueio_fit(estabelecimento_id, dia, mes, ano, comeco_h
         for (let i = 0; i < marcacoes_exist.length; i++)
         {
             //continue on marcacoes that already passed the day of the bloqueio
-
+            if (ano > marcacoes_exist[i].ano || ano == marcacoes_exist[i].ano && mes > marcacoes_exist[i].mes || ano == marcacoes_exist[i].ano && mes == marcacoes_exist[i].mes && dia > marcacoes_exist[i].dia)
+            {
+                console.log("ja passou")
+                continue;
+            }
 
 
             if (marcacoes_exist[i].user != user)

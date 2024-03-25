@@ -5,6 +5,7 @@ var auth = require("./auth.js");
 var server = require("./server.js");
 const estabelecimentos = require("./estabelecimentos.js");
 const crypto = require("crypto");
+const { start } = require("repl");
 
 function order_errors(err, order, ip)
 {
@@ -55,6 +56,28 @@ async function check_user_estabelecimento(user, estabelecimento_id)
 }
 
 
+
+function does_hours_fit(hora_comeco1, hora_fim1, hora_comeco2, hora_fim2)
+{
+  if (hora_comeco1 >= hora_comeco2 && hora_comeco1 < hora_fim2)
+  {
+    return false;
+  }
+  if (hora_fim1 > hora_comeco2 && hora_fim1 <= hora_fim2)
+  {
+    return false;
+  }
+  if (hora_comeco1 < hora_comeco2 && hora_fim1 > hora_fim2)
+  {
+    return false;
+  }
+  if (hora_comeco1 > hora_comeco2 && hora_fim1 < hora_fim2)
+  {
+    return false;
+  }
+  return true;
+}
+
 async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, product)
 {
 
@@ -79,14 +102,9 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, pr
     var cur_start_mins = cur_marcacao[i].hora * 60 + cur_marcacao[i].minuto;
     var cur_end_mins = cur_start_mins + cur_marcacao[i].duration;
 
-    if (start_mins >= cur_start_mins && start_mins < cur_end_mins)
+    if (does_hours_fit(start_mins, end_mins, cur_start_mins, cur_end_mins) == false)
     {
-      console.log("Does not fit becouse of start_mins")
-      return 802;
-    }
-    if (end_mins > cur_start_mins && end_mins <= cur_end_mins)
-    {
-      console.log("Does not fit becouse of end_mins")
+      console.log("Does not fit becouse of marcacao")
       return 802;
     }
   }
@@ -119,24 +137,14 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, pr
     var hora_fim = parseInt(cur_bloqueio[i].fim.split(":")[0]) * 60 + parseInt(cur_bloqueio[i].fim.split(":")[1]);
     if (cur_bloqueio[i].user == user)
     {
-      if (start_mins >= hora_comeco && start_mins < hora_fim)
-      {
-        console.log("Does not fit becouse of bloqueio")
-        return 804;
-      }
-      if (end_mins > hora_comeco && end_mins <= hora_fim)
+      if (does_hours_fit(hora_comeco, hora_fim, start_mins, end_mins) == false)
       {
         console.log("Does not fit becouse of bloqueio")
         return 804;
       }
     } else if (cur_bloqueio[i].user == '*')
     {
-      if (start_mins >= hora_comeco && start_mins < hora_fim)
-      {
-        console.log("Does not fit becouse of bloqueio")
-        return 804;
-      }
-      if (end_mins > hora_comeco && end_mins <= hora_fim)
+      if (does_hours_fit(hora_comeco, hora_fim, start_mins, end_mins) == false)
       {
         console.log("Does not fit becouse of bloqueio")
         return 804;
@@ -154,26 +162,17 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, pr
     {
       var hora_comeco = parseInt(bloqueios_repeat[i].comeco.split(":")[0]) * 60 + parseInt(bloqueios_repeat[i].comeco.split(":")[1]);
       var hora_fim = parseInt(bloqueios_repeat[i].fim.split(":")[0]) * 60 + parseInt(bloqueios_repeat[i].fim.split(":")[1]);
-      if (start_mins >= hora_comeco && start_mins < hora_fim)
-      {
-        console.log("Does not fit becouse of bloqueio repeat")
-        return 804;
-      }
-      if (end_mins > hora_comeco && end_mins <= hora_fim)
-      {
-        console.log("Does not fit becouse of bloqueio repeat")
-        return 804;
-      }
-    } else if (bloqueios_repeat[i].user == '*')
-    {
-      var hora_comeco = parseInt(bloqueios_repeat[i].comeco.split(":")[0]) * 60 + parseInt(bloqueios_repeat[i].comeco.split(":")[1]);
-      var hora_fim = parseInt(bloqueios_repeat[i].fim.split(":")[0]) * 60 + parseInt(bloqueios_repeat[i].fim.split(":")[1]);
-      if (start_mins >= hora_comeco && start_mins < hora_fim)
+      if (does_hours_fit(hora_comeco, hora_fim, start_mins, end_mins) == false)
       {
         console.log("Does not fit becouse of bloqueio")
         return 804;
       }
-      if (end_mins > hora_comeco && end_mins <= hora_fim)
+
+    } else if (bloqueios_repeat[i].user == '*')
+    {
+      var hora_comeco = parseInt(bloqueios_repeat[i].comeco.split(":")[0]) * 60 + parseInt(bloqueios_repeat[i].comeco.split(":")[1]);
+      var hora_fim = parseInt(bloqueios_repeat[i].fim.split(":")[0]) * 60 + parseInt(bloqueios_repeat[i].fim.split(":")[1]);
+      if (does_hours_fit(hora_comeco, hora_fim, start_mins, end_mins) == false)
       {
         console.log("Does not fit becouse of bloqueio")
         return 804;
@@ -199,6 +198,7 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, pr
 
 async function new_order_test(body, ip)
 {
+
   const { user_number, email, name, estabelecimento_id, date, complete_name, user } = body;
   console.log(complete_name);
   if (user_number == undefined || email == undefined || name == undefined || date == undefined || complete_name == undefined || user == undefined)
@@ -213,6 +213,10 @@ async function new_order_test(body, ip)
     return 703;
   }
 
+  if (await estabelecimentos.does_estabelecimento_exist(estabelecimento_id) == false)
+  {
+    return 706;
+  }
   let mar_fit_err = (await can_marcacao_fit(date, product[0].duration, 0, user, estabelecimento_id, product));
   if (mar_fit_err != 200)
   {
@@ -257,10 +261,7 @@ async function new_order_test(body, ip)
     return 702;
   }
 
-  if (await estabelecimentos.does_estabelecimento_exist(estabelecimento_id) == false)
-  {
-    return 706;
-  }
+
 
   console.log(`Venda para ${email} de '${name}' inicializada`);
 
@@ -286,6 +287,7 @@ async function new_order_test(body, ip)
   } catch (err)
   {
     console.error(`Cant find product "${name}" on db`);
+    console.log(`Cant find product "${name}" on db`);
     const new_order = {
       email,
       complete_name,

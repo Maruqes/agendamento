@@ -110,7 +110,7 @@ app.post("/new", async function (req, res)
     res.status(702).send("Invalid phone number");
   } else if (result == 706)
   {
-    res.status(706).send("Estabelecimento does ont exist");
+    res.status(706).send("Estabelecimento does not exist");
   }
   else if (result == 801)
   {
