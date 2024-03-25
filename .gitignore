@@ -1,5 +1,4 @@
 node_modules/
 .vscode/
-backend/base.db
 web_server/server.log
 web_server/Error.log
