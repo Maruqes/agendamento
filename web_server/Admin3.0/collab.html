@@ -265,9 +265,32 @@
                             <label for="validationCustom04" class="form-label"></label>
                             <select class="form-select" id="estabelecimento" multiple required>
                               <option disabled value="">Estabelecimento</option>
-                              <option value="3">Estabelecimento 3</option>
-                              <option value="4">Estabelecimento 4</option>
-                              <option value="5">Estabelecimento 5</option>
+                              <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                  getEstabelecimetnos().then((data) => {
+                                    for (let i = 0; i < data.length; i++) {
+                                      let option = "<option value='" + data[i].id + "'>" + data[i].name + "</option>";
+                                      document.getElementById("estabelecimento").innerHTML += option;
+                                    }
+                                  }).catch((error) => {
+                                    console.error('Error:', error);
+                                  });
+                                });
+    
+                            function getEstabelecimetnos() {
+                              return new Promise((resolve, reject) => {
+                                fetch("/get_estabelecimentos")
+                                  .then((response) => response.json())
+                                  .then((data) => {
+                                    resolve(data);
+                                  })
+                                  .catch((error) => {
+                                    console.error("Error: ", error);
+                                    reject(error);
+                                  });
+                              });
+                            }
+                              </script>
                             </select>
                             
                             <div class="invalid-feedback">
@@ -326,9 +349,7 @@
                               estabelecimento_id: estabelecimento1,
                               image: 'EDIT_IMAGE.png' 
                           };
-              
-                          console.log(user);
-              
+                            
                           return fetch("/edit_user", {
                               method: 'POST',
                               headers: {
@@ -420,11 +441,34 @@
                              
                           <div class="col-md-6">
                             <label for="validationCustom04" class="form-label"></label>
-                            <select class="form-select" id="estabelecimento_edit" required multiple>
-                              <option  disabled value="">Estabelecimento</option>
-                              <option value="3">Estabelecimento 3</option>
-                              <option value="4">Estabelecimento 4</option>
-                              <option value="5">Estabelecimento 5</option>
+                            <select class="form-select" id="estabelecimento_edit" multiple required>
+                              <option disabled value="">Estabelecimento</option>
+                              <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                  getEstabelecimetnos().then((data) => {
+                                    for (let i = 0; i < data.length; i++) {
+                                      let option = "<option value='" + data[i].id + "'>" + data[i].name + "</option>";
+                                      document.getElementById("estabelecimento_edit").innerHTML += option;
+                                    }
+                                  }).catch((error) => {
+                                    console.error('Error:', error);
+                                  });
+                                });
+    
+                            function getEstabelecimetnos() {
+                              return new Promise((resolve, reject) => {
+                                fetch("/get_estabelecimentos")
+                                  .then((response) => response.json())
+                                  .then((data) => {
+                                    resolve(data);
+                                  })
+                                  .catch((error) => {
+                                    console.error("Error: ", error);
+                                    reject(error);
+                                  });
+                              });
+                            }
+                              </script>
                             </select>
                             <div class="invalid-feedback">
                               Escolha o estabelecimnto do colaborador.
@@ -522,9 +566,10 @@
                                             <th>Username</th>
                                             <th class="d-none d-md-table-cell">Contacto</th>
                                             <th class="d-none d-md-table-cell">Email</th>
-                                            <th>Status</th>
+                                            <th>Permissões</th>
                                         </tr>
                                     </thead>
+                                    
                                     <tbody id="colab-table">
                                       <style>
                                         .colab_ln:hover {

@@ -62,6 +62,8 @@ function set_new_page(link, ficheiro)
 set_new_page("/colaboradores", "collab.html");
 set_new_page("/calendario", "calendar1.html");
 set_new_page("/estabelecimentos", "estabelecimentos.html");
+set_new_page("/servicos", "servicos.html");
+
 
 app.use(express.static("images"));
 app.post("/upload", (req, res) =>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Estabelecimentos</title>
+  <title>Serviços</title>
 
 
 
@@ -290,7 +290,7 @@
         <div class="container-fluid p-0">
 
           <div class="mb-3 d-flex justify-content-md-between">
-            <h1 class="h3 d-inline align-middle">Estabelecimentos</h1>
+            <h1 class="h3 d-inline align-middle">Serviços</h1>
 
             <button type="button" class="btn btn-primary btn-colab-new" data-bs-toggle="modal"
               data-bs-target="#modal_add"><i class="fa-solid fa-plus" style="margin-right: 7px;"></i>Novo</button>
@@ -305,28 +305,31 @@
             }
 
 
-            function criaEstabelecimento()
+            function criaServico()
             {
               return new Promise((resolve, reject) =>
               {
                 const cookie = getCookie('session_token');
                 const user = getCookie('username');
-                const nome = document.getElementById('nome').value;
-                const address = document.getElementById('morada').value;
-                const phone = document.getElementById('telefone').value;
-                const descricao = document.getElementById('descricao').value;
+                const nome = document.getElementById('name').value;
+                const description = document.getElementById('description').value;
+                const duration = document.getElementById('duration').value;
+                const price = document.getElementById('price').value;
+                const select = document.getElementById('estabelecimento');
+                const estabelecimento = Array.from(select.selectedOptions).map(option => Number(option.value));
 
                 const data = {
-                  "username": user,
-                  "cookie": cookie,
-                  "name": nome,
-                  "address": address,
-                  "phone": phone,
-                  "image": "test2.png",
-                  "description": descricao
+                    "username": user,
+                    "cookie": cookie,
+                    "name": nome,
+                    "estabelecimento_id": estabelecimento,
+                    "price": price,
+                    "image": "newimg.png", 
+                    "duration": duration,
+                    "description": description
                 };
 
-                fetch("/create_estabelecimento", {
+                fetch("/create_product", {
                   method: "POST",
                   body: JSON.stringify(data),
                   headers: {
@@ -365,7 +368,7 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="staticBackdropLabel">Adicionar Estabelecimento</h5>
+                  <h5 class="modal-title" id="staticBackdropLabel">Adicionar Serviço</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modal-body">
@@ -373,7 +376,7 @@
                   <form class="row g-3 needs-validation" novalidate>
                     <div class="col-md-12">
                       <label for="validationCustom01" class="form-label"></label>
-                      <input type="text" class="form-control" id="nome" placeholder="Nome" required>
+                      <input type="text" class="form-control" id="name" placeholder="Nome" required>
                       <div class="valid-feedback">
                         Muito bem!
                       </div>
@@ -383,7 +386,7 @@
                     </div>
                     <div class="col-md-12">
                       <label for="validationCustom01" class="form-label"></label>
-                      <input type="text" class="form-control" id="morada" placeholder="Morada" required>
+                      <input type="number" class="form-control" id="duration" placeholder="Duração" required>
                       <div class="valid-feedback">
                         Muito bem!
                       </div>
@@ -393,7 +396,7 @@
                     </div>
                     <div class="col-md-6">
                       <label for="validationCustom03" class="form-label"></label>
-                      <input type="text" class="form-control" id="telefone" placeholder="Telefone" required>
+                      <input type="number" class="form-control" id="price" placeholder="Preço" required>
                       <div class="invalid-feedback">
                         Introduza o seu número de telefone.
                       </div>
@@ -401,9 +404,10 @@
                         Muito bem!
                       </div>
                     </div>
+                    
                     <div class="col-md-12">
                       <div class="form-floating">
-                        <textarea class="form-control" id="descricao"
+                        <textarea class="form-control" id="description"
                           placeholder="Escreva a descrição do estabelecimento..." id="floatingTextarea2"
                           style="height: 100px" required></textarea>
                         <label for="floatingTextarea2" class="form-label">Descrição</label>
@@ -415,12 +419,61 @@
                         Introduza o nome do estabelecimento.
                       </div>
                     </div>
+                    <div class="col-md-6">
+                        <label for="validationCustom04" class="form-label"></label>
+                        <select class="form-select" id="estabelecimento" multiple required>
+                          <option disabled value="">Estabelecimento</option>
+                          <script>
+                            document.addEventListener('DOMContentLoaded', (event) => {
+                              getEstabelecimetnos().then((data) => {
+                                for (let i = 0; i < data.length; i++) {
+                                  let option = "<option value='" + data[i].id + "'>" + data[i].name + "</option>";
+                                  document.getElementById("estabelecimento").innerHTML += option;
+                                }
+                              }).catch((error) => {
+                                console.error('Error:', error);
+                              });
+                            });
+
+                        function getEstabelecimetnos() {
+                          return new Promise((resolve, reject) => {
+                            fetch("/get_estabelecimentos")
+                              .then((response) => response.json())
+                              .then((data) => {
+                                resolve(data);
+                              })
+                              .catch((error) => {
+                                console.error("Error: ", error);
+                                reject(error);
+                              });
+                          });
+                        }
+                          </script>
+                        </select>
+                        
+                        <div class="invalid-feedback">
+                          Escolha o estabelecimento do colaborador.
+                        </div>
+                        <div class="valid-feedback">
+                          Muito bem!
+                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', (event) => {
+                                var select = document.getElementById('estabelecimento');
+                                select.addEventListener('change', function() {
+                                    var values = Array.from(select.selectedOptions).map(option => option.value);
+                                    var valuesString = values.join(',');
+                                    console.log(valuesString);
+                                });
+                            });
+                              </script>
+                      </div>
 
                 </div>
 
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" onclick="criaEstabelecimento(event)"
+                  <button type="button" class="btn btn-primary" onclick="criaServico(event)"
                     style="background-color: var(--color-primary); border-color: var(--color-primary);">Adicionar</button>
                 </div>
                 </form>
@@ -433,22 +486,28 @@
 
           <!-- Modal Edit-->
           <script>
-            function editStoreRequest() {
-              const cookie = getCookie('session_token');
-              const user1 = getCookie('username');
+            function editServiceRequest() {
+                const cookie = getCookie('session_token');
+                const user1 = getCookie('username');
+                const nome = document.getElementById('name_edit').value;
+                const description = document.getElementById('description_edit').value;
+                const duration = document.getElementById('duration_edit').value;
+                const price = document.getElementById('price_edit').value;
+                const select = document.getElementById('estabelecimento_edit');
+                const estabelecimento = Array.from(select.selectedOptions).map(option => Number(option.value));
               
                 var user = {
-                  username: user1,
-                  cookie: cookie,
-                  id: globalId,
-                  name: document.getElementById('nome_edit').value,
-                  address: document.getElementById('morada_edit').value,
-                  phone: document.getElementById('telefone_edit').value,
-                  description: document.getElementById('descricao_edit').value,
-                  image: "testjoao.png"
+                    "username": user1,
+                    "cookie": cookie,
+                    "name": nome,
+                    "estabelecimento_id": estabelecimento,
+                    "price": price,
+                    "image": "newimg.png", 
+                    "duration": duration,
+                    "description": description
                 };
 
-              return fetch("/edit_estabelecimento", {
+              return fetch("/edit_product", {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -496,56 +555,106 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="col-md-12">
-                      <label for="validationCustom01" class="form-label"></label>
-                      <input type="text" class="form-control" id="nome_edit" placeholder="Nome" required>
-                      <div class="valid-feedback">
-                        Muito bem!
-                      </div>
-                      <div class="invalid-feedback">
-                        Introduza o nome do estabelecimento.
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <label for="validationCustom01" class="form-label"></label>
-                      <input type="text" class="form-control" id="morada_edit" placeholder="Morada" required>
-                      <div class="valid-feedback">
-                        Muito bem!
-                      </div>
-                      <div class="invalid-feedback">
-                        Introduza a morada do estabelecimento.
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <label for="validationCustom03" class="form-label"></label>
-                      <input type="text" class="form-control" id="telefone_edit" placeholder="Telefone" required>
-                      <div class="invalid-feedback">
-                        Introduza o seu número de telefone.
-                      </div>
-                      <div class="valid-feedback">
-                        Muito bem!
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-floating">
-                        <textarea class="form-control" id="descricao_edit"
-                          placeholder="Escreva a descrição do estabelecimento..." 
-                          style="height: 100px" required></textarea>
-                        <label for="floatingTextarea2" class="form-label">Descrição</label>
-                      </div>
-                      <div class="valid-feedback">
-                        Muito bem!
-                      </div>
-                      <div class="invalid-feedback">
-                        Introduza o nome do estabelecimento.
-                      </div>
-                    </div>
-                    <div class="teste"></div>
+                    <form class="row g-3 needs-validation" novalidate>
+                        <div class="col-md-12">
+                          <label for="validationCustom01" class="form-label"></label>
+                          <input type="text" class="form-control" id="name_edit" placeholder="Nome" required>
+                          <div class="valid-feedback">
+                            Muito bem!
+                          </div>
+                          <div class="invalid-feedback">
+                            Introduza o nome do estabelecimento.
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <label for="validationCustom01" class="form-label"></label>
+                          <input type="number" class="form-control" id="duration_edit" placeholder="Duração" required>
+                          <div class="valid-feedback">
+                            Muito bem!
+                          </div>
+                          <div class="invalid-feedback">
+                            Introduza a morada do estabelecimento.
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="validationCustom03" class="form-label"></label>
+                          <input type="number" class="form-control" id="price_edit" placeholder="Preço" required>
+                          <div class="invalid-feedback">
+                            Introduza o seu número de telefone.
+                          </div>
+                          <div class="valid-feedback">
+                            Muito bem!
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                          <div class="form-floating">
+                            <textarea class="form-control" id="description_edit"
+                              placeholder="Escreva a descrição do estabelecimento..." id="floatingTextarea2"
+                              style="height: 100px" required></textarea>
+                            <label for="floatingTextarea2" class="form-label">Descrição</label>
+                          </div>
+                          <div class="valid-feedback">
+                            Muito bem!
+                          </div>
+                          <div class="invalid-feedback">
+                            Introduza o nome do estabelecimento.
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="validationCustom04" class="form-label"></label>
+                            <select class="form-select" id="estabelecimento_edit" multiple required>
+                              <option disabled value="">Estabelecimento</option>
+                              <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                  getEstabelecimetnos().then((data) => {
+                                    for (let i = 0; i < data.length; i++) {
+                                      let option = "<option value='" + data[i].id + "'>" + data[i].name + "</option>";
+                                      document.getElementById("estabelecimento_edit").innerHTML += option;
+                                    }
+                                  }).catch((error) => {
+                                    console.error('Error:', error);
+                                  });
+                                });
+    
+                            function getEstabelecimetnos() {
+                              return new Promise((resolve, reject) => {
+                                fetch("/get_estabelecimentos")
+                                  .then((response) => response.json())
+                                  .then((data) => {
+                                    resolve(data);
+                                  })
+                                  .catch((error) => {
+                                    console.error("Error: ", error);
+                                    reject(error);
+                                  });
+                              });
+                            }
+                              </script>
+                            </select>
+                            
+                            <div class="invalid-feedback">
+                              Escolha o estabelecimento do colaborador.
+                            </div>
+                            <div class="valid-feedback">
+                              Muito bem!
+                            </div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                    var select = document.getElementById('estabelecimento_edit');
+                                    select.addEventListener('change', function() {
+                                        var values = Array.from(select.selectedOptions).map(option => option.value);
+                                        var valuesString = values.join(',');
+                                        console.log(valuesString);
+                                    });
+                                });
+                                  </script>
+                          </div>
                 </div>
 
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" onclick="editStoreRequest()" class="btn btn-primary">Salvar</button>
+                  <button type="button" onclick="editServiceRequest()" class="btn btn-primary">Salvar</button>
                 </div>
 
 
@@ -564,142 +673,122 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  Têm a certeza que deseja excluir o estabelecimento <span><b id="userToDelete"></b></span> ?
+                  Têm a certeza que deseja excluir o serviço <span><b id="userToDelete"></b></span> ?
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                  <button type="button" class="btn btn-danger" onclick="deleteUserRequest()">Excluir</button>
+                  <button type="button" class="btn btn-danger" onclick="deleteServiceRequest()">Excluir</button>
                 </div>
               </div>
             </div>
             <script>
-              function deleteUserRequest()
-              {
-                const cookie = getCookie('session_token');
-                const user1 = getCookie('username');
-                var user = {
-                  username: user1,
-                  cookie: cookie,
-                  id: globalId,
-                };
-                fetch("/delete_estabelecimento", {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify(user),
-                })
-                  .then(response =>
-                  {
-                    if (response.ok)
-                    {
-                      localStorage.setItem('showNotification', 'true');
-                      localStorage.setItem('notificationMessage', 'Colaborador excluido com sucesso.');
-                      localStorage.setItem('notificationType', 'success');
-                      window.location.reload();
-                    } else if (response.status == 701)
-                    {
-                      localStorage.setItem('showNotification', 'true');
-                      localStorage.setItem('notificationMessage', 'Não pode apagar a sua própria conta.');
-                      localStorage.setItem('notificationType', 'error');
-                    } else if (response.status == 400)
-                    {
-                      localStorage.setItem('showNotification', 'true');
-                      localStorage.setItem('notificationMessage', 'User does not exist');
-                      localStorage.setItem('notificationType', 'error');
-                      window.location.reload();
-                    }
+                var serviceToDelete;
+              
+                function confirmDelete(serviceName) {
+                  document.getElementById('userToDelete').innerText = serviceName;
+                  serviceToDelete = serviceName;
+                }
+              
+                function deleteServiceRequest()
+                {
+                  const cookie = getCookie('session_token');
+                  const user1 = getCookie('username');
+              
+                  var user = {
+                      username: user1,
+                      cookie: cookie,
+                      name: serviceToDelete,
+                          };
+              
+                  fetch("/delete_Product", {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(user),
                   })
-                  .then(data =>
-                  {
-                    console.log('Success:', data);
-                  })
-                  .catch((error) =>
-                  {
-                    console.error('Error:', error);
-                  });
-              }
-
-            </script>
-          </div>
-          <!--Fim Modal Delet-->
-          <!-- Listagem Estabelecimentos-->
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="card card-colab-list">
-                <div class="card-body">
-                  <table class="table table-responsive table-striped colab-table" style="width:100%">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Foto</th>
-                        <th>Nome</th>
-                        <th class="d-none d-md-table-cell">Contacto</th>
-                        <th class="d-none d-md-table-cell">Local</th>
-                        <th>Estado</th>
-                      </tr>
-                    </thead>
-                    <tbody id="colab-table">
-                      <style>
-                        .colab_ln:hover {
-                          background-color: #e7e6e6;
-
-                        }
-                      </style>
-
-                      <script>
-
-                        let globalId, globalIdEdit, globalName, globalDescricao;
-
-                        getEstabelecimetnos().then((data) => {
-                          for (let i = 0; i < data.length; i++) {
-                            let row = "<tr class='colab_ln'><td class='id_edit'><b>"+ data[i].id +"</b></td><td><img src='img/avatars/avatar.jpg' width='32' height='32' class='rounded-circle my-n1' alt='Avatar'></td><td class='name_edit'>" + data[i].name + "</td><td class='d-none d-md-table-cell'>" + data[i].phone + "</td><td class='d-none d-md-table-cell'>" + data[i].address + "</td><td>" + (data[i].admin === 0 ? "<span class='badge bg-success'>Aberto</span>" : "<span class='badge bg-danger'>Fechado</span>") + "</td><td><a class='edit' data-bs-toggle='modal' data-bs-target='#modal_edit' data-local='" + data[i].address + "' data-nome='" + data[i].name + "' data-telefone='" + data[i].phone + "' data-id='" + data[i].id + "' data-descricao='" + data[i].description + "'><i class='fa-regular fa-pen-to-square' style='color:var(--color-text-sidebar);'></i></a></td><td><a class='delete' data-bs-toggle='modal' data-bs-target='#modal_delete' data-id='" + data[i].id + "'><i class='fa-regular fa-trash-can' style='color:var(--color-text-sidebar);'></i></a></td></tr>";
-                            document.getElementById("colab-table").innerHTML += row;
-                          }
-
-                          let editIcons = document.getElementsByClassName('edit');
-                          for (let i = 0; i < editIcons.length; i++) {
-                            editIcons[i].addEventListener('click', function() {
-                              globalId = this.getAttribute('data-id');
-                              globalIdEdit = this.parentElement.parentElement.getElementsByClassName('id_edit')[0].textContent;
-                              globalName = this.parentElement.parentElement.getElementsByClassName('name_edit')[0].textContent;
-                              globalDescricao = this.getAttribute('data-descricao');
-
-
-                              document.getElementById('nome_edit').value = this.getAttribute('data-nome');
-                              document.getElementById('morada_edit').value = this.getAttribute('data-local');
-                              document.getElementById('telefone_edit').value = this.getAttribute('data-telefone');
-                              document.getElementById('descricao_edit').value = globalDescricao;
-                                });
-                          }
-
-                          let deleteIcons = document.getElementsByClassName('delete');
-                          for (let i = 0; i < deleteIcons.length; i++) {
-                            deleteIcons[i].addEventListener('click', function() {
-                              globalId = this.getAttribute('data-id');
-                              globalName = this.parentElement.parentElement.getElementsByClassName('name_edit')[0].textContent;
-                              document.getElementById('userToDelete').innerHTML = globalName;
-                            });
-                          }
-                        }).catch((error) => {
-                          console.error('Error:', error);
-                        });
-
-                        function getEstabelecimetnos() {
-                          return new Promise((resolve, reject) => {
-                            fetch("/get_estabelecimentos")
-                              .then((response) => response.json())
-                              .then((data) => {
-                                resolve(data);
-                              })
-                              .catch((error) => {
-                                console.error("Error: ", error);
-                                reject(error);
+                    .then(response =>
+                    {
+                      if (response.ok)
+                      {
+                        localStorage.setItem('showNotification', 'true');
+                        localStorage.setItem('notificationMessage', 'Colaborador excluido com sucesso.');
+                        localStorage.setItem('notificationType', 'success');
+                        window.location.reload();
+                      } else if (response.status == 701)
+                      {
+                        localStorage.setItem('showNotification', 'true');
+                        localStorage.setItem('notificationMessage', 'Não pode apagar a sua própria conta.');
+                        localStorage.setItem('notificationType', 'error');
+                      } else if (response.status == 400)
+                      {
+                        localStorage.setItem('showNotification', 'true');
+                        localStorage.setItem('notificationMessage', 'User does not exist');
+                        localStorage.setItem('notificationType', 'error');
+                        window.location.reload();
+                      }
+                    })
+                    .then(data =>
+                    {
+                      console.log('Success:', data);
+                    })
+                    .catch((error) =>
+                    {
+                      console.error('Error:', error);
+                    });
+                  }
+              
+              </script>
+              </div>
+              <!--Fim Modal Delet-->
+              <!-- Listagem Estabelecimentos-->
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="card card-colab-list">
+                    <div class="card-body">
+                      <table class="table table-responsive table-striped colab-table" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>Foto</th>
+                            <th>Nome</th>
+                            <th class="d-none d-md-table-cell">Descrição</th>
+                            <th class="d-none d-md-table-cell">Duração</th>
+                            <th>Preço</th>
+                          </tr>
+                        </thead>
+                        <tbody id="colab-table">
+                          <style>
+                            .colab_ln:hover {
+                              background-color: #e7e6e6;
+                            }
+                          </style>
+              
+                          <script>
+              
+                            getServicos().then((data) => {
+                            for (let i = 0; i < data.length; i++) {
+                                let row = "<tr class='colab_ln'><td><img src='img/avatars/avatar.jpg' width='32' height='32' class='rounded-circle my-n1' alt='Avatar'></td><td class='name_edit'>" + data[i].name + "</td><td class='d-none d-md-table-cell'>" + data[i].description + "</td><td class='d-none d-md-table-cell'>" + data[i].duration + " min</td><td>" + data[i].price + "€</td><td><a class='edit' data-bs-toggle='modal' data-bs-target='#modal_edit' data-nome='" + data[i].name + "' data-description='" + data[i].description + "' data-duration='" + data[i].duration + "' data-price='" + data[i].price + "' data-estabelecimento='" + JSON.stringify(data[i].estabelecimento_id) + "'><i class='fa-regular fa-pen-to-square' style='color:var(--color-text-sidebar);'></i></a></td><td><a class='delete' data-bs-toggle='modal' data-bs-target='#modal_delete' data-nome='" + data[i].name + "' onclick='confirmDelete(this.getAttribute(\"data-nome\"))'><i class='fa-regular fa-trash-can' style='color:var(--color-text-sidebar);'></i></a></td></tr>";
+                                document.getElementById("colab-table").innerHTML += row;
+                            }
+                        }).catch((error) => {});
+              
+                          
+              
+                            function getServicos() {
+                              return new Promise((resolve, reject) => {
+                                fetch("/get_products")
+                                  .then((response) => response.json())
+                                  .then((data) => {
+                                    resolve(data);
+                                  })
+                                  .catch((error) => {
+                                    console.error("Error: ", error);
+                                    reject(error);
+                                  });
                               });
-                          });
-                        }
-
-                      </script>
+                            }
+              
+                          </script>
                     </tbody>
                   </table>
                 </div>
