@@ -466,9 +466,11 @@
                   </div>
                   <script>
                     function deleteUserRequest() {
+                      const cookie = getCookie('session_token');
+                          const user1 = getCookie('username');
 
                       var user = {
-                            username: user,
+                            username: user1,
                             cookie: cookie,
                             user: userToDelete,
                         };

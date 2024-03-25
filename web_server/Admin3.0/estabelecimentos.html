@@ -325,7 +325,6 @@
                   "image": "test2.png",
                   "description": descricao
                 };
-                console.log(data);
 
                 fetch("/create_estabelecimento", {
                   method: "POST",
@@ -434,22 +433,20 @@
 
           <!-- Modal Edit-->
           <script>
-            function editStoreRequest()
-            {
+            function editStoreRequest() {
               const cookie = getCookie('session_token');
               const user1 = getCookie('username');
-              const id = document.getElementById('modal_edit').getAttribute('data-id');
-
-              var user = {
-                username: user1,
-                cookie: cookie,
-                id: id,
-                nome: document.getElementById('nome_edit').value,
-                address: document.getElementById('morada_edit').value,
-                phone: document.getElementById('telefone_edit').value,
-                descricao: document.getElementById('descricao_edit').value,
-                image: 'EDIT_IMAGE.png'
-              };
+              
+                var user = {
+                  username: user1,
+                  cookie: cookie,
+                  id: globalId,
+                  name: document.getElementById('nome_edit').value,
+                  address: document.getElementById('morada_edit').value,
+                  phone: document.getElementById('telefone_edit').value,
+                  description: document.getElementById('descricao_edit').value,
+                  image: "testjoao.png"
+                };
 
               return fetch("/edit_estabelecimento", {
                 method: 'POST',
@@ -471,7 +468,6 @@
                     localStorage.setItem('showNotification', 'true');
                     localStorage.setItem('notificationMessage', '701 - User already exists.');
                     localStorage.setItem('notificationType', 'error');
-                    window.location.reload();
                   } else if (response.status == 400)
                   {
                     localStorage.setItem('showNotification', 'true');
@@ -486,7 +482,6 @@
                 .catch((error) =>
                 {
                   console.error('Error:', error);
-                  console.log(user.id);
                 });
             }
 
@@ -501,7 +496,6 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <form class="row g-3 needs-validation" id="form-edit" novalidate>
                     <div class="col-md-12">
                       <label for="validationCustom01" class="form-label"></label>
                       <input type="text" class="form-control" id="nome_edit" placeholder="Nome" required>
@@ -535,7 +529,7 @@
                     <div class="col-md-12">
                       <div class="form-floating">
                         <textarea class="form-control" id="descricao_edit"
-                          placeholder="Escreva a descrição do estabelecimento..." id="floatingTextarea2"
+                          placeholder="Escreva a descrição do estabelecimento..." 
                           style="height: 100px" required></textarea>
                         <label for="floatingTextarea2" class="form-label">Descrição</label>
                       </div>
@@ -546,6 +540,7 @@
                         Introduza o nome do estabelecimento.
                       </div>
                     </div>
+                    <div class="teste"></div>
                 </div>
 
                 <div class="modal-footer">
@@ -553,7 +548,6 @@
                   <button type="button" onclick="editStoreRequest()" class="btn btn-primary">Salvar</button>
                 </div>
 
-                </form>
 
 
               </div>
@@ -570,7 +564,7 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  Têm a certeza que deseja excluir <span><b id="userToDelete"></b></span> ?
+                  Têm a certeza que deseja excluir o estabelecimento <span><b id="userToDelete"></b></span> ?
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -586,9 +580,9 @@
                 var user = {
                   username: user1,
                   cookie: cookie,
-                  user: userToDelete,
+                  id: globalId,
                 };
-                fetch("/delete_user", {
+                fetch("/delete_estabelecimento", {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
@@ -608,7 +602,6 @@
                       localStorage.setItem('showNotification', 'true');
                       localStorage.setItem('notificationMessage', 'Não pode apagar a sua própria conta.');
                       localStorage.setItem('notificationType', 'error');
-                      window.location.reload();
                     } else if (response.status == 400)
                     {
                       localStorage.setItem('showNotification', 'true');
@@ -639,6 +632,7 @@
                     <thead>
                       <tr>
                         <th>#</th>
+                        <th>Foto</th>
                         <th>Nome</th>
                         <th class="d-none d-md-table-cell">Contacto</th>
                         <th class="d-none d-md-table-cell">Local</th>
@@ -655,29 +649,50 @@
 
                       <script>
 
+                        let globalId, globalIdEdit, globalName, globalDescricao;
 
-                        getEstabelecimetnos().then((data) =>
-                        {
-                          for (let i = 0; i < data.length; i++)
-                          {
-                            document.getElementById("colab-table").innerHTML += "<tr class='colab_ln'><td><img src='img/avatars/avatar.jpg' width='32' height='32' class='rounded-circle my-n1' alt='Avatar'></td><td>" + data[i].name + "</td><td class='d-none d-md-table-cell'>" + data[i].phone + "</td><td class='d-none d-md-table-cell'>" + data[i].address + "</td><td>" + (data[i].admin === 0 ? "<span class='badge bg-success'>Aberto</span>" : "<span class='badge bg-danger'>Fechado</span>") + "</td><td><a data-bs-toggle='modal' data-bs-target='#modal_edit' data-local='" + data[i].address + "' data-nome='" + data[i].name + "' data-telefone='" + data[i].phone + "' data-id='" + data[i].id + "' data-descricao='" + data[i].descricao + "'><i class='fa-regular fa-pen-to-square'></i></a></td><td><a data-bs-toggle='modal' data-bs-target='#modal_delete' data-id='" + data[i].id + "'><i class='fa-regular fa-trash-can'></i></a></td></tr>";
+                        getEstabelecimetnos().then((data) => {
+                          for (let i = 0; i < data.length; i++) {
+                            let row = "<tr class='colab_ln'><td class='id_edit'><b>"+ data[i].id +"</b></td><td><img src='img/avatars/avatar.jpg' width='32' height='32' class='rounded-circle my-n1' alt='Avatar'></td><td class='name_edit'>" + data[i].name + "</td><td class='d-none d-md-table-cell'>" + data[i].phone + "</td><td class='d-none d-md-table-cell'>" + data[i].address + "</td><td>" + (data[i].admin === 0 ? "<span class='badge bg-success'>Aberto</span>" : "<span class='badge bg-danger'>Fechado</span>") + "</td><td><a class='edit' data-bs-toggle='modal' data-bs-target='#modal_edit' data-local='" + data[i].address + "' data-nome='" + data[i].name + "' data-telefone='" + data[i].phone + "' data-id='" + data[i].id + "' data-descricao='" + data[i].description + "'><i class='fa-regular fa-pen-to-square'></i></a></td><td><a class='delete' data-bs-toggle='modal' data-bs-target='#modal_delete' data-id='" + data[i].id + "'><i class='fa-regular fa-trash-can'></i></a></td></tr>";
+                            document.getElementById("colab-table").innerHTML += row;
                           }
+
+                          let editIcons = document.getElementsByClassName('edit');
+                          for (let i = 0; i < editIcons.length; i++) {
+                            editIcons[i].addEventListener('click', function() {
+                              globalId = this.getAttribute('data-id');
+                              globalIdEdit = this.parentElement.parentElement.getElementsByClassName('id_edit')[0].textContent;
+                              globalName = this.parentElement.parentElement.getElementsByClassName('name_edit')[0].textContent;
+                              globalDescricao = this.getAttribute('data-descricao');
+
+
+                              document.getElementById('nome_edit').value = this.getAttribute('data-nome');
+                              document.getElementById('morada_edit').value = this.getAttribute('data-local');
+                              document.getElementById('telefone_edit').value = this.getAttribute('data-telefone');
+                              document.getElementById('descricao_edit').value = globalDescricao;
+                                });
+                          }
+
+                          let deleteIcons = document.getElementsByClassName('delete');
+                          for (let i = 0; i < deleteIcons.length; i++) {
+                            deleteIcons[i].addEventListener('click', function() {
+                              globalId = this.getAttribute('data-id');
+                              globalName = this.parentElement.parentElement.getElementsByClassName('name_edit')[0].textContent;
+                              document.getElementById('userToDelete').innerHTML = globalName;
+                            });
+                          }
+                        }).catch((error) => {
+                          console.error('Error:', error);
                         });
 
-
-
-                        function getEstabelecimetnos()
-                        {
-                          return new Promise((resolve, reject) =>
-                          {
+                        function getEstabelecimetnos() {
+                          return new Promise((resolve, reject) => {
                             fetch("/get_estabelecimentos")
                               .then((response) => response.json())
-                              .then((data) =>
-                              {
+                              .then((data) => {
                                 resolve(data);
                               })
-                              .catch((error) =>
-                              {
+                              .catch((error) => {
                                 console.error("Error: ", error);
                                 reject(error);
                               });
