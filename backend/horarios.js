@@ -145,7 +145,14 @@ async function set_bloqueio(estabelecimento_id, dia, mes, ano, comeco, fim, user
         return 400;
     }
 
+
+
     if (await estabelecimentos.does_estabelecimento_exist(estabelecimento_id) == false)
+    {
+        return 705;
+    }
+
+    if (await estabelecimentos.is_user_on_estabelecimento(user, estabelecimento_id) == false)
     {
         return 703;
     }

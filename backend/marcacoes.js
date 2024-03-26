@@ -110,8 +110,8 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, pr
   }
 
   //horario
-  var date = new Date(Date.UTC(date[0].ano, date[0].mes - 1, date[0].dia));
-  const day1 = date.getDay();
+  var cur_date = new Date(Date.UTC(date[0].ano, date[0].mes - 1, date[0].dia));
+  const day1 = cur_date.getDay();
   console.log("dia-> " + day1);
   const horario_on_day = await db.read_horario_on_specific_day(day1, estabelecimento_id);
 
@@ -157,6 +157,12 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, pr
   for (var i = 0; i < bloqueios_repeat.length; i++)
   {
     if (bloqueios_repeat[i].repeat == 0) continue;
+
+    //checkar se ja passou a data
+    if (bloqueios_repeat[i].ano < date[0].ano) continue;
+    if (bloqueios_repeat[i].ano == date[0].ano && bloqueios_repeat[i].mes > date[0].mes) continue;
+    if (bloqueios_repeat[i].ano == date[0].ano && bloqueios_repeat[i].mes == date[0].mes && bloqueios_repeat[i].dia > date[0].dia) continue;
+
 
     if (bloqueios_repeat[i].user == user)
     {

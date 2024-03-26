@@ -521,18 +521,25 @@ app.post("/set_bloqueio", async function (req, res)
       req.body.user,
       req.body.repeat
     );
-    if (result == 703)
-    {
-      res.status(result).send("Estabelecimento does not exist");
-    } else if (result == 704)
+    if (result == 704)
     {
       res.status(result).send("Invalid repeat");
-    } else if (result == 701)
+    }
+    else if (result == 701)
     {
       res.status(result).send("User does not exist");
-    } else if (result == 702)
+    }
+    else if (result == 702)
     {
       res.status(result).send("Invalid date, exists a marcacao on that");
+    }
+    else if (result == 705)
+    {
+      res.status(result).send("Estabelecimento does not exist");
+    }
+    else if (result == 703)
+    {
+      res.status(result).send("User is not in the estabelecimento");
     }
     else
     {
@@ -732,7 +739,11 @@ app.post("/delete_estabelecimento", async function (req, res)
     } else if (result == 701)
     {
       res.status(result).send("invalid estabelecimento");
-    } else
+    } else if (result == 704)
+    {
+      res.status(result).send("Estabelecimento cannot be removed there is marcacoes on the future");
+    }
+    else
     {
       res.sendStatus(result);
     }
