@@ -55,6 +55,65 @@ async function get_horario(res)
         });
 }
 
+async function check_if_bloqueio_fit(estabelecimento_id, dia, mes, ano, comeco_hora, comeco_minuto, fim_hora, fim_minuto, user, repeat, dia_da_semana)
+{
+    if (repeat == 0)
+    {
+        const marcacoes_exist = await db.read_marcacao_on_specific_day(dia, mes, ano, estabelecimento_id); // ver caso seja repeat
+        let comeco_do_bloqueio = comeco_hora * 60 + comeco_minuto;
+        let fim_do_bloqueio = fim_hora * 60 + fim_minuto;
+        for (let i = 0; i < marcacoes_exist.length; i++)
+        {
+            if (marcacoes_exist[i].user != user)
+            {
+                if (user != '*')
+                    continue;
+            }
+            let comeco_da_marcacao_existente = marcacoes_exist[i].hora * 60 + marcacoes_exist[i].minuto;
+            let fim_da_marcacao_existente = comeco_da_marcacao_existente + marcacoes_exist[i].duration;
+            if (comeco_do_bloqueio >= comeco_da_marcacao_existente && comeco_do_bloqueio < fim_da_marcacao_existente ||
+                fim_do_bloqueio > comeco_da_marcacao_existente && fim_do_bloqueio <= fim_da_marcacao_existente ||
+                comeco_do_bloqueio <= comeco_da_marcacao_existente && fim_do_bloqueio >= fim_da_marcacao_existente ||
+                comeco_do_bloqueio >= comeco_da_marcacao_existente && fim_do_bloqueio <= fim_da_marcacao_existente)
+            {
+                console.log("ja existe marcacao nao foi possivel marcar bloqueio");
+                return 702;
+            }
+        }
+    } else
+    {
+        const marcacoes_exist = await db.read_marcacoes_on_dia_da_semana(dia_da_semana, estabelecimento_id, user); // ver caso seja repeat
+        let comeco_do_bloqueio = comeco_hora * 60 + comeco_minuto;
+        let fim_do_bloqueio = fim_hora * 60 + fim_minuto;
+        for (let i = 0; i < marcacoes_exist.length; i++)
+        {
+            //continue on marcacoes that already passed the day of the bloqueio
+            if (ano > marcacoes_exist[i].ano || ano == marcacoes_exist[i].ano && mes > marcacoes_exist[i].mes || ano == marcacoes_exist[i].ano && mes == marcacoes_exist[i].mes && dia > marcacoes_exist[i].dia)
+            {
+                console.log("ja passou")
+                continue;
+            }
+
+
+            if (marcacoes_exist[i].user != user)
+            {
+                if (user != '*')
+                    continue;
+            }
+            let comeco_da_marcacao_existente = marcacoes_exist[i].hora * 60 + marcacoes_exist[i].minuto;
+            let fim_da_marcacao_existente = comeco_da_marcacao_existente + marcacoes_exist[i].duration;
+            if (comeco_do_bloqueio >= comeco_da_marcacao_existente && comeco_do_bloqueio < fim_da_marcacao_existente ||
+                fim_do_bloqueio > comeco_da_marcacao_existente && fim_do_bloqueio <= fim_da_marcacao_existente ||
+                comeco_do_bloqueio <= comeco_da_marcacao_existente && fim_do_bloqueio >= fim_da_marcacao_existente ||
+                comeco_do_bloqueio >= comeco_da_marcacao_existente && fim_do_bloqueio <= fim_da_marcacao_existente)
+            {
+                console.log("ja existe marcacao nao foi possivel marcar bloqueio repeat");
+                return 702;
+            }
+        }
+    }
+}
+
 
 async function set_bloqueio(estabelecimento_id, dia, mes, ano, comeco, fim, user, repeat)
 {
@@ -86,7 +145,14 @@ async function set_bloqueio(estabelecimento_id, dia, mes, ano, comeco, fim, user
         return 400;
     }
 
+
+
     if (await estabelecimentos.does_estabelecimento_exist(estabelecimento_id) == false)
+    {
+        return 705;
+    }
+
+    if (await estabelecimentos.is_user_on_estabelecimento(user, estabelecimento_id) == false)
     {
         return 703;
     }
@@ -96,10 +162,13 @@ async function set_bloqueio(estabelecimento_id, dia, mes, ano, comeco, fim, user
         return 704;
     }
 
+
+
     var comeco_hora = parseInt(comeco.split(":")[0]);
     var comeco_minuto = parseInt(comeco.split(":")[1]);
     var fim_hora = parseInt(fim.split(":")[0]);
     var fim_minuto = parseInt(fim.split(":")[1]);
+
     if (comeco_hora * 60 + comeco_minuto > fim_hora * 60 + fim_minuto)
     {
         return 400;
@@ -108,6 +177,14 @@ async function set_bloqueio(estabelecimento_id, dia, mes, ano, comeco, fim, user
     var date = new Date(Date.UTC(ano, mes - 1, dia));
     const day1 = date.getDay();
     console.log("dia-> " + day1);
+
+    if (await check_if_bloqueio_fit(estabelecimento_id, dia, mes, ano, comeco_hora, comeco_minuto, fim_hora, fim_minuto, user, repeat, day1) == 702)
+    {
+        return 702;
+    }
+
+
+
 
     console.log(`[+] SETADO NOVO BLOQUEIO dia = ${dia} comeco = ${comeco} fim = ${fim} user = ${user}`);
     let uuid = crypto.randomUUID();

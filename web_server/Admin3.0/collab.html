@@ -16,108 +16,31 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 
-
 <body data-theme="marine-blue">
       <div class="wrapper">
-        <nav class="d-flex flex-column flex-shrink-0 sidebar">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none logos">
-              <div class="logo"><div class="logo1"></div></div>
-              <span class="fs-4 logoname">JGStore</span>  
-            </a>
-            <hr style="opacity: 0.02;">
-            <div class="cont" style="overflow: auto;">
-            <ul class="nav nav-pills flex-column mb-auto ">
-              <div class="sidebar-header">Negócio</div>
-              <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">
-                  <i class="fa-solid fa-gauge"></i>
-                  Dashboard
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link link-dark">
-                  <i class="fa-solid fa-chart-pie"></i>
-                  Estatisticas
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link link-dark">
-                  <i class="fa-solid fa-calendar"></i>
-                  Calendario
-                </a>
-              </li> 
-              <li>
-                <a href="#" class="nav-link link-dark">
-                  <i class="fa-solid fa-book-bookmark"></i>
-                  Agenda
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link link-dark">
-                  <i class="fa-solid fa-briefcase"></i>
-                  Serviços
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link link-dark">
-                  <i class="fa-solid fa-people-group"></i>
-                  Funcionários
-                </a>
-              </li> 
-              <li>
-                <a href="#" class="nav-link link-dark">
-                  <i class="fa-solid fa-star"></i>
-                  Habilidades
-                </a>
-              </li>
 
-              <div class="sidebar-header">Definições do Negócio</div>
-              <li>
-                <a href="#" class="nav-link link-dark">
-                  <i class="fa-solid fa-clock"></i>
-                  Hórarios
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link link-dark">
-                  <i class="fa-solid fa-lock"></i>
-                  Bloqueios
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link link-dark">
-                  <i class="fa-solid fa-paintbrush"></i>
-                  Tema do Calendario
-                </a>
-              </li>
+        <script>
+          $(function(){
+            $("#menu").load("sideMenu.html"); 
+          });
+          </script>
+        
+        <div id="menu"></div>
 
-              <li>
-                <a href="#" class="nav-link link-dark">
-                  <i class="fa-solid fa-palette"></i>
-                  Tema da Aplicação
-                </a>
-              </li>
-              
-            </ul>
-        </div>
-            <div class="dropdown">
-              <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle avatar" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                <!--<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">-->
-                
-                  <svg class="user-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,12.5c-3.04,0-5.5,1.73-5.5,3.5s2.46,3.5,5.5,3.5,5.5-1.73,5.5-3.5-2.46-3.5-5.5-3.5Zm0-.5c1.66,0,3-1.34,3-3s-1.34-3-3-3-3,1.34-3,3,1.34,3,3,3Z"></path></svg>
-                
-                <strong>João Barbosa</strong>
-              </a>
-              <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
-              </ul>
-            </div>
-          </nav> 
-          
+        <script>
+          $(function(){
+              $("#menu").load("sideMenu.html", function() {
+                  var path = window.location.pathname;
+                  $('.nav-link').each(function() {
+                      var href = $(this).attr('href');
+                      if (path === href) {
+                          $(this).addClass('active');
+                      }
+                  });
+              }); 
+          });
+          </script>
+        
         <div class="main">
           <div class="container menu">
             <nav class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
@@ -215,7 +138,8 @@
                           const permissao = document.getElementById('permissao').value;
                           const cookie = getCookie('session_token');
                           const user = getCookie('username');
-
+                          const select = document.getElementById('estabelecimento');
+                          const estabelecimento = Array.from(select.selectedOptions).map(option => Number(option.value));
                           const data = {
                               "username": user,
                               "cookie": cookie,
@@ -225,6 +149,7 @@
                               "email": email,
                               "phone_number": telefone,
                               "full_name": nomeCompleto,
+                              "estabelecimento_id": estabelecimento,
                               "image": "TEST.png"
                           };
                           console.log(data);
@@ -336,7 +261,56 @@
                               Muito bem!
                             </div>
                           </div>
+                          <div class="col-md-6">
+                            <label for="validationCustom04" class="form-label"></label>
+                            <select class="form-select" id="estabelecimento" multiple required>
+                              <option disabled value="">Estabelecimento</option>
+                              <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                  getEstabelecimetnos().then((data) => {
+                                    for (let i = 0; i < data.length; i++) {
+                                      let option = "<option value='" + data[i].id + "'>" + data[i].name + "</option>";
+                                      document.getElementById("estabelecimento").innerHTML += option;
+                                    }
+                                  }).catch((error) => {
+                                    console.error('Error:', error);
+                                  });
+                                });
+    
+                            function getEstabelecimetnos() {
+                              return new Promise((resolve, reject) => {
+                                fetch("/get_estabelecimentos")
+                                  .then((response) => response.json())
+                                  .then((data) => {
+                                    resolve(data);
+                                  })
+                                  .catch((error) => {
+                                    console.error("Error: ", error);
+                                    reject(error);
+                                  });
+                              });
+                            }
+                              </script>
+                            </select>
+                            
+                            <div class="invalid-feedback">
+                              Escolha o estabelecimento do colaborador.
+                            </div>
+                            <div class="valid-feedback">
+                              Muito bem!
+                            </div>
+                          </div>
                         </div>
+                        <script>
+                        document.addEventListener('DOMContentLoaded', (event) => {
+                            var select = document.getElementById('estabelecimento');
+                            select.addEventListener('change', function() {
+                                var values = Array.from(select.selectedOptions).map(option => option.value);
+                                var valuesString = values.join(',');
+                                console.log(valuesString);
+                            });
+                        });
+                          </script>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                           <button type="button" class="btn btn-primary" onclick="criaUser(event)" style="background-color: var(--color-primary); border-color: var(--color-primary);">Adicionar</button>
@@ -350,6 +324,68 @@
                 <!--Fim Modal Add-->
 
                 <!-- Modal Edit-->
+                <script>
+                  var select1;
+                  document.addEventListener('DOMContentLoaded', (event) => {
+                      select1 = document.getElementById('estabelecimento_edit');
+                      select1.addEventListener('change', function() {
+                          var values = Array.from(select1.selectedOptions).map(option => Number(option.value));
+                          var valuesString = values.join(',');
+                          console.log(valuesString);
+                      });
+              
+                      function editUserRequest() {
+                          var estabelecimento1 = Array.from(select1.selectedOptions).map(option => Number(option.value));
+                          const cookie = getCookie('session_token');
+                          const user1 = getCookie('username');
+              
+                          var user = {
+                              username: user1,
+                              cookie: cookie,
+                              user: document.getElementById('username_edit').value,
+                              email: document.getElementById('email_edit').value,
+                              phone_number: document.getElementById('telefone_edit').value,
+                              full_name: document.getElementById('nomeCompleto_edit').value,
+                              estabelecimento_id: estabelecimento1,
+                              image: 'EDIT_IMAGE.png' 
+                          };
+                            
+                          return fetch("/edit_user", {
+                              method: 'POST',
+                              headers: {
+                                  'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify(user),
+                          })
+                          .then(response => {
+                              console.log(response);
+                              if(response.ok){
+                                  localStorage.setItem('showNotification', 'true');
+                                  localStorage.setItem('notificationMessage', 'Colaborador editado com sucesso.');
+                                  localStorage.setItem('notificationType', 'success');
+                                  window.location.reload();
+                              } else if(response.status == 701){
+                                  localStorage.setItem('showNotification', 'true');
+                                  localStorage.setItem('notificationMessage', '701 - User already exists.');
+                                  localStorage.setItem('notificationType', 'error');
+                                  window.location.reload();
+                              } else if(response.status == 400){
+                                  localStorage.setItem('showNotification', 'true');
+                                  localStorage.setItem('notificationMessage', 'Deve preencher todos os campos.');
+                                  localStorage.setItem('notificationType', 'error');
+                              }
+                          })
+                          .then(data => {
+                              console.log('Success:', data);
+                          })
+                          .catch((error) => {
+                              console.error('Error:', error);
+                          });
+                      }
+              
+                      document.getElementById('editUserRequest').addEventListener('click', editUserRequest);
+                  });
+              </script>
                 <div class="modal fade" id="modal_edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -402,60 +438,55 @@
                               Muito bem!
                             </div>
                           </div>
-                          
-                        </div>                        
+                             
+                          <div class="col-md-6">
+                            <label for="validationCustom04" class="form-label"></label>
+                            <select class="form-select" id="estabelecimento_edit" multiple required>
+                              <option disabled value="">Estabelecimento</option>
+                              <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                  getEstabelecimetnos().then((data) => {
+                                    for (let i = 0; i < data.length; i++) {
+                                      let option = "<option value='" + data[i].id + "'>" + data[i].name + "</option>";
+                                      document.getElementById("estabelecimento_edit").innerHTML += option;
+                                    }
+                                  }).catch((error) => {
+                                    console.error('Error:', error);
+                                  });
+                                });
+    
+                            function getEstabelecimetnos() {
+                              return new Promise((resolve, reject) => {
+                                fetch("/get_estabelecimentos")
+                                  .then((response) => response.json())
+                                  .then((data) => {
+                                    resolve(data);
+                                  })
+                                  .catch((error) => {
+                                    console.error("Error: ", error);
+                                    reject(error);
+                                  });
+                              });
+                            }
+                              </script>
+                            </select>
+                            <div class="invalid-feedback">
+                              Escolha o estabelecimnto do colaborador.
+                            </div>
+                            <div class="valid-feedback">
+                              Muito bem!
+                            </div>
+                          </div>
+                        </div>
+                                            
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="button" onclick="editUserRequest()" class="btn btn-primary">Salvar</button>
+                          <button type="button" id="editUserRequest" class="btn btn-primary">Salvar</button>
                         </div>
                         
                       </form>
-                      <script>
-                        function editUserRequest() {
-
-                          var user = {
-                                username: 'admin',
-                                cookie: 'admin',
-                                user: document.getElementById('username_edit').value,
-                                email: document.getElementById('email_edit').value,
-                                phone_number: document.getElementById('telefone_edit').value,
-                                full_name: document.getElementById('nomeCompleto_edit').value,
-                                image: 'EDIT_IMAGE.png' 
-                            };
-                            fetch("/edit_user", {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(user),
-                            })
-                            .then(response => {
-                              if(response.ok){
-                              localStorage.setItem('showNotification', 'true');
-                              localStorage.setItem('notificationMessage', 'Colaborador editado com sucesso.');
-                              localStorage.setItem('notificationType', 'success');
-                              window.location.reload();
-                            } else if(response.status == 701){
-                              localStorage.setItem('showNotification', 'true');
-                              localStorage.setItem('notificationMessage', '701 - User already exists.');
-                              localStorage.setItem('notificationType', 'error');
-                              window.location.reload();
-                            } else if(response.status == 400){
-                              localStorage.setItem('showNotification', 'true');
-                              localStorage.setItem('notificationMessage', 'Deve preencher todos os campos.');
-                              localStorage.setItem('notificationType', 'error');
-                              window.location.reload();
-                            }
-                            })
-                            .then(data => {
-                                console.log('Success:', data);
-                            })
-                            .catch((error) => {
-                                console.error('Error:', error);
-                            });
-                        }
-                        
-                      </script>
+                      
+                      
                     </div>
                   </div>
                 </div>
@@ -479,10 +510,12 @@
                   </div>
                   <script>
                     function deleteUserRequest() {
+                      const cookie = getCookie('session_token');
+                          const user1 = getCookie('username');
 
                       var user = {
-                            username: 'admin',
-                            cookie: 'admin',
+                            username: user1,
+                            cookie: cookie,
                             user: userToDelete,
                         };
                         fetch("/delete_user", {
@@ -533,15 +566,22 @@
                                             <th>Username</th>
                                             <th class="d-none d-md-table-cell">Contacto</th>
                                             <th class="d-none d-md-table-cell">Email</th>
-                                            <th>Status</th>
+                                            <th>Permissões</th>
                                         </tr>
                                     </thead>
+                                    
                                     <tbody id="colab-table">
+                                      <style>
+                                        .colab_ln:hover {
+                                          background-color: #e7e6e6;
+
+                                        }
+                                      </style>
                                         
                                         <script>
                                             getUsers().then((data) => {
                                                 for (let i = 0; i < data.length; i++) {
-                                                    document.getElementById("colab-table").innerHTML += "<tr><td><img src='img/avatars/avatar.jpg' width='32' height='32' class='rounded-circle my-n1' alt='Avatar'></td><td>" + data[i].user + "</td><td class='d-none d-md-table-cell'>" + data[i].phone_number + "</td><td class='d-none d-md-table-cell'>" + data[i].email + "</td><td>" + (data[i].admin === 0 ? "<span class='badge bg-success'>Funcionário</span>" : "<span class='badge bg-danger'>Administrador</span>") + "</td><td><a data-bs-toggle='modal' data-bs-target='#modal_edit' data-nomeCompleto='" + data[i].full_name + "' data-email='" + data[i].email + "' data-user='" + data[i].user + "' data-telefone='" + data[i].phone_number + "' ><i class='fa-regular fa-pen-to-square'></i></a></td><td><a data-bs-toggle='modal' data-bs-target='#modal_delete' data-user='" + data[i].user + "'><i class='fa-regular fa-trash-can'></i></a></td></tr>";
+                                                    document.getElementById("colab-table").innerHTML += "<tr class='colab_ln'><td><img src='img/avatars/avatar.jpg' width='32' height='32' class='rounded-circle my-n1' alt='Avatar'></td><td>" + data[i].user + "</td><td class='d-none d-md-table-cell'>" + data[i].phone_number + "</td><td class='d-none d-md-table-cell'>" + data[i].email + "</td><td>" + (data[i].admin === 0 ? "<span class='badge bg-success'>Funcionário</span>" : "<span class='badge bg-danger'>Administrador</span>") + "</td><td><a data-bs-toggle='modal' data-bs-target='#modal_edit' data-nomeCompleto='" + data[i].full_name + "' data-email='" + data[i].email + "' data-user='" + data[i].user + "' data-telefone='" + data[i].phone_number + "' data-estabelecimento='" + JSON.stringify(data[i].estabelecimento_id) + "'><i class='fa-regular fa-pen-to-square'></i></a></td><td><a data-bs-toggle='modal' data-bs-target='#modal_delete' data-user='" + data[i].user + "'><i class='fa-regular fa-trash-can'></i></a></td></tr>";
                                                 }
                                             });
 

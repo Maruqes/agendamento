@@ -61,6 +61,8 @@ function set_new_page(link, ficheiro)
 
 set_new_page("/colaboradores", "collab.html");
 set_new_page("/calendario", "calendar1.html");
+set_new_page("/estabelecimentos", "estabelecimentos.html");
+set_new_page("/servicos", "servicos.html");
 
 
 app.use(express.static("images"));
@@ -108,7 +110,7 @@ app.post("/new", async function (req, res)
     res.status(702).send("Invalid phone number");
   } else if (result == 706)
   {
-    res.status(706).send("Estabelecimento does ont exist");
+    res.status(706).send("Estabelecimento does not exist");
   }
   else if (result == 801)
   {
@@ -370,6 +372,7 @@ app.post("/edit_user", function (req, res)
     }
     auth.edit_user(
       req.body.user,
+      req.body.estabelecimento_id,
       req.body.email,
       req.body.phone_number,
       req.body.full_name,
@@ -518,15 +521,25 @@ app.post("/set_bloqueio", async function (req, res)
       req.body.user,
       req.body.repeat
     );
-    if (result == 703)
-    {
-      res.status(result).send("Estabelecimento does not exist");
-    } else if (result == 704)
+    if (result == 704)
     {
       res.status(result).send("Invalid repeat");
-    } else if (result == 701)
+    }
+    else if (result == 701)
     {
       res.status(result).send("User does not exist");
+    }
+    else if (result == 702)
+    {
+      res.status(result).send("Invalid date, exists a marcacao on that");
+    }
+    else if (result == 705)
+    {
+      res.status(result).send("Estabelecimento does not exist");
+    }
+    else if (result == 703)
+    {
+      res.status(result).send("User is not in the estabelecimento");
     }
     else
     {
@@ -726,7 +739,11 @@ app.post("/delete_estabelecimento", async function (req, res)
     } else if (result == 701)
     {
       res.status(result).send("invalid estabelecimento");
-    } else
+    } else if (result == 704)
+    {
+      res.status(result).send("Estabelecimento cannot be removed there is marcacoes on the future");
+    }
+    else
     {
       res.sendStatus(result);
     }

@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serviços</title>
+
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+  <!--Script Jquery-->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <!--Notify.js-->
+  <script src="js/notify.min.js"></script>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body data-theme="marine-blue">
+  <div class="wrapper">
+
+    <script>
+      $(function ()
+      {
+        $("#menu").load("sideMenu.html");
+      });
+    </script>
+
+    <div id="menu"></div>
+
+    <script>
+      $(function ()
+      {
+        $("#menu").load("sideMenu.html", function ()
+        {
+          var path = window.location.pathname;
+          $('.nav-link').each(function ()
+          {
+            var href = $(this).attr('href');
+            if (path === href)
+            {
+              $(this).addClass('active');
+            }
+          });
+        });
+      });
+    </script>
+
+    <div class="main">
+      <div class="container menu">
+        <nav class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
+          <div href="/"
+            class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none area1 d-none">
+            <b>Algo Aqui</b>
+          </div>
+
+          <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 area2">
+            <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">Features</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
+          </ul>
+
+          <div class="col-md-3 text-end area3">
+            <div class="bloco d-flex"><i class="fa-regular fa-bell"></i></div>
+            <div class="bloco d-flex"><i class="fa-regular fa-message"></i></div>
+            <div class="bloco d-flex" onclick="toggleFullscreen()"><i class="fa-solid fa-expand"></i></div>
+            <div class="dropdown">
+              <button class="btn btn-outline-primary dropdown-toggle drop-store" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fa-solid fa-store i-store"></i> <span style="font-weight: 500;">JGStore Braga</span>
+              </button>
+              <ul class="dropdown-menu drop-store-list">
+                <div class="scroll">
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Porto
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo" style="background-color: #3889CC;">
+                          <div class="logo1" style="background-color: #7bb8ea4d;"></div>
+                        </div>JGStore Braga
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Lisboa
+                      </span></a></li>
+
+
+
+
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Porto
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo" style="background-color: #3889CC;">
+                          <div class="logo1" style="background-color: #7bb8ea4d;"></div>
+                        </div>JGStore Braga
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Lisboa
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Viana do Castelo viana do castelo
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo" style="background-color: #3889CC;">
+                          <div class="logo1" style="background-color: #7bb8ea4d;"></div>
+                        </div>JGStore Braga
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Lisboa
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Porto
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo" style="background-color: #3889CC;">
+                          <div class="logo1" style="background-color: #7bb8ea4d;"></div>
+                        </div>JGStore Braga
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Lisboa
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Porto
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo" style="background-color: #3889CC;">
+                          <div class="logo1" style="background-color: #7bb8ea4d;"></div>
+                        </div>JGStore Braga
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Lisboa
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Porto
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo" style="background-color: #3889CC;">
+                          <div class="logo1" style="background-color: #7bb8ea4d;"></div>
+                        </div>JGStore Braga
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Lisboa
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Porto
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo" style="background-color: #3889CC;">
+                          <div class="logo1" style="background-color: #7bb8ea4d;"></div>
+                        </div>JGStore Braga
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Lisboa
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Porto
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo" style="background-color: #3889CC;">
+                          <div class="logo1" style="background-color: #7bb8ea4d;"></div>
+                        </div>JGStore Braga
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Lisboa
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Porto
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo" style="background-color: #3889CC;">
+                          <div class="logo1" style="background-color: #7bb8ea4d;"></div>
+                        </div>JGStore Braga
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Lisboa
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Porto
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo" style="background-color: #3889CC;">
+                          <div class="logo1" style="background-color: #7bb8ea4d;"></div>
+                        </div>JGStore Braga
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Lisboa
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Porto
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo" style="background-color: #3889CC;">
+                          <div class="logo1" style="background-color: #7bb8ea4d;"></div>
+                        </div>JGStore Braga
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Lisboa
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Porto
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo" style="background-color: #3889CC;">
+                          <div class="logo1" style="background-color: #7bb8ea4d;"></div>
+                        </div>JGStore Braga
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Lisboa
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Porto
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo" style="background-color: #3889CC;">
+                          <div class="logo1" style="background-color: #7bb8ea4d;"></div>
+                        </div>JGStore Braga
+                      </span></a></li>
+                  <li><a class="dropdown-item" href="#"><span>
+                        <div class="logo">
+                          <div class="logo1"></div>
+                        </div>JGStore Lisboa
+                      </span></a></li>
+                </div>
+
+
+
+
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <main class="content">
+        <div class="container-fluid p-0">
+
+          <div class="mb-3 d-flex justify-content-md-between">
+            <h1 class="h3 d-inline align-middle">Serviços</h1>
+
+            <button type="button" class="btn btn-primary btn-colab-new" data-bs-toggle="modal"
+              data-bs-target="#modal_add"><i class="fa-solid fa-plus" style="margin-right: 7px;"></i>Novo</button>
+          </div>
+          <!-- Modal Add-->
+          <script>
+            function getCookie(name)
+            {
+              const value = `; ${document.cookie}`;
+              const parts = value.split(`; ${name}=`);
+              if (parts.length === 2) return parts.pop().split(';').shift();
+            }
+
+
+            function criaServico()
+            {
+              return new Promise((resolve, reject) =>
+              {
+                const cookie = getCookie('session_token');
+                const user = getCookie('username');
+                const nome = document.getElementById('name').value;
+                const description = document.getElementById('description').value;
+                const duration = document.getElementById('duration').value;
+                const price = document.getElementById('price').value;
+                const select = document.getElementById('estabelecimento');
+                const estabelecimento = Array.from(select.selectedOptions).map(option => Number(option.value));
+
+                const data = {
+                    "username": user,
+                    "cookie": cookie,
+                    "name": nome,
+                    "estabelecimento_id": estabelecimento,
+                    "price": price,
+                    "image": "newimg.png", 
+                    "duration": duration,
+                    "description": description
+                };
+
+                fetch("/create_product", {
+                  method: "POST",
+                  body: JSON.stringify(data),
+                  headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                  }
+                })
+                  .then(response =>
+                  {
+                    if (response.ok)
+                    {
+                      localStorage.setItem('showNotification', 'true');
+                      localStorage.setItem('notificationMessage', 'Estabelecimento criado com sucesso!');
+                      localStorage.setItem('notificationType', 'success');
+                      window.location.reload();
+                    } else if (response.status == 701)
+                    {
+                      localStorage.setItem('showNotification', 'true');
+                      localStorage.setItem('notificationMessage', 'Este estabelecimento já existe!');
+                      localStorage.setItem('notificationType', 'error');
+                      window.location.reload();
+                    } else if (response.status == 400)
+                    {
+                      localStorage.setItem('showNotification', 'true');
+                      localStorage.setItem('notificationMessage', 'Deve preencher todos os campos.');
+                      localStorage.setItem('notificationType', 'error');
+                      window.location.reload();
+                    }
+                  }).catch(error => console.log(error));
+              });
+
+            }
+
+          </script>
+          <div class="modal fade" id="modal_add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Adicionar Serviço</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-body">
+
+                  <form class="row g-3 needs-validation" novalidate>
+                    <div class="col-md-12">
+                      <label for="validationCustom01" class="form-label"></label>
+                      <input type="text" class="form-control" id="name" placeholder="Nome" required>
+                      <div class="valid-feedback">
+                        Muito bem!
+                      </div>
+                      <div class="invalid-feedback">
+                        Introduza o nome do estabelecimento.
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <label for="validationCustom01" class="form-label"></label>
+                      <input type="number" class="form-control" id="duration" placeholder="Duração" required>
+                      <div class="valid-feedback">
+                        Muito bem!
+                      </div>
+                      <div class="invalid-feedback">
+                        Introduza a morada do estabelecimento.
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="validationCustom03" class="form-label"></label>
+                      <input type="number" class="form-control" id="price" placeholder="Preço" required>
+                      <div class="invalid-feedback">
+                        Introduza o seu número de telefone.
+                      </div>
+                      <div class="valid-feedback">
+                        Muito bem!
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                        <textarea class="form-control" id="description"
+                          placeholder="Escreva a descrição do estabelecimento..." id="floatingTextarea2"
+                          style="height: 100px" required></textarea>
+                        <label for="floatingTextarea2" class="form-label">Descrição</label>
+                      </div>
+                      <div class="valid-feedback">
+                        Muito bem!
+                      </div>
+                      <div class="invalid-feedback">
+                        Introduza o nome do estabelecimento.
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="validationCustom04" class="form-label"></label>
+                        <select class="form-select" id="estabelecimento" multiple required>
+                          <option disabled value="">Estabelecimento</option>
+                          <script>
+                            document.addEventListener('DOMContentLoaded', (event) => {
+                              getEstabelecimetnos().then((data) => {
+                                for (let i = 0; i < data.length; i++) {
+                                  let option = "<option value='" + data[i].id + "'>" + data[i].name + "</option>";
+                                  document.getElementById("estabelecimento").innerHTML += option;
+                                }
+                              }).catch((error) => {
+                                console.error('Error:', error);
+                              });
+                            });
+
+                        function getEstabelecimetnos() {
+                          return new Promise((resolve, reject) => {
+                            fetch("/get_estabelecimentos")
+                              .then((response) => response.json())
+                              .then((data) => {
+                                resolve(data);
+                              })
+                              .catch((error) => {
+                                console.error("Error: ", error);
+                                reject(error);
+                              });
+                          });
+                        }
+                          </script>
+                        </select>
+                        
+                        <div class="invalid-feedback">
+                          Escolha o estabelecimento do colaborador.
+                        </div>
+                        <div class="valid-feedback">
+                          Muito bem!
+                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', (event) => {
+                                var select = document.getElementById('estabelecimento');
+                                select.addEventListener('change', function() {
+                                    var values = Array.from(select.selectedOptions).map(option => option.value);
+                                    var valuesString = values.join(',');
+                                    console.log(valuesString);
+                                });
+                            });
+                              </script>
+                      </div>
+
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" onclick="criaServico(event)"
+                    style="background-color: var(--color-primary); border-color: var(--color-primary);">Adicionar</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+          <!--Fim Modal Add-->
+
+          <!-- Modal Edit-->
+          <script>
+            function editServiceRequest() {
+                const cookie = getCookie('session_token');
+                const user1 = getCookie('username');
+                const nome = document.getElementById('name_edit').value;
+                const description = document.getElementById('description_edit').value;
+                const duration = document.getElementById('duration_edit').value;
+                const price = document.getElementById('price_edit').value;
+                const select = document.getElementById('estabelecimento_edit');
+                const estabelecimento = Array.from(select.selectedOptions).map(option => Number(option.value));
+              
+                var user = {
+                    "username": user1,
+                    "cookie": cookie,
+                    "name": nome,
+                    "estabelecimento_id": estabelecimento,
+                    "price": price,
+                    "image": "newimg.png", 
+                    "duration": duration,
+                    "description": description
+                };
+
+              return fetch("/edit_product", {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+              })
+                .then(response =>
+                {
+                  if (response.ok)
+                  {
+                    localStorage.setItem('showNotification', 'true');
+                    localStorage.setItem('notificationMessage', 'Colaborador editado com sucesso.');
+                    localStorage.setItem('notificationType', 'success');
+                    window.location.reload();
+                  } else if (response.status == 701)
+                  {
+                    localStorage.setItem('showNotification', 'true');
+                    localStorage.setItem('notificationMessage', '701 - User already exists.');
+                    localStorage.setItem('notificationType', 'error');
+                  } else if (response.status == 400)
+                  {
+                    localStorage.setItem('showNotification', 'true');
+                    localStorage.setItem('notificationMessage', 'Deve preencher todos os campos.');
+                    localStorage.setItem('notificationType', 'error');
+                  }
+                })
+                .then(data =>
+                {
+                  console.log('Success:', data);
+                })
+                .catch((error) =>
+                {
+                  console.error('Error:', error);
+                });
+            }
+
+
+          </script>
+          <div class="modal fade" id="modal_edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar </h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3 needs-validation" novalidate>
+                        <div class="col-md-12">
+                          <label for="validationCustom01" class="form-label"></label>
+                          <input type="text" class="form-control" id="name_edit" placeholder="Nome" required>
+                          <div class="valid-feedback">
+                            Muito bem!
+                          </div>
+                          <div class="invalid-feedback">
+                            Introduza o nome do estabelecimento.
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <label for="validationCustom01" class="form-label"></label>
+                          <input type="number" class="form-control" id="duration_edit" placeholder="Duração" required>
+                          <div class="valid-feedback">
+                            Muito bem!
+                          </div>
+                          <div class="invalid-feedback">
+                            Introduza a morada do estabelecimento.
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="validationCustom03" class="form-label"></label>
+                          <input type="number" class="form-control" id="price_edit" placeholder="Preço" required>
+                          <div class="invalid-feedback">
+                            Introduza o seu número de telefone.
+                          </div>
+                          <div class="valid-feedback">
+                            Muito bem!
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                          <div class="form-floating">
+                            <textarea class="form-control" id="description_edit"
+                              placeholder="Escreva a descrição do estabelecimento..." id="floatingTextarea2"
+                              style="height: 100px" required></textarea>
+                            <label for="floatingTextarea2" class="form-label">Descrição</label>
+                          </div>
+                          <div class="valid-feedback">
+                            Muito bem!
+                          </div>
+                          <div class="invalid-feedback">
+                            Introduza o nome do estabelecimento.
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="validationCustom04" class="form-label"></label>
+                            <select class="form-select" id="estabelecimento_edit" multiple required>
+                              <option disabled value="">Estabelecimento</option>
+                              <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                  getEstabelecimetnos().then((data) => {
+                                    for (let i = 0; i < data.length; i++) {
+                                      let option = "<option value='" + data[i].id + "'>" + data[i].name + "</option>";
+                                      document.getElementById("estabelecimento_edit").innerHTML += option;
+                                    }
+                                  }).catch((error) => {
+                                    console.error('Error:', error);
+                                  });
+                                });
+    
+                            function getEstabelecimetnos() {
+                              return new Promise((resolve, reject) => {
+                                fetch("/get_estabelecimentos")
+                                  .then((response) => response.json())
+                                  .then((data) => {
+                                    resolve(data);
+                                  })
+                                  .catch((error) => {
+                                    console.error("Error: ", error);
+                                    reject(error);
+                                  });
+                              });
+                            }
+                              </script>
+                            </select>
+                            
+                            <div class="invalid-feedback">
+                              Escolha o estabelecimento do colaborador.
+                            </div>
+                            <div class="valid-feedback">
+                              Muito bem!
+                            </div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                    var select = document.getElementById('estabelecimento_edit');
+                                    select.addEventListener('change', function() {
+                                        var values = Array.from(select.selectedOptions).map(option => option.value);
+                                        var valuesString = values.join(',');
+                                        console.log(valuesString);
+                                    });
+                                });
+                                  </script>
+                          </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" onclick="editServiceRequest()" class="btn btn-primary">Salvar</button>
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+          <!--Fim Modal Edit-->
+          <!-- Modal Delet-->
+          <div class="modal fade" id="modal_delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Excluir</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Têm a certeza que deseja excluir o serviço <span><b id="userToDelete"></b></span> ?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-danger" onclick="deleteServiceRequest()">Excluir</button>
+                </div>
+              </div>
+            </div>
+            <script>
+                var serviceToDelete;
+              
+                function confirmDelete(serviceName) {
+                  document.getElementById('userToDelete').innerText = serviceName;
+                  serviceToDelete = serviceName;
+                }
+              
+                function deleteServiceRequest()
+                {
+                  const cookie = getCookie('session_token');
+                  const user1 = getCookie('username');
+              
+                  var user = {
+                      username: user1,
+                      cookie: cookie,
+                      name: serviceToDelete,
+                          };
+              
+                  fetch("/delete_Product", {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(user),
+                  })
+                    .then(response =>
+                    {
+                      if (response.ok)
+                      {
+                        localStorage.setItem('showNotification', 'true');
+                        localStorage.setItem('notificationMessage', 'Colaborador excluido com sucesso.');
+                        localStorage.setItem('notificationType', 'success');
+                        window.location.reload();
+                      } else if (response.status == 701)
+                      {
+                        localStorage.setItem('showNotification', 'true');
+                        localStorage.setItem('notificationMessage', 'Não pode apagar a sua própria conta.');
+                        localStorage.setItem('notificationType', 'error');
+                      } else if (response.status == 400)
+                      {
+                        localStorage.setItem('showNotification', 'true');
+                        localStorage.setItem('notificationMessage', 'User does not exist');
+                        localStorage.setItem('notificationType', 'error');
+                        window.location.reload();
+                      }
+                    })
+                    .then(data =>
+                    {
+                      console.log('Success:', data);
+                    })
+                    .catch((error) =>
+                    {
+                      console.error('Error:', error);
+                    });
+                  }
+              
+              </script>
+              </div>
+              <!--Fim Modal Delet-->
+              <!-- Listagem Estabelecimentos-->
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="card card-colab-list">
+                    <div class="card-body">
+                      <table class="table table-responsive table-striped colab-table" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>Foto</th>
+                            <th>Nome</th>
+                            <th class="d-none d-md-table-cell">Descrição</th>
+                            <th class="d-none d-md-table-cell">Duração</th>
+                            <th>Preço</th>
+                          </tr>
+                        </thead>
+                        <tbody id="colab-table">
+                          <style>
+                            .colab_ln:hover {
+                              background-color: #e7e6e6;
+                            }
+                          </style>
+              
+                          <script>
+              
+                            getServicos().then((data) => {
+                            for (let i = 0; i < data.length; i++) {
+                                let row = "<tr class='colab_ln'><td><img src='img/avatars/avatar.jpg' width='32' height='32' class='my-n1' alt='Avatar'></td><td class='name_edit'>" + data[i].name + "</td><td class='d-none d-md-table-cell'>" + data[i].description + "</td><td class='d-none d-md-table-cell'>" + data[i].duration + " min</td><td>" + data[i].price + "€</td><td><a class='edit' data-bs-toggle='modal' data-bs-target='#modal_edit' data-nome='" + data[i].name + "' data-description='" + data[i].description + "' data-duration='" + data[i].duration + "' data-price='" + data[i].price + "' data-estabelecimento='" + JSON.stringify(data[i].estabelecimento_id) + "'><i class='fa-regular fa-pen-to-square' style='color:var(--color-text-sidebar);'></i></a></td><td><a class='delete' data-bs-toggle='modal' data-bs-target='#modal_delete' data-nome='" + data[i].name + "' onclick='confirmDelete(this.getAttribute(\"data-nome\"))'><i class='fa-regular fa-trash-can' style='color:var(--color-text-sidebar);'></i></a></td></tr>";
+                                document.getElementById("colab-table").innerHTML += row;
+                            }
+                        }).catch((error) => {});
+              
+                          
+              
+                            function getServicos() {
+                              return new Promise((resolve, reject) => {
+                                fetch("/get_products")
+                                  .then((response) => response.json())
+                                  .then((data) => {
+                                    resolve(data);
+                                  })
+                                  .catch((error) => {
+                                    console.error("Error: ", error);
+                                    reject(error);
+                                  });
+                              });
+                            }
+              
+                          </script>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--Fim Listagem Colaboradores-->
+
+        </div>
+      </main>
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row text-muted">
+            <div class="col-6 text-start">
+              <p class="mb-0">
+                <a href="#" class="text-decoration-none">
+                  <div class="logo">
+                    <div class="logo1"><span class="logoname-footer">JGStore </span>
+                </a>
+            </div>
+          </div>
+
+          </p>
+        </div>
+        <div class="col-6 text-end">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a class="text-muted" href="#">Support</a>
+            </li>
+            <li class="list-inline-item">
+              <a class="text-muted" href="#">Help Center</a>
+            </li>
+            <li class="list-inline-item">
+              <a class="text-muted" href="#">Privacy</a>
+            </li>
+            <li class="list-inline-item">
+              <a class="text-muted" href="#">Terms</a>
+            </li>
+          </ul>
+        </div>
+    </div>
+  </div>
+  </footer>
+  </div>
+  </div>
+  <!-- Script Bootstrap-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <!--Fontes e Icons-->
+  <script src="https://kit.fontawesome.com/aeca222388.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

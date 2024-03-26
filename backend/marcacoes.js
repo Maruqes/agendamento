@@ -5,6 +5,7 @@ var auth = require("./auth.js");
 var server = require("./server.js");
 const estabelecimentos = require("./estabelecimentos.js");
 const crypto = require("crypto");
+const { start } = require("repl");
 
 function order_errors(err, order, ip)
 {
@@ -33,7 +34,8 @@ async function create_order(order, date, ip)
       order.complete_name,
       order.user,
       uuid,
-      order.estabelecimento_id
+      order.estabelecimento_id,
+      order.dia_da_semana
     );
     console.log(" [+] Venda para " + order.email + " de '" + order.product.name + "' finalizada");
     sms.send_sms("Your order has been created", order.user_number);
@@ -53,6 +55,28 @@ async function check_user_estabelecimento(user, estabelecimento_id)
   return false;
 }
 
+
+
+function does_hours_fit(hora_comeco1, hora_fim1, hora_comeco2, hora_fim2)
+{
+  if (hora_comeco1 >= hora_comeco2 && hora_comeco1 < hora_fim2)
+  {
+    return false;
+  }
+  if (hora_fim1 > hora_comeco2 && hora_fim1 <= hora_fim2)
+  {
+    return false;
+  }
+  if (hora_comeco1 < hora_comeco2 && hora_fim1 > hora_fim2)
+  {
+    return false;
+  }
+  if (hora_comeco1 > hora_comeco2 && hora_fim1 < hora_fim2)
+  {
+    return false;
+  }
+  return true;
+}
 
 async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, product)
 {
@@ -78,21 +102,16 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, pr
     var cur_start_mins = cur_marcacao[i].hora * 60 + cur_marcacao[i].minuto;
     var cur_end_mins = cur_start_mins + cur_marcacao[i].duration;
 
-    if (start_mins >= cur_start_mins && start_mins < cur_end_mins)
+    if (does_hours_fit(start_mins, end_mins, cur_start_mins, cur_end_mins) == false)
     {
-      console.log("Does not fit becouse of start_mins")
-      return 802;
-    }
-    if (end_mins > cur_start_mins && end_mins <= cur_end_mins)
-    {
-      console.log("Does not fit becouse of end_mins")
+      console.log("Does not fit becouse of marcacao")
       return 802;
     }
   }
 
   //horario
-  var date = new Date(Date.UTC(date[0].ano, date[0].mes - 1, date[0].dia));
-  const day1 = date.getDay();
+  var cur_date = new Date(Date.UTC(date[0].ano, date[0].mes - 1, date[0].dia));
+  const day1 = cur_date.getDay();
   console.log("dia-> " + day1);
   const horario_on_day = await db.read_horario_on_specific_day(day1, estabelecimento_id);
 
@@ -118,24 +137,14 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, pr
     var hora_fim = parseInt(cur_bloqueio[i].fim.split(":")[0]) * 60 + parseInt(cur_bloqueio[i].fim.split(":")[1]);
     if (cur_bloqueio[i].user == user)
     {
-      if (start_mins >= hora_comeco && start_mins < hora_fim)
-      {
-        console.log("Does not fit becouse of bloqueio")
-        return 804;
-      }
-      if (end_mins > hora_comeco && end_mins <= hora_fim)
+      if (does_hours_fit(hora_comeco, hora_fim, start_mins, end_mins) == false)
       {
         console.log("Does not fit becouse of bloqueio")
         return 804;
       }
     } else if (cur_bloqueio[i].user == '*')
     {
-      if (start_mins >= hora_comeco && start_mins < hora_fim)
-      {
-        console.log("Does not fit becouse of bloqueio")
-        return 804;
-      }
-      if (end_mins > hora_comeco && end_mins <= hora_fim)
+      if (does_hours_fit(hora_comeco, hora_fim, start_mins, end_mins) == false)
       {
         console.log("Does not fit becouse of bloqueio")
         return 804;
@@ -149,30 +158,27 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, pr
   {
     if (bloqueios_repeat[i].repeat == 0) continue;
 
+    //checkar se ja passou a data
+    if (bloqueios_repeat[i].ano < date[0].ano) continue;
+    if (bloqueios_repeat[i].ano == date[0].ano && bloqueios_repeat[i].mes > date[0].mes) continue;
+    if (bloqueios_repeat[i].ano == date[0].ano && bloqueios_repeat[i].mes == date[0].mes && bloqueios_repeat[i].dia > date[0].dia) continue;
+
+
     if (bloqueios_repeat[i].user == user)
     {
       var hora_comeco = parseInt(bloqueios_repeat[i].comeco.split(":")[0]) * 60 + parseInt(bloqueios_repeat[i].comeco.split(":")[1]);
       var hora_fim = parseInt(bloqueios_repeat[i].fim.split(":")[0]) * 60 + parseInt(bloqueios_repeat[i].fim.split(":")[1]);
-      if (start_mins >= hora_comeco && start_mins < hora_fim)
-      {
-        console.log("Does not fit becouse of bloqueio repeat")
-        return 804;
-      }
-      if (end_mins > hora_comeco && end_mins <= hora_fim)
-      {
-        console.log("Does not fit becouse of bloqueio repeat")
-        return 804;
-      }
-    } else if (bloqueios_repeat[i].user == '*')
-    {
-      var hora_comeco = parseInt(bloqueios_repeat[i].comeco.split(":")[0]) * 60 + parseInt(bloqueios_repeat[i].comeco.split(":")[1]);
-      var hora_fim = parseInt(bloqueios_repeat[i].fim.split(":")[0]) * 60 + parseInt(bloqueios_repeat[i].fim.split(":")[1]);
-      if (start_mins >= hora_comeco && start_mins < hora_fim)
+      if (does_hours_fit(hora_comeco, hora_fim, start_mins, end_mins) == false)
       {
         console.log("Does not fit becouse of bloqueio")
         return 804;
       }
-      if (end_mins > hora_comeco && end_mins <= hora_fim)
+
+    } else if (bloqueios_repeat[i].user == '*')
+    {
+      var hora_comeco = parseInt(bloqueios_repeat[i].comeco.split(":")[0]) * 60 + parseInt(bloqueios_repeat[i].comeco.split(":")[1]);
+      var hora_fim = parseInt(bloqueios_repeat[i].fim.split(":")[0]) * 60 + parseInt(bloqueios_repeat[i].fim.split(":")[1]);
+      if (does_hours_fit(hora_comeco, hora_fim, start_mins, end_mins) == false)
       {
         console.log("Does not fit becouse of bloqueio")
         return 804;
@@ -198,6 +204,7 @@ async function can_marcacao_fit(date, duration, id, user, estabelecimento_id, pr
 
 async function new_order_test(body, ip)
 {
+
   const { user_number, email, name, estabelecimento_id, date, complete_name, user } = body;
   console.log(complete_name);
   if (user_number == undefined || email == undefined || name == undefined || date == undefined || complete_name == undefined || user == undefined)
@@ -212,6 +219,10 @@ async function new_order_test(body, ip)
     return 703;
   }
 
+  if (await estabelecimentos.does_estabelecimento_exist(estabelecimento_id) == false)
+  {
+    return 706;
+  }
   let mar_fit_err = (await can_marcacao_fit(date, product[0].duration, 0, user, estabelecimento_id, product));
   if (mar_fit_err != 200)
   {
@@ -256,15 +267,13 @@ async function new_order_test(body, ip)
     return 702;
   }
 
-  if (await estabelecimentos.does_estabelecimento_exist(estabelecimento_id) == false)
-  {
-    return 706;
-  }
+
 
   console.log(`Venda para ${email} de '${name}' inicializada`);
 
   try
   {
+    let dia_da_semana = new Date(Date.UTC(date[0].ano, date[0].mes - 1, date[0].dia)).getDay();
     const new_order = {
       email,
       complete_name,
@@ -272,6 +281,7 @@ async function new_order_test(body, ip)
       product: product[0],
       user,
       estabelecimento_id,
+      dia_da_semana,
     };
     if (new_order.product.name != name)
     {
@@ -283,6 +293,7 @@ async function new_order_test(body, ip)
   } catch (err)
   {
     console.error(`Cant find product "${name}" on db`);
+    console.log(`Cant find product "${name}" on db`);
     const new_order = {
       email,
       complete_name,

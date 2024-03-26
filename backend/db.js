@@ -5,13 +5,13 @@ const db = new sqlite3.Database("../backend/base.db", sqlite3.OPEN_READWRITE, (e
   if (err) return console.log(err.message);
 });
 
-function add_db(service, email, user_number, ano, mes, dia, hora, minuto, duration, price, complete_name, user, uuid, estabelecimento_id)
+function add_db(service, email, user_number, ano, mes, dia, hora, minuto, duration, price, complete_name, user, uuid, estabelecimento_id, dia_da_semana)
 {
   return new Promise((resolve, reject) =>
   {
     db.run(
-      "INSERT INTO marcacoes (id, email, user_number, service, duration, ano, mes, dia, hora, minuto, price_at_moment,complete_name, user, estabelecimento_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-      [uuid, email, user_number, service, duration, ano, mes, dia, hora, minuto, price, complete_name, user, estabelecimento_id],
+      "INSERT INTO marcacoes (id, email, user_number, service, duration, ano, mes, dia, hora, minuto, price_at_moment,complete_name, user, estabelecimento_id,dia_da_semana) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+      [uuid, email, user_number, service, duration, ano, mes, dia, hora, minuto, price, complete_name, user, estabelecimento_id, dia_da_semana],
       (err) =>
       {
         if (err)
@@ -98,6 +98,39 @@ function read_db(user)
   });
 }
 
+async function read_marcacoes_on_dia_da_semana(dia_da_semana, estabelecimento_id, user)
+{
+  if (user == "*")
+  {
+    return new Promise((resolve, reject) =>
+    {
+      db.all("SELECT * FROM marcacoes WHERE dia_da_semana = ? AND estabelecimento_id = ?", [dia_da_semana, estabelecimento_id], function (err, data)
+      {
+        if (err)
+        {
+          reject(err);
+        }
+        resolve(data);
+      });
+    });
+  } else
+  {
+    return new Promise((resolve, reject) =>
+    {
+      db.all("SELECT * FROM marcacoes WHERE dia_da_semana = ? AND estabelecimento_id = ? AND user = ?", [dia_da_semana, estabelecimento_id, user], function (err, data)
+      {
+        if (err)
+        {
+          reject(err);
+        }
+        resolve(data);
+      });
+    });
+
+  }
+}
+
+
 function read_marcacao_on_specific_day(dia, mes, ano, estabelecimento_id)
 {
   return new Promise((resolve, reject) =>
@@ -111,6 +144,22 @@ function read_marcacao_on_specific_day(dia, mes, ano, estabelecimento_id)
       resolve(data);
     });
   });
+}
+
+function read_marcacoes_from_estabelecimento(estabelecimento_id)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.all("SELECT * FROM marcacoes WHERE estabelecimento_id = ?", [estabelecimento_id], function (err, data)
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+
 }
 
 function read_db_products()
@@ -209,6 +258,38 @@ function delete_product_on_db(product)
   });
 }
 
+function get_product_with_estabelecimento_id(estabelecimento_id)
+{
+  return new Promise((resolve, reject) =>
+  {
+    //estabelecimento_id=3 we need to find it in a string stored in db like1,2,3
+    db.all("SELECT * FROM products WHERE estabelecimento_id LIKE ?", ["%" + estabelecimento_id + "%"], function (err, data)
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}
+
+function change_product_estabelecimento(name, estabelecimento_id)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("UPDATE products SET estabelecimento_id = ? WHERE name = ?", [estabelecimento_id, name], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+
+}
+
 
 /////USERS
 function add_user(user, password, estabelecimento_id, admin, email, phone_number, full_name, image)
@@ -296,6 +377,53 @@ function read_db_users()
   });
 }
 
+function get_users_by_name(user)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.all("SELECT * FROM users WHERE user=?", [user], function (err, data)
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}
+
+async function get_user_with_estabelecimento_id(estabelecimento_id)
+{
+  return new Promise((resolve, reject) =>
+  {
+    //estabelecimento_id=3 we need to find it in a string stored in db like1,2,3
+    db.all("SELECT * FROM users WHERE estabelecimento_id LIKE ?", ["%" + estabelecimento_id + "%"], function (err, data)
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}
+
+
+function change_user_estabelecimento(user, estabelecimento_id)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("UPDATE users SET estabelecimento_id = ? WHERE user = ?", [estabelecimento_id, user], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+
+}
 
 ///////HORARIOS
 function set_horario(estabelecimento_id, dia, comeco, fim)
@@ -786,26 +914,48 @@ async function remove_estabelecimento_from_horario(estebelecimento_id)
   });
 }
 
+async function remove_estabelecimento_from_bloqueio(estebelecimento_id)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("DELETE FROM bloqueios WHERE estabelecimento_id = ?", [estebelecimento_id], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
 
 
 module.exports = {
   get_all_db_data,
   add_db,
   read_db,
+  read_marcacoes_on_dia_da_semana,
   get_product_on_db,
   read_db_sms,
   create_new_product_on_db,
   search_for_user,
   read_db_products,
   delete_product_on_db,
+  get_product_with_estabelecimento_id,
+  change_product_estabelecimento,
   add_user,
   delete_user,
   read_db_users,
+  get_users_by_name,
+  get_user_with_estabelecimento_id,
+  change_user_estabelecimento,
   edit_product_on_db,
   edit_user,
   delete_marcacao,
   edit_marcacao,
   read_marcacao_on_specific_day,
+  read_marcacoes_from_estabelecimento,
   get_product_on_db_by_uuid,
   set_horario,
   get_horario,
@@ -828,4 +978,5 @@ module.exports = {
   edit_estabelecimento,
   add_horario_estabelecimento,
   remove_estabelecimento_from_horario,
+  remove_estabelecimento_from_bloqueio,
 };
