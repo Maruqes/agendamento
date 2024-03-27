@@ -929,7 +929,82 @@ async function remove_estabelecimento_from_bloqueio(estebelecimento_id)
   });
 }
 
+//skills
 
+async function create_skill(user, product, rating)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("INSERT INTO skills (user,product,rating) VALUES(?,?,?)", [user, product, rating], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
+async function edit_skill(user, product, rating)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("UPDATE skills SET rating = ? WHERE user = ? AND product = ?", [rating, user, product], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
+async function delete_skill(user, product)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.run("DELETE FROM skills WHERE user = ? AND product = ?", [user, product], (err) =>
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
+async function get_skills_by_user(user)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.all("SELECT * FROM skills WHERE user=?", [user], function (err, data)
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}
+
+async function get_skills_by_product(product)
+{
+  return new Promise((resolve, reject) =>
+  {
+    db.all("SELECT * FROM skills WHERE product=?", [product], function (err, data)
+    {
+      if (err)
+      {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}
 
 module.exports = {
   get_all_db_data,
@@ -979,4 +1054,9 @@ module.exports = {
   add_horario_estabelecimento,
   remove_estabelecimento_from_horario,
   remove_estabelecimento_from_bloqueio,
+  create_skill,
+  edit_skill,
+  delete_skill,
+  get_skills_by_user,
+  get_skills_by_product,
 };

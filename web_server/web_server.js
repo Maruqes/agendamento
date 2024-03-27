@@ -10,6 +10,7 @@ var marcacoes = require("../backend/marcacoes.js");
 var estabelecimentos = require("../backend/estabelecimentos.js");
 var horarios = require("../backend/horarios.js");
 const defines = require("../web_server/defines.js");
+const skills = require("../backend/skills.js");
 const cors = require("cors");
 const console = require("./logs").console;
 const setRateLimit = require("express-rate-limit");
@@ -781,6 +782,105 @@ app.post("/edit_estabelecimento", async function (req, res)
   {
     res.sendStatus(401);
   }
+});
+
+
+//skills
+
+app.post("/create_skill", async function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+  if (autorizado == 1)
+  {
+    var result = await skills.create_new_skill(req.body);
+    if (result == 701)
+    {
+      res.status(result).send("user does not exist");
+    } else if (result == 702)
+    {
+      res.status(result).send("Product not found");
+
+    } else if (result == 703)
+    {
+      res.status(result).send("Rating is not between 0 and 10");
+    }
+    else
+    {
+      res.sendStatus(result);
+    }
+  } else
+  {
+    res.sendStatus(401);
+  }
+});
+
+app.post("/edit_skill", async function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+  if (autorizado == 1)
+  {
+    var result = await skills.edit_skill(req.body);
+    if (result == 701)
+    {
+      res.status(result).send("user does not exist");
+    } else if (result == 702)
+    {
+      res.status(result).send("Product not found");
+
+    } else if (result == 703)
+    {
+      res.status(result).send("Rating is not between 0 and 10");
+    }
+    else
+    {
+      res.sendStatus(result);
+    }
+  } else
+  {
+    res.sendStatus(401);
+  }
+});
+
+app.post("/delete_skill", async function (req, res)
+{
+  var autorizado = auth.login_user_with_cookie(
+    req.body.username,
+    req.body.cookie
+  );
+  if (autorizado == 1)
+  {
+    var result = await skills.delete_skill(req.body);
+    if (result == 701)
+    {
+      res.status(result).send("user does not exist");
+    } else if (result == 702)
+    {
+      res.status(result).send("Product not found");
+
+    } else
+    {
+      res.sendStatus(result);
+    }
+  } else
+  {
+    res.sendStatus(401);
+  }
+});
+
+app.get("/get_skill_by_user", function (req, res)
+{
+  skills.get_skill_by_user(req.query.user, res);
+});
+
+app.get("/get_skill_by_product", function (req, res)
+{
+  skills.get_skill_by_product(req.query.product, res);
 });
 
 ////debug ---> TO REMOVE
